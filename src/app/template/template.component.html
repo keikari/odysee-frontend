@@ -1,0 +1,35 @@
+<div  class="p-grid p-justify-center p-align-center" style="margin:50px;">
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Send Email Template</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Subject</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter subject" style="margin:10px" [(ngModel)]="subject">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Template</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter template" style="margin:10px" [(ngModel)]="template">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tags</span>
+  <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="tags" [allowDuplicate]="false"></p-chips></div>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Template</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter template" style="margin:10px" [(ngModel)]="template">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Verified Email?</span>
+  <div class="p-col-7 ui-widget"><p-radioButton label="don't filter on this attribute" name="verified" value="" [(ngModel)]="verifiedValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="yes - only verified email addresses" name="verified" value="yes" [(ngModel)]="verifiedValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="no - only unverified email addresses" name="verified" value="no" [(ngModel)]="verifiedValue"></p-radioButton></div>
+
+  <span class="p-col-7 p-col-align-center  ui-widget" style="font-size:150%">App Users?</span>
+  <div class="p-col-7 ui-widget"><p-radioButton label="don't filter on this attribute" name="app" value="" [(ngModel)]="appValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="yes - only users who have run the app at least once" name="app" value="yes" [(ngModel)]="appValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="no - only users who have never run the app" name="app" value="no" [(ngModel)]="appValue"></p-radioButton></div>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Mailgun Tags (Optional)</span>
+  <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="mailgunTags" [allowDuplicate]="false"></p-chips></div>
+  <span class="p-col-7 ui-widget">Setting a mailgun tag will tag this campaign in Mailgun, allowing you to track click/open stats. See the <a href="https://app.mailgun.com/app/analytics">Mailgun analytics tab</a>.</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Confirm?</span>
+  <div class="p-col-7 ui-widget"><p-radioButton label="testing" name="confirm" value="" [(ngModel)]="confirmValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="REALLY SEND IT!!" name="confirm" value="yes" [(ngModel)]="confirmValue"></p-radioButton></div>
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="sendTemplate($event)"></p-button></div>
+</div>
