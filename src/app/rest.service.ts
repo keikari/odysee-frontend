@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import {MessageService} from 'primeng/api';
+import {environment} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,8 @@ export class RestService {
 
   constructor(private http: HttpClient, private messageService: MessageService ) { }
 
-  endpoint = 'https://api.lbry.io';
-  token: string;
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, ' +
-    'Access-Control-Request-Method, Access-Control-Request-Headers',
-  });
+    endpoint = environment.apiurl ? environment.apiurl : 'http://localhost:8080';
+    token: string;
 
   private extractData(res: Response) {
     const body = res;
@@ -29,7 +23,7 @@ export class RestService {
   private handleError<T> (operation = 'operation', result?: T) {
     const messageService = this.messageService;
     return (responseError: any): Observable<T> => {
-      messageService.add({severity: 'error', summary: 'Service Message', detail: responseError.error});
+      messageService.add({severity: 'error', summary: 'Service Message', detail: responseError.error.error});
       // TODO: send the error to remote logging infrastructure
       console.log(responseError); // log to console instead
       // Let the app keep running by returning an empty result.
@@ -40,7 +34,7 @@ export class RestService {
   get(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
     const url = this.endpoint + '/' + resource + '/' + action;
-    console.log(this.headers)
+    console.log(params)
     return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
     );

@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { RestService } from './rest.service';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
+import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { ToastModule } from 'primeng/toast';
 import { RouterModule, Routes } from '@angular/router';
 import { TemplateComponent } from './template/template.component';
@@ -21,6 +22,8 @@ import { TagfileComponent } from './tag/tagfile/tagfile.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { ChipsModule } from 'primeng/chips';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { TerminalModule } from 'primeng/terminal';
+
 
 const appRoutes: Routes = [
   { path: 'terminal', component: TerminalComponent },
@@ -54,12 +57,13 @@ const appRoutes: Routes = [
     ToastModule,
     ChipsModule,
     RadioButtonModule,
+    TerminalModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [RestService, MessageService],
+  providers: [RestService, MessageService, TerminalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

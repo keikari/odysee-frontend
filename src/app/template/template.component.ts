@@ -14,28 +14,30 @@ export class TemplateComponent implements OnInit {
 
   subject: string;
   template: string;
-  tags: string[];
+  tags: string[] = [];
   verifiedValue = 'yes';
   appValue = '';
-  mailgunTags: string[];
+  mailgunTags: string[] = [];
   confirmValue = '';
 
   ngOnInit() {
   }
 
   sendTemplate($event: any) {
-    const params = new HttpParams()
-    params.set('subject', this.subject);
-    params.set('template', this.template);
-    params.set('tags', this.tags.join(','));
-    params.set('mailgun_tag', this.mailgunTags.join(','));
-    params.set('', '');
-    params.set('', '');
-    this.rest.get('template', 'send', new HttpParams()).subscribe((response: any) => {
-      if (response !== undefined){
+    const params = new HttpParams().
+    set('subject', this.subject).
+    set('template', this.template).
+    set('tags', this.tags.join(',')).
+    set('mailgun_tag', this.mailgunTags.join(',')).
+    set('confirm', this.confirmValue).
+    set('verified', this.verifiedValue).
+    set('installed', this.appValue);
+
+    console.log('sendtemplate', params);
+    this.rest.get('template', 'send', params).subscribe((response: any) => {
+      if (response !== undefined) {
         this.messageService.add({severity: 'success', summary: 'Service Message', detail: response.data});
       }
     });
-
   }
 }
