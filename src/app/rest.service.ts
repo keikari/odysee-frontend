@@ -11,9 +11,15 @@ export class RestService {
 
   constructor(private http: HttpClient, private messageService: MessageService ) { }
 
-  endpoint = 'http://localhost:8080';
+  endpoint = 'https://api.lbry.io';
   token: string;
-  headers = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+  headers = new HttpHeaders({'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
+    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, ' +
+    'Access-Control-Request-Method, Access-Control-Request-Headers',
+  });
 
   private extractData(res: Response) {
     const body = res;
@@ -21,7 +27,7 @@ export class RestService {
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
-    const messageService = this.messageService
+    const messageService = this.messageService;
     return (responseError: any): Observable<T> => {
       messageService.add({severity: 'error', summary: 'Service Message', detail: responseError.error});
       // TODO: send the error to remote logging infrastructure
