@@ -13,10 +13,10 @@ export class RestService {
 
   endpoint = 'https://api.lbry.io';
   token: string;
-  headers = new HttpHeaders({'Content-Type': 'application/json',
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, ' +
     'Access-Control-Request-Method, Access-Control-Request-Headers',
   });
@@ -40,7 +40,8 @@ export class RestService {
   get(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
     const url = this.endpoint + '/' + resource + '/' + action;
-    return this.http.get(url, {headers: this.headers, params: params}).pipe(
+    console.log(this.headers)
+    return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
     );
   }
