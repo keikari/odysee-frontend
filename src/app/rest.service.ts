@@ -12,7 +12,7 @@ export class RestService {
 
   constructor(private http: HttpClient, private messageService: MessageService ) { }
 
-    endpoint = environment.apiurl ? environment.apiurl : 'http://localhost:8080';
+    endpoint = environment.apiurl;
     token: string;
 
   private extractData(res: Response) {
@@ -23,7 +23,7 @@ export class RestService {
   private handleError<T> (operation = 'operation', result?: T) {
     const messageService = this.messageService;
     return (responseError: any): Observable<T> => {
-      messageService.add({severity: 'error', summary: 'Service Message', detail: responseError.error.error});
+      messageService.add({severity: 'error', summary: 'Error', detail: responseError.error.error});
       // TODO: send the error to remote logging infrastructure
       console.log(responseError); // log to console instead
       // Let the app keep running by returning an empty result.
@@ -34,7 +34,6 @@ export class RestService {
   get(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
     const url = this.endpoint + '/' + resource + '/' + action;
-    console.log(params)
     return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
     );

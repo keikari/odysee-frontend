@@ -12,8 +12,8 @@ export class TemplateComponent implements OnInit {
 
   constructor(public rest: RestService, private messageService: MessageService) { }
 
-  subject: string;
-  template: string;
+  subject = '';
+  template = '';
   tags: string[] = [];
   verifiedValue = 'yes';
   appValue = '';
@@ -36,7 +36,7 @@ export class TemplateComponent implements OnInit {
     console.log('sendtemplate', params);
     this.rest.get('template', 'send', params).subscribe((response: any) => {
       if (response !== undefined) {
-        this.messageService.add({severity: 'success', summary: 'Service Message', detail: response.data});
+        this.messageService.add({severity: 'success', summary: 'Success', detail: response.data});
       }
     });
   }

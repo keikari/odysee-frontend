@@ -1,4 +1,3 @@
-<p-messages></p-messages>
 <p-toast></p-toast>
 <div *ngIf="isAuthenticated">
   <p-menubar [model]="items">
@@ -6,6 +5,7 @@
       <button pButton label="Logout" icon="fa fa-sign-out" style="margin-left:.25em" (click)="logout()"></button>
     </div>
   </p-menubar>
+  <p-messages></p-messages>
   <router-outlet></router-outlet>
 </div>
 <div style="margin:200px" *ngIf="!isAuthenticated">
