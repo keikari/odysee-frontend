@@ -1,3 +1,13 @@
-<p>
-  invite works!
-</p>
+<div  class="p-grid p-justify-center p-align-center" style="margin:50px;">
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Invite Users</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Email</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter email" style="margin:10px" [(ngModel)]="email">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Notify?</span>
+  <div class="p-col-7 ui-widget"><p-radioButton label="Do not send email invite" name="notify" value="no" [(ngModel)]="notifyValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="Send invite email if not invited yet" name="notify" value="yes" [(ngModel)]="notifyValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="Send invite email even if already invited" name="notify" value="resend" [(ngModel)]="notifyValue"></p-radioButton></div>
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="approveUser($event)"></p-button></div>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {RestService} from '../../rest.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-invite',
@@ -6,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invite.component.css']
 })
 export class InviteComponent implements OnInit {
+  email = '';
+  notifyValue = 'yes';
 
-  constructor() { }
+  constructor(public rest: RestService, private messageService: MessageService) { }
 
   ngOnInit() {
   }
