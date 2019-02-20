@@ -9,5 +9,5 @@
   <div class="p-col-7 ui-widget"><p-radioButton label="Send invite email if not invited yet" name="notify" value="yes" [(ngModel)]="notifyValue"></p-radioButton></div>
   <div class="p-col-7 ui-widget"><p-radioButton label="Send invite email even if already invited" name="notify" value="resend" [(ngModel)]="notifyValue"></p-radioButton></div>
 
-  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="approveUser($event)"></p-button></div>
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="inviteUser($event)"></p-button></div>
 </div>
