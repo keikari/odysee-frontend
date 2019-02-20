@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {RestService} from '../../rest.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-taguser',
@@ -6,10 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./taguser.component.css']
 })
 export class TaguserComponent implements OnInit {
+  emails: string[] = [];
+  tag = '';
+  createUser: boolean;
 
-  constructor() { }
+  constructor(public rest: RestService, private messageService: MessageService) { }
 
   ngOnInit() {
   }
 
+  tagUser($event: any) {
+    const params = new HttpParams().
+    set('emails', this.emails.join(',')).
+    set('tag', this.tag);
+
+    this.rest.get('users', 'tag', params).subscribe((response: any) => {
+      if (response !== undefined) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'success', summary: 'Success', detail: JSON.stringify(response.data, null, 1)});
+      }
+    });
+  }
 }

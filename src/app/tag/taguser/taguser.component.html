@@ -1,3 +1,14 @@
-<p>
-  taguser works!
-</p>
+<div  class="taguser p-grid p-justify-center p-align-center" style="margin:50px;">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Tag Users</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Emails</span>
+  <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="emails" [allowDuplicate]="false"></p-chips></div>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tag</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter tag" style="margin:10px" [(ngModel)]="tag">
+
+  <div class="p-col-7 p-col-align-center ui-widget"><p-checkbox [(ngModel)]="createUser" binary="true" label="Create New User"></p-checkbox></div>
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="tagUser($event)"></p-button></div>
+</div>

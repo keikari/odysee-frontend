@@ -30,6 +30,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DataViewModule } from 'primeng/dataview';
 
 
 const appRoutes: Routes = [
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
     InputTextareaModule,
     SidebarModule,
     CheckboxModule,
+    DataViewModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
