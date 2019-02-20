@@ -1,3 +1,11 @@
-<p>
-  merge works!
-</p>
+<div  class="p-grid p-justify-center p-align-center" style="margin:50px;">
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Merge Users</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">First UserID</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter user id" style="margin:10px" [(ngModel)]="primary">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Second UserID</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter user id" style="margin:10px" [(ngModel)]="secondary">
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="mergeUsers($event)"></p-button></div>
+</div>
