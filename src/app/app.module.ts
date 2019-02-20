@@ -23,6 +23,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { ChipsModule } from 'primeng/chips';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TerminalModule } from 'primeng/terminal';
+import { PasswordModule } from 'primeng/password';
 
 
 const appRoutes: Routes = [
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
     ChipsModule,
     RadioButtonModule,
     TerminalModule,
+    PasswordModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
