@@ -24,6 +24,7 @@ import { ChipsModule } from 'primeng/chips';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TerminalModule } from 'primeng/terminal';
 import { PasswordModule } from 'primeng/password';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 const appRoutes: Routes = [
@@ -60,6 +61,7 @@ const appRoutes: Routes = [
     RadioButtonModule,
     TerminalModule,
     PasswordModule,
+    InputTextareaModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

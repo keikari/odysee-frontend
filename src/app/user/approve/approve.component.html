@@ -1,3 +1,17 @@
-<p>
-  approve works!
-</p>
+<div  class="p-grid p-justify-center p-align-center" style="margin:50px;">
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Approve User</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Email</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter email" style="margin:10px" [(ngModel)]="email">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Rewards Approved?</span>
+  <div class="p-col-7 ui-widget"><p-radioButton label="Leave as is" name="approval" value="" [(ngModel)]="approvedValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="Let the code decide" name="approval" value="auto" [(ngModel)]="approvedValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="Yes" name="approval" value="yes" [(ngModel)]="approvedValue"></p-radioButton></div>
+  <div class="p-col-7 ui-widget"><p-radioButton label="No" name="approval" value="no" [(ngModel)]="approvedValue"></p-radioButton></div>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Comment</span>
+  <textarea class="p-col-7 ui-widget" [rows]="3" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="comment"></textarea>
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="approveUser($event)"></p-button></div>
+</div>
