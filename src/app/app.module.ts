@@ -25,6 +25,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TerminalModule } from 'primeng/terminal';
 import { PasswordModule } from 'primeng/password';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RewardCodeComponent } from './reward-code/reward-code.component';
+import { SettingsComponent } from './settings/settings.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { SidebarModule } from 'primeng/sidebar';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 const appRoutes: Routes = [
@@ -34,7 +39,9 @@ const appRoutes: Routes = [
   { path: 'user/merge', component: MergeComponent },
   { path: 'user/invite', component: InviteComponent },
   { path: 'tag/user', component: TaguserComponent },
-  { path: 'tag/file', component: TagfileComponent }];
+  { path: 'tag/file', component: TagfileComponent },
+  { path: 'rewardcode', component: RewardCodeComponent },
+  { path: 'homepage', component: HomepageComponent }];
 
 @NgModule({
   declarations: [
@@ -45,7 +52,10 @@ const appRoutes: Routes = [
     InviteComponent,
     TaguserComponent,
     TagfileComponent,
-    TerminalComponent
+    TerminalComponent,
+    RewardCodeComponent,
+    SettingsComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -62,6 +72,8 @@ const appRoutes: Routes = [
     TerminalModule,
     PasswordModule,
     InputTextareaModule,
+    SidebarModule,
+    CheckboxModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

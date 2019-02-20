@@ -1,0 +1,6 @@
+<div>
+  <p-checkbox [(ngModel)]="identityVerificationOn" binary="true" label="Identity Verification Enabled"></p-checkbox>
+</div>
+<div>
+  <p-checkbox [(ngModel)]="rewardsEnabled" binary="true" label="Rewards Enabled"(onChange)="rewardsChange($event)"></p-checkbox>
+</div>

@@ -3,8 +3,12 @@
   <p-menubar [model]="items">
     <div>
       <button pButton label="Logout" icon="fa fa-sign-out" style="margin-left:.25em" (click)="logout()"></button>
+      <button pButton icon="fa fa-gear" style="margin-left:.25em" (click)="showSettings()"></button>
     </div>
   </p-menubar>
+  <p-sidebar [(visible)]="settingsVisible" position="right">
+    <app-settings></app-settings>
+  </p-sidebar>
   <p-messages></p-messages>
   <router-outlet></router-outlet>
 </div>

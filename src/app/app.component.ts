@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   isAuthenticated = false;
   items: MenuItem[];
   token: string;
+  settingsVisible: boolean;
 
   ngOnInit() {
     this.token = localStorage.getItem('token');
@@ -29,29 +30,32 @@ export class AppComponent implements OnInit {
     }
     this.items = [
       {
-        label: 'File',
+        label: 'User',
         items: [
-          {label: 'Terminal', icon: 'fa fa-terminal', routerLink: ['/terminal']}
+          {label: 'Approve', routerLink: ['/user/approve']},
+          {label: 'Merge', routerLink: ['/user/merge']},
+          {label: 'Invite', routerLink: ['/user/invite']}
+        ]
+      },
+      {
+        label: 'Tag',
+        items: [
+          {label: 'Tag User', routerLink: ['/tag/user']},
+          {label: 'Tag File', routerLink: ['/tag/file']}
         ]
       },
       {
         label: 'Templates', routerLink: ['/template']
       },
       {
-        label: 'User',
-        items: [
-          {label: 'Approve', icon: 'pi pi-fw pi-trash', routerLink: ['/user/approve']},
-          {label: 'Merge', icon: 'pi pi-fw pi-refresh', routerLink: ['/user/merge']},
-          {label: 'Invite', icon: 'pi pi-fw pi-refresh', routerLink: ['/user/invite']}
-        ]
+        label: 'Codes', routerLink: ['/rewardcode']
       },
       {
-        label: 'Tag',
-        items: [
-          {label: 'Tag User', icon: 'pi pi-fw pi-trash', routerLink: ['/tag/user']},
-          {label: 'Tag File', icon: 'pi pi-fw pi-refresh', routerLink: ['/tag/file']}
-        ]
-      }
+        label: 'Homepage', routerLink: ['/homepage']
+      },
+      {
+        label: 'Terminal', routerLink: ['/terminal']
+      },
     ];
   }
 
@@ -69,5 +73,9 @@ export class AppComponent implements OnInit {
   logout() {
     localStorage.setItem('token', undefined);
     this.isAuthenticated = false;
+  }
+
+  showSettings() {
+    this.settingsVisible = true;
   }
 }
