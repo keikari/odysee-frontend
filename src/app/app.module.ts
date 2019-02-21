@@ -34,6 +34,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { InplaceModule } from 'primeng/inplace';
 import { StatusComponent } from './status/status.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
 
 
 const appRoutes: Routes = [
@@ -84,6 +85,7 @@ const appRoutes: Routes = [
     DataViewModule,
     InplaceModule,
     DropdownModule,
+    CardModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
