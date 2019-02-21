@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardCodeComponent } from './reward-code.component';
+import {AppModule} from '../app.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('RewardCodeComponent', () => {
   let component: RewardCodeComponent;
@@ -8,7 +10,9 @@ describe('RewardCodeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardCodeComponent ]
+      imports: [AppModule],
+      declarations: [],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     })
     .compileComponents();
   }));

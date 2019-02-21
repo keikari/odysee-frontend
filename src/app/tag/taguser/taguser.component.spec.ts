@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaguserComponent } from './taguser.component';
+import {AppModule} from '../../app.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('TaguserComponent', () => {
   let component: TaguserComponent;
@@ -8,7 +10,9 @@ describe('TaguserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaguserComponent ]
+      imports: [AppModule],
+      declarations: [],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     })
     .compileComponents();
   }));

@@ -16,10 +16,12 @@
 <div style="margin:200px" *ngIf="!isAuthenticated">
   <div class="p-grid p-justify-center p-align-center" style="margin:50px">
     <div>
-      <span class="p-col-12 ui-widget" style="font-size:300%;justify-content: center;display: flex;">Commander Login</span>
+      <span id="appname" class="p-col-12 ui-widget" style="font-size:300%;justify-content: center;display: flex;">Commander Login</span>
       <div class="p-col-12 ui-inputgroup">
-        <span class="ui-inputgroup-addon"><p-checkbox label="Custom API" [(ngModel)]="checked" (onChange)="setChecked()" binary="true"></p-checkbox></span>
-        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="disabled" [(ngModel)]="customAPI"
+        <span class="ui-inputgroup-addon">
+          <p-checkbox label="Custom API" (onChange)="setChecked()" binary="true"></p-checkbox>
+        </span>
+        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="disabled" [value]="customAPI"
                (keyup.enter)="setCustomAPIHost()" (blur)="setCustomAPIHost()">
       </div>
       <p-card class="p-col-4">
@@ -28,7 +30,7 @@
     </div>
   </div>
   <div class="p-grid p-justify-center p-align-center" >
-    <input class="p-col-4" type="password" pInputText pPassword placeholder="Auth Token" style="margin:10px" [(ngModel)]="token">
+    <input class="p-col-4" type="password" pInputText pPassword placeholder="Auth Token" style="margin:10px" [value]="token">
     <button class="p-col-2" pButton label="Sign In" icon="fa ga-sign-out" style="margin:10px" (click)="login()"></button>
   </div >
 </div>

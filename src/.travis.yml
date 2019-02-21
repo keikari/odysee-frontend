@@ -1,0 +1,20 @@
+
+sudo: required
+addons:
+  chrome: stable
+
+language: node_js
+node_js:
+  - "8"
+
+branches:
+  only:
+    - master
+
+before_script:
+  - npm install @angular/cli@7.3.1
+
+script:
+  - ng build --prod -c production
+  - ng test
+  - ng e2e

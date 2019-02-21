@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
   defaultAPI = environment.apiurl;
   customAPI = '';
   disabled = true;
-  checked = false;
 
   ngOnInit() {
     this.token = localStorage.getItem('token');

@@ -1,11 +1,21 @@
 import { TestBed, async } from '@angular/core/testing';
+import {FormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
+import {Toast, ToastItem} from 'primeng/toast';
+import {Menubar, MenubarSub} from 'primeng/menubar';
+import {Card, Checkbox, InputText, MenuItem, Messages, MessageService, MessagesModule, Sidebar} from 'primeng/primeng';
+import {SettingsComponent} from './settings/settings.component';
+import {RouterLink, RouterLinkActive, RouterModule, RouterOutlet} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+import {AppModule} from './app.module';
+import {APP_BASE_HREF} from '@angular/common';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      imports: [AppModule],
+      declarations: [],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
@@ -17,11 +27,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to commander!');
   }));
 });

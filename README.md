@@ -1,4 +1,8 @@
+[![Build Status](https://travis-ci.com/lbryio/commander.svg?token=6GPvhdnmp2bbM55sBtou&branch=master)](https://travis-ci.com/lbryio/commander)
+
 # Commander
+
+![alt text](img/commander.png "Commander Login Screen")
 
 This project is used as a user interface for LBRY Inc APIs commonly used by the growth team. 
 

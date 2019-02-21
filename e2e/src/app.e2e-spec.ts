@@ -1,14 +1,14 @@
 import { AppPage } from './app.po';
 
-describe('workspace-project App', () => {
+describe('Commander App', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display login screen', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to commander!');
+    expect(page.getParagraphText()).toEqual('Commander Login');
   });
 });

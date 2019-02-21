@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MenubarModule } from 'primeng/menubar';
@@ -12,7 +13,6 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { ToastModule } from 'primeng/toast';
-import { RouterModule, Routes } from '@angular/router';
 import { TemplateComponent } from './template/template.component';
 import { MergeComponent } from './user/merge/merge.component';
 import { ApproveComponent } from './user/approve/approve.component';
