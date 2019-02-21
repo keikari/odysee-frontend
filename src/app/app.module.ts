@@ -33,6 +33,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DataViewModule } from 'primeng/dataview';
 import { InplaceModule } from 'primeng/inplace';
 import { StatusComponent } from './status/status.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 const appRoutes: Routes = [
@@ -82,6 +83,7 @@ const appRoutes: Routes = [
     CheckboxModule,
     DataViewModule,
     InplaceModule,
+    DropdownModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

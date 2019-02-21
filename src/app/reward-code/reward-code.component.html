@@ -1,3 +1,31 @@
-<p>
-  reward-code works!
-</p>
+<div  class="p-grid p-justify-center p-align-center" style="margin:50px;">
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Create Reward Code</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Title</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Required" style="margin:10px" [(ngModel)]="title">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Amount</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Required" style="margin:10px" [(ngModel)]="amount">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Code</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="code">
+  <span class="p-col-7 ui-widget">Numbers, lowercase letters, underscores, and dashes only. If not set, one will be randomly generated.</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Quantity</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="quantity">
+  <span class="p-col-7 ui-widget">If not set, defaults to 1. If set, this many separate random codes will be created. Quantity and Code cannot be used at the same time.</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Max Uses</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="maxUses">
+  <span class="p-col-7 ui-widget">If not set, defaults to 1.</span>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Platform</span>
+  <p-dropdown  class="p-col-7 p-justify-center" [style]="{'width':'300px'}" [options]="platformOptions"
+               [(ngModel)]="platform" placeholder="All" optionLabel="name" [showClear]="true"></p-dropdown>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">App Version Constraint</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="versionConstraint">
+  <span class="p-col-7 ui-widget">If not set, there are no version restrictions.</span>
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="createCode($event)"></p-button></div>
+</div>
