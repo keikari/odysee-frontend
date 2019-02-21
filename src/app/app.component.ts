@@ -99,4 +99,8 @@ export class AppComponent implements OnInit {
       this.rest.setEndpoint(this.defaultAPI);
     }
   }
+
+  goToStats() {
+    this.router.navigate(['/status']);
+  }
 }

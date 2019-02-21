@@ -2,6 +2,7 @@
 <div *ngIf="isAuthenticated">
   <p-menubar [model]="items">
     <div>
+      <button pButton icon="fa fa-home" style="margin-left:.25em" (click)="goToStats()"></button>
       <button pButton label="Logout" icon="fa fa-sign-out" style="margin-left:.25em" (click)="logout()"></button>
       <button pButton icon="fa fa-gear" style="margin-left:.25em" (click)="showSettings()"></button>
     </div>

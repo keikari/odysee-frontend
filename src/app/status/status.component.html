@@ -1,0 +1,26 @@
+<div class="p-grid p-justify-center p-align-center" style="margin:50px;">
+
+  <span class="p-col-12 p-col-align-center ui-widget" style="font-size:300%;text-align: center">API Status</span>
+
+  <span class="p-col-4 p-col-align-start ui-widget"></span>
+  <span class="p-col-2 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Version:</span>
+  <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{version}}</span>
+
+  <span class="p-col-4 p-col-align-start ui-widget"></span>
+  <span class="p-col-2 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Commit Message:</span>
+  <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{commit}}</span>
+
+  <span class="p-col-4 p-col-align-start ui-widget"></span>
+  <span class="p-col-2 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Balance:</span>
+  <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{balance}}</span>
+
+  <span class="p-col-4 p-col-align-start ui-widget"></span>
+  <span class="p-col-2 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Up Time:</span>
+  <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{upTime}}</span>
+
+  <span class="p-col-4 p-col-align-start ui-widget"></span>
+  <span class="p-col-2 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Avg Response Time:</span>
+  <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{responseTime}}</span>
+
+  <div class="p-col-7 p-col-align-center" style="margin-top:20px;text-align: center"><p-button label="Update Stats" icon="pi pi-check" iconPos="left" (onClick)="updateStats($event)"></p-button></div>
+</div>

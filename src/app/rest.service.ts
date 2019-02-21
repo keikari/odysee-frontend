@@ -39,6 +39,14 @@ export class RestService {
     );
   }
 
+  getAction(action: string, params: HttpParams): Observable<any> {
+    params = params.set('auth_token', this.token);
+    const url = this.endpoint + '/' + action;
+    return this.http.get(url, {headers: null, params: params}).pipe(
+      map(this.extractData), catchError(this.handleError<any>( action))
+    );
+  }
+
   authenticate(token: string): Observable<any> {
     this.token = token;
     return this.get('user', 'me',  new HttpParams());

@@ -32,6 +32,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DataViewModule } from 'primeng/dataview';
 import { InplaceModule } from 'primeng/inplace';
+import { StatusComponent } from './status/status.component';
 
 
 const appRoutes: Routes = [
@@ -43,7 +44,9 @@ const appRoutes: Routes = [
   { path: 'tag/user', component: TaguserComponent },
   { path: 'tag/file', component: TagfileComponent },
   { path: 'rewardcode', component: RewardCodeComponent },
-  { path: 'homepage', component: HomepageComponent }];
+  { path: 'homepage', component: HomepageComponent },
+  { path: 'status', component: StatusComponent },
+  { path: '', component: StatusComponent}];
 
 @NgModule({
   declarations: [
@@ -57,7 +60,8 @@ const appRoutes: Routes = [
     TerminalComponent,
     RewardCodeComponent,
     SettingsComponent,
-    HomepageComponent
+    HomepageComponent,
+    StatusComponent
   ],
   imports: [
     BrowserAnimationsModule,
