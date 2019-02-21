@@ -17,8 +17,10 @@ export class TemplateComponent implements OnInit {
   tags: string[] = [];
   verifiedValue = 'yes';
   appValue = '';
-  mailgunTags: string[] = [];
+  mailgunTag = '';
   confirmValue = '';
+  showInplace = false;
+  emails: string[] = [];
 
   ngOnInit() {
   }
@@ -28,10 +30,12 @@ export class TemplateComponent implements OnInit {
     set('subject', this.subject).
     set('template', this.template).
     set('tags', this.tags.join(',')).
-    set('mailgun_tag', this.mailgunTags.join(',')).
+    set('mailgun_tag', this.mailgunTag).
     set('confirm', this.confirmValue).
     set('verified', this.verifiedValue).
-    set('installed', this.appValue);
+    set('installed', this.appValue).
+    set('test', this.showInplace.toString()).
+    set('test_emails', this.emails.join(','));
 
     console.log('sendtemplate', params);
     this.rest.get('template', 'send', params).subscribe((response: any) => {
@@ -39,5 +43,9 @@ export class TemplateComponent implements OnInit {
         this.messageService.add({severity: 'success', summary: 'Success', detail: response.data});
       }
     });
+  }
+
+  testSelected(isSelected: boolean) {
+    this.showInplace = isSelected;
   }
 }
