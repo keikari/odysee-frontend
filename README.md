@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/lbryio/commander.svg?token=6GPvhdnmp2bbM55sBtou&branch=master)](https://travis-ci.com/lbryio/commander)
+[![Build Status](https://travis-ci.com/lbryio/commander.svg?token=HuxpTszyex5nq6zpBpxs&branch=master)](https://travis-ci.com/lbryio/commander)
 
 # Commander
 
