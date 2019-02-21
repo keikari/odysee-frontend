@@ -2,7 +2,7 @@
 
 # Commander
 
-![alt text](img/commander.png "Commander Login Screen")
+![alt text](/src/img/commander.png "Commander Login Screen")
 
 This project is used as a user interface for LBRY Inc APIs commonly used by the growth team. 
 
