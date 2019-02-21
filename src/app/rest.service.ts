@@ -43,6 +43,10 @@ export class RestService {
     this.token = token;
     return this.get('user', 'me',  new HttpParams());
   }
+
+  public setEndpoint(endpoint: string) {
+    this.endpoint = endpoint;
+  }
 }
 
 

@@ -16,6 +16,11 @@
   <div class="p-grid p-justify-center p-align-center" style="margin:50px">
     <div>
       <span class="p-col-12 ui-widget" style="font-size:200%">Commander Login</span>
+      <div class="p-col-12 ui-inputgroup">
+        <span class="ui-inputgroup-addon"><p-checkbox label="Custom API" [(ngModel)]="checked" (onChange)="setChecked()" binary="true"></p-checkbox></span>
+        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="disabled" [(ngModel)]="customAPI"
+               (keyup.enter)="setCustomAPIHost()" (blur)="setCustomAPIHost()">
+      </div>
     </div>
   </div>
   <div class="p-grid p-justify-center p-align-center" >

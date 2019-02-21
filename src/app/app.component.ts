@@ -3,6 +3,7 @@ import {MenuItem} from 'primeng/api';
 import { RestService } from './rest.service';
 import {MessageService} from 'primeng/api';
 import { Router } from '@angular/router';
+import {environment} from '../environments/environment';
 
 
 
@@ -22,6 +23,10 @@ export class AppComponent implements OnInit {
   items: MenuItem[];
   token: string;
   settingsVisible: boolean;
+  defaultAPI = environment.apiurl;
+  customAPI = '';
+  disabled = true;
+  checked = false;
 
   ngOnInit() {
     this.token = localStorage.getItem('token');
@@ -77,5 +82,21 @@ export class AppComponent implements OnInit {
 
   showSettings() {
     this.settingsVisible = true;
+  }
+
+  setCustomAPIHost() {
+    if ( this.disabled ) {
+      this.rest.setEndpoint(this.defaultAPI);
+    } else {
+      this.rest.setEndpoint(this.customAPI);
+    }
+  }
+
+  setChecked() {
+    this.disabled = !this.disabled;
+    if (this.disabled) {
+      this.customAPI = '';
+      this.rest.setEndpoint(this.defaultAPI);
+    }
   }
 }
