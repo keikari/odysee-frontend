@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="p-grid p-justify-center p-align-center" >
-    <input class="p-col-4" type="password" pInputText pPassword placeholder="Auth Token" style="margin:10px" [value]="token">
+    <input class="p-col-4" type="password" pInputText pPassword placeholder="Auth Token" style="margin:10px" [(ngModel)]="token">
     <button class="p-col-2" pButton label="Sign In" icon="fa ga-sign-out" style="margin:10px" (click)="login()"></button>
   </div >
 </div>
