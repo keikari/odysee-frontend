@@ -1,3 +1,23 @@
-<p>
-  tagfile works!
-</p>
+<div  class="tagfile p-grid p-justify-center p-align-center" style="margin:50px;">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Tag File</span>
+
+  <p-card class="p-col-7 tagfilecard">
+    For more information, see the <a href="https://www.notion.so/lbry/Tagging-and-File-Blocking-Procedures-410950330ae04d05905f53ae0e2b23a5">taggin kb article</a>.
+  </p-card>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Outpoint</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="outpoint">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">ClaimID</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="claim_id">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Comment</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText style="margin:10px" [(ngModel)]="comment">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tag</span>
+  <p-dropdown  class="p-col-7 p-justify-center" [style]="{'width':'300px'}" [options]="tagOptions"
+               [(ngModel)]="selectedTag" optionLabel="name" [showClear]="true"></p-dropdown>
+
+  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="tagFile()"></p-button></div>
+</div>

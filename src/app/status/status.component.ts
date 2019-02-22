@@ -25,7 +25,6 @@ export class StatusComponent implements OnInit {
     const params = new HttpParams();
     this.rest.getAction('status', params).subscribe((response: any) => {
       if (response !== undefined) {
-        console.log(response);
         this.version = response.data.version;
         this.commit = response.data.commit_message;
         this.balance = response.data.balance;
