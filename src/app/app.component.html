@@ -21,7 +21,7 @@
         <span class="ui-inputgroup-addon">
           <p-checkbox label="Custom API" (onChange)="setChecked()" binary="true"></p-checkbox>
         </span>
-        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="disabled" [value]="customAPI"
+        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="disabled" [(ngModel)]="customAPI"
                (keyup.enter)="setCustomAPIHost()" (blur)="setCustomAPIHost()">
       </div>
       <p-card class="p-col-4">
