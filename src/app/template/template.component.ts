@@ -40,6 +40,7 @@ export class TemplateComponent implements OnInit {
     console.log('sendtemplate', params);
     this.rest.get('template', 'send', params).subscribe((response: any) => {
       if (response !== undefined) {
+        this.messageService.clear()
         this.messageService.add({severity: 'success', summary: 'Success', detail: response.data});
       }
     });

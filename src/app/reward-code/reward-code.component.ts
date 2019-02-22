@@ -48,6 +48,7 @@ export class RewardCodeComponent implements OnInit {
 
     this.rest.get('reward_code', 'new', params).subscribe((response: any) => {
       if (response !== undefined) {
+        this.messageService.clear()
         this.messageService.add({severity: 'success', summary: 'Success', detail: response.data});
       }
     });
