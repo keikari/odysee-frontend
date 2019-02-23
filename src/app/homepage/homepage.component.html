@@ -1,3 +1,183 @@
-<p>
-  homepage works!
-</p>
+<div class="p-grid p-justify-center p-align-center">
+
+  <span class="p-col-9 p-col-align-center ui-widget" style="font-size:300%;text-align: center">HomePage Content</span>
+  <p-card class="p-col-9 tagfilecard">
+    To see the files in a category, select the category. Double click to edit a category. Click to edit the file.
+  </p-card>
+  <div class="p-col-4 p-col-align-start">
+    <p-table [columns]="categoryCols"
+             [value]="Categories" selectionMode="single" dataKey="ID"
+             [(selection)]="selectedCategory"
+             [scrollable]="true"
+              scrollHeight="300px"
+             columnResizeMode="expand"
+             [resizableColumns]="true"
+             (onRowSelect)="onCategoryRowSelect($event)"
+             (onRowUnselect)="onCategoryRowUnSelect($event)"
+             [metaKeySelection]="true">
+      <ng-template pTemplate="caption">
+        Categories
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" ngSwitch="true" pResizableColumn>
+            <span *ngSwitchDefault>{{col.header}}</span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns" class="ui-resizable-column">
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:center">
+          <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAddCategory()" label="Add"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="p-col-6 p-col-align-start">
+    <p-table *ngIf="selectedCategory" [columns]="fileCols"
+             [value]="selectedCategory.Files" selectionMode="single" dataKey="ID"
+             [(selection)]="selectedFile"
+             [scrollable]="true"
+             scrollHeight="300px"
+             columnResizeMode="expand"
+             [resizableColumns]="true"
+             (onRowSelect)="onFileRowSelect($event)">
+      <ng-template pTemplate="caption">
+        Category Files
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [ngSwitch]="true" pResizableColumn>
+            <span *ngSwitchDefault>{{col.header}}</span>
+            <svg *ngSwitchCase="col.field === 'IsFeatured'" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e2495e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns" [ngSwitch]="true" class="ui-resizable-column">
+            <div *ngSwitchCase="col.field === 'IsFeatured'">
+              <svg *ngIf="rowData.IsFeatured" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e2495e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            </div>
+            <span *ngSwitchCase="col.field === 'Start' || col.field === 'End'">{{ rowData[col.field] | date:'short' }} </span>
+            <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:center">
+          <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAddFile()" label="Add"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+
+<!-- File DIALOG -->
+
+
+<p-dialog header="File Details" [(visible)]="displayFileDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '400px'}">
+  <div class="ui-g ui-fluid" *ngIf="file">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="featured">Featured</label>
+      </div>
+      <div class="ui-g-8">
+        <p-checkbox id="featured" [(ngModel)]="file.IsFeatured" binary="true" ></p-checkbox>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="url">URL</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="url" [(ngModel)]="file.URL" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="start">Start</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar id="start" appendTo="body" hourFormat="12" showButtonBar="true" hideOnDateTimeSelect="true"
+                    [ngModel]="file.Start"
+                    [showTime]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="end">End</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar id="end" appendTo="body" hourFormat="12" showButtonBar="true" hideOnDateTimeSelect="true"
+                    [ngModel]="file.End"
+                    [showTime]="true"></p-calendar>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-close" (click)="deleteFile()" label="Delete"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="saveFile()" label="Save"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+
+<!-- CATEGORY DIALOG -->
+
+
+<p-dialog header="Category Details" [(visible)]="displayCategoryDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '400px'}">
+  <div class="ui-g ui-fluid" *ngIf="category">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="name">Name</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="name" [(ngModel)]="category.Name" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="channel">Channel</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="channel" [(ngModel)]="category.Channel" placeholder="@channel#claimid"/>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="active">Active</label>
+      </div>
+      <div class="ui-g-8">
+        <p-checkbox id="active" [(ngModel)]="category.IsActive" binary="true" ></p-checkbox>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-close" (click)="deleteCategory()" label="Delete"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="saveCategory()" label="Save"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+

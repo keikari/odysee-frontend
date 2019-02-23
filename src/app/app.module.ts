@@ -35,6 +35,12 @@ import { InplaceModule } from 'primeng/inplace';
 import { StatusComponent } from './status/status.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { InputMaskModule } from 'primeng/inputmask';
+
 
 
 const appRoutes: Routes = [
@@ -86,6 +92,11 @@ const appRoutes: Routes = [
     InplaceModule,
     DropdownModule,
     CardModule,
+    TableModule,
+    CalendarModule,
+    ContextMenuModule,
+    DialogModule,
+    InputMaskModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

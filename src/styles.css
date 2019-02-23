@@ -10,3 +10,10 @@ body .ui-chips > ul.ui-inputtext{
   height:100px;
 }
 
+ tr> td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
