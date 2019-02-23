@@ -74,7 +74,7 @@ export class HomepageComponent implements OnInit {
     });
   }
 
-  saveCategory() {
+  public saveCategory() {
     let params = new HttpParams().
     set('name', this.category.Name).
     set('is_active', this.category.IsActive.toString()).
@@ -107,7 +107,7 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-  private deleteCategory() {
+  public deleteCategory() {
     const params = new HttpParams().set('id', this.selectedCategory.ID.toString());
     this.rest.get('featured_category', 'delete', params).subscribe((response) => {
       if ( response && response.data) {
@@ -120,7 +120,7 @@ export class HomepageComponent implements OnInit {
     });
   }
 
-  private saveFile() {
+  public saveFile() {
     const params = new HttpParams().
     set('category_id', this.selectedCategory.ID.toString()).
     set('url', this.file.URL).
@@ -151,7 +151,7 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-  private deleteFile() {
+  public deleteFile() {
     const params = new HttpParams().set('id', this.file.ID.toString());
     this.rest.get('featured_file', 'delete', params).subscribe((response) => {
       if ( response && response.data) {
@@ -164,7 +164,7 @@ export class HomepageComponent implements OnInit {
     });
   }
 
-  showDialogToAddCategory() {
+  public showDialogToAddCategory() {
     this.newCategory = true;
     this.category = new Category();
     this.category.SequenceNr = 1 + this.Categories.
@@ -172,7 +172,7 @@ export class HomepageComponent implements OnInit {
     this.displayCategoryDialog = true;
   }
 
-  showDialogToAddFile() {
+  public showDialogToAddFile() {
     this.newFile = true;
     this.file = new File();
     this.file.SequenceNr = 1 + this.selectedCategory.Files.
@@ -182,7 +182,7 @@ export class HomepageComponent implements OnInit {
     this.displayFileDialog = true;
   }
 
-  onCategoryRowSelect($event: any) {
+  public onCategoryRowSelect($event: any) {
     if ( this.doubleSelectedCategory === this.selectedCategory) {
       this.newCategory = false;
       const category = {}
@@ -196,7 +196,7 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-  onFileRowSelect($event: any) {
+  public onFileRowSelect($event: any) {
     this.newFile =  false;
     const file = {}
     for (const prop in this.selectedFile) {
@@ -206,7 +206,7 @@ export class HomepageComponent implements OnInit {
     this.displayFileDialog = true;
   }
 
-  onCategoryRowUnSelect($event: any) {
+  public onCategoryRowUnSelect($event: any) {
     this.selectedCategory = <Category> $event.data;
     this.messageService.clear();
     this.messageService.add({severity: 'success', summary: 'Success', detail: 'deselected category'});
