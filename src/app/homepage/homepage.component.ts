@@ -126,6 +126,7 @@ export class HomepageComponent implements OnInit {
     set('url', this.file.URL).
     set('start', this.file.Start.toISOString()).
     set('end', this.file.End.toISOString()).
+    // set('isfeatured', this.file.IsFeatured.toString()). //Uncomment to send to internal-apis when ready.
     set('sequence_number', this.file.SequenceNr.toString());
     if (this.newFile) {
       this.rest.get('featured_file', 'new', params).subscribe( (response) => {
