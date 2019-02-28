@@ -45,7 +45,8 @@ export class AppComponent implements OnInit {
         label: 'Tag',
         items: [
           {label: 'Tag User', routerLink: ['/tag/user']},
-          {label: 'Tag File', routerLink: ['/tag/file']}
+          {label: 'Tag File', routerLink: ['/tag/file']},
+          {label: 'Tag Claim', routerLink: ['/tag/channel']},
         ]
       },
       {

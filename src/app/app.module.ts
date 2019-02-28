@@ -40,6 +40,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
+import { TagchannelComponent } from './tag/tagchannel/tagchannel.component';
 
 
 
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'rewardcode', component: RewardCodeComponent },
   { path: 'homepage', component: HomepageComponent },
   { path: 'status', component: StatusComponent },
+  { path: 'tag/channel', component: TagchannelComponent },
   { path: '', component: StatusComponent}];
 
 @NgModule({
@@ -69,7 +71,8 @@ const appRoutes: Routes = [
     RewardCodeComponent,
     SettingsComponent,
     HomepageComponent,
-    StatusComponent
+    StatusComponent,
+    TagchannelComponent
   ],
   imports: [
     BrowserAnimationsModule,
