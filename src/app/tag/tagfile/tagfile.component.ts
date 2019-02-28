@@ -35,7 +35,7 @@ export class TagfileComponent implements OnInit {
     const params = new HttpParams().
     set('comment', this.comment).
     set('outpoint', this.outpoint).
-    set('tag', this.selectedTag.name).
+    set('tag_name', this.selectedTag.name).
     set('claim_id', this.claim_id);
 
     this.rest.get('file', 'tag', params).subscribe((response: any) => {
