@@ -35,5 +35,5 @@
     </p-inplace>
   </div>
 
-  <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="sendTemplate($event)"></p-button></div>
+  <div class="p-col-7" style="margin-top:20px;"><p-button [disabled]="isDisabled" [label]="buttonLabel" icon="pi pi-check" iconPos="left" (onClick)="sendTemplate($event)"></p-button></div>
 </div>

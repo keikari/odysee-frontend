@@ -13,6 +13,7 @@ export class TemplateComponent implements OnInit {
   constructor(public rest: RestService, private messageService: MessageService) { }
 
   subject = '';
+  buttonLabel = 'Submit';
   template = '';
   tags: string[] = [];
   verifiedValue = 'yes';
@@ -20,12 +21,15 @@ export class TemplateComponent implements OnInit {
   mailgunTag = '';
   confirmValue = '';
   showInplace = false;
+  isDisabled = false;
   emails: string[] = [];
 
   ngOnInit() {
   }
 
   sendTemplate($event: any) {
+    this.isDisabled = true;
+    this.buttonLabel = 'Working...';
     const params = new HttpParams().
     set('subject', this.subject).
     set('template', this.template).
@@ -40,9 +44,11 @@ export class TemplateComponent implements OnInit {
     console.log('sendtemplate', params);
     this.rest.get('template', 'send', params).subscribe((response: any) => {
       if (response !== undefined) {
-        this.messageService.clear()
+        this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Success', detail: response.data});
       }
+      this.isDisabled = false;
+      this.buttonLabel = 'Submit';
     });
   }
 
