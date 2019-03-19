@@ -8,7 +8,7 @@
   <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter template" style="margin:10px" [(ngModel)]="template">
 
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tags</span>
-  <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="tags" [allowDuplicate]="false"></p-chips></div>
+  <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="tags" [addOnTab]="true" [addOnBlur]="true" [allowDuplicate]="false"></p-chips></div>
 
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Verified Email?</span>
   <div class="p-col-7 ui-widget"><p-radioButton label="don't filter on this attribute" name="verified" value="" [(ngModel)]="verifiedValue"></p-radioButton></div>
@@ -31,7 +31,7 @@
   <div class="p-col-7" style="min-width: 0">
     <p-inplace [active]="showInplace">
       <span style="display:none;margin: 0;" pInplaceDisplay>yolo</span>
-      <span pInplaceContent><p-chips placeholder="Enter emails" [(ngModel)]="emails" [allowDuplicate]="false"></p-chips></span>
+      <span pInplaceContent><p-chips placeholder="Enter emails" [(ngModel)]="emails" [addOnTab]="true" [addOnBlur]="true" [allowDuplicate]="false"></p-chips></span>
     </p-inplace>
   </div>
 
