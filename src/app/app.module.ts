@@ -41,6 +41,8 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TagchannelComponent } from './tag/tagchannel/tagchannel.component';
+import { PendingComponent } from './pending/pending.component';
+import {AccordionModule} from 'primeng/accordion';
 
 
 
@@ -56,6 +58,7 @@ const appRoutes: Routes = [
   { path: 'homepage', component: HomepageComponent },
   { path: 'status', component: StatusComponent },
   { path: 'tag/channel', component: TagchannelComponent },
+  { path: 'admin/pending', component: PendingComponent },
   { path: '', component: StatusComponent}];
 
 @NgModule({
@@ -72,7 +75,8 @@ const appRoutes: Routes = [
     SettingsComponent,
     HomepageComponent,
     StatusComponent,
-    TagchannelComponent
+    TagchannelComponent,
+    PendingComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -100,6 +104,7 @@ const appRoutes: Routes = [
     ContextMenuModule,
     DialogModule,
     InputMaskModule,
+    AccordionModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

@@ -115,7 +115,7 @@ export class HomepageComponent implements OnInit {
         this.displayCategoryDialog = false;
       } else if ( response && response.error) {
         this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Delete Category', detail: response.error});
+        this.messageService.add({severity: 'error', summary: 'Delete Category', detail: response.error});
       }
     });
   }
@@ -160,7 +160,7 @@ export class HomepageComponent implements OnInit {
         this.displayFileDialog = false;
       } else if ( response && response.error) {
         this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Delete File', detail: response.error});
+        this.messageService.add({severity: 'error', summary: 'Delete File', detail: response.error});
       }
     });
   }
@@ -186,7 +186,7 @@ export class HomepageComponent implements OnInit {
   public onCategoryRowSelect($event: any) {
     if ( this.doubleSelectedCategory === this.selectedCategory) {
       this.newCategory = false;
-      const category = {}
+      const category = {};
       for (const prop in this.selectedCategory) {
         category[prop] = this.selectedCategory[prop];
       }
@@ -199,7 +199,7 @@ export class HomepageComponent implements OnInit {
 
   public onFileRowSelect($event: any) {
     this.newFile =  false;
-    const file = {}
+    const file = {};
     for (const prop in this.selectedFile) {
       file[prop] = this.selectedFile[prop];
     }

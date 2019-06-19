@@ -1,0 +1,165 @@
+<p-table [columns]="userColumns" [value]="PendingUsers" [resizableColumns]="true" dataKey="UserID">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th style="width: 4em"></th>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+      <th>
+        Approve
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+    <tr>
+      <td>
+        <a href="#" [pRowToggler]="rowData">
+          <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+        </a>
+      </td>
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}{{log(rowData)}}
+      </td>
+      <td>
+        <button type="button" pButton icon="fa fa-check" (click)="approve()" label="Approve"></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+    <tr>
+      <td  [attr.colspan]="columns.length + 2">
+      <p-accordion>
+        <p-accordionTab header="Emails">
+          <p-table [columns]="emailColumns" [value]="rowData.Emails">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  {{rowData[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Phones">
+          <p-table [columns]="phoneColumns" [value]="rowData.Phones">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  {{rowData[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Youtube Channels">
+          <p-table [columns]="youtubeColumns" [value]="rowData.YoutubeChannels">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  {{rowData[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Credit Cards">
+          <p-table [columns]="creditColumns" [value]="rowData.CreditCards">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns" [ngSwitch]="true">
+                  <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+                  <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Accesses">
+          <p-table [columns]="accessColumns" [value]="rowData.Accesses">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns" [ngSwitch]="true">
+                  <span *ngSwitchCase="col.field === 'AccessTime'">{{ rowData[col.field] | date:'short' }} </span>
+                  <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Duplicate Accounts">
+          <p-table [columns]="dupColumns" [value]="rowData.DuplicateAccounts">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  {{rowData[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Installs">
+          <p-table [columns]="installColumns" [value]="rowData.Installs">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns" [ngSwitch]="true">
+                  <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+                  <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+      </p-accordion>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
