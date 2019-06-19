@@ -5,6 +5,7 @@ import {CreditCard} from '../credit_card/credit-card';
 import {Access} from '../access/access';
 import {DuplicateAccount} from '../duplicate_account/duplicate-account';
 import {Install} from '../install/install';
+import {Note} from '../note/note';
 
 
 export class User {
@@ -19,10 +20,12 @@ export class User {
   Accesses: Access[] = [];
   DuplicateAccounts: DuplicateAccount[] = [];
   Installs: Install[] = [];
+  Notes: Note[] = [];
+  PrimaryEmail: string;
+  LastAccessTime: string;
   // Calculated Columns
   Duplicates: number;
-  LastAccessTime: Date;
   IsCountryMatch: boolean;
-  PrimaryEmail: string;
-
+  Country: string;
+  LastNote: string;
 }

@@ -10,6 +10,7 @@ import {CreditCard} from './model/credit_card/credit-card';
 import {Access} from './model/access/access';
 import {DuplicateAccount} from './model/duplicate_account/duplicate-account';
 import {Install} from './model/install/install';
+import {Note} from './model/note/note';
 
 @Component({
   selector: 'app-pending',
@@ -24,6 +25,7 @@ export class PendingComponent implements OnInit {
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
     {field: 'LastAccessTime', header: 'Last Access'},
     {field: 'IsCountryMatch', header: 'Country Match'},
+    {field: 'Country', header: 'Country'},
     {field: 'PrimaryEmail', header: 'Email'}];
   emailColumns = [
     {field: 'EmailAddress', header: 'Email'},
@@ -50,13 +52,18 @@ export class PendingComponent implements OnInit {
     {field: 'AccessTime', header: 'Time'}];
   dupColumns = [
     {field: 'UserID', header: 'UserID'},
-    {field: 'RewardsStatusChangeTrigger', header: 'Trigger'},
-    {field: 'IsRewardsApproved', header: 'Rewards Approved'}];
+    {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
+    {field: 'IsRewardsApproved', header: 'Rewards Approved'},
+    {field: 'PrimaryEmail', header: 'Primary Email'},
+    {field: 'FirstIPMatch', header: 'First Matched IP'}];
   installColumns = [
     {field: 'Platform', header: 'Platform'},
     {field: 'DeviceType', header: 'Device'},
     {field: 'CreatedAt', header: 'Created'},
     {field: 'UpdatedAt', header: 'Updated'}];
+  noteColumns = [
+    {field: 'Note', header: 'Note'},
+    {field: 'UpdatedAt', header: 'UpdatedAt'}];
 
   constructor(public rest: RestService, private messageService: MessageService) {
   }
@@ -124,7 +131,7 @@ export class PendingComponent implements OnInit {
         if (u.accesses) {
           let match = true;
           const lastCounty = u.accesses[0].country;
-          let latestAccess = new Date(u.accesses[0].time);
+          user.Country = lastCounty;
           u.accesses.forEach((a) => {
             const access = new Access();
             access.IP = a.ip;
@@ -135,11 +142,8 @@ export class PendingComponent implements OnInit {
             if (lastCounty !== access.Country) {
               match = false;
             }
-            if (latestAccess < access.AccessTime) {
-              latestAccess = access.AccessTime;
-            }
           });
-          user.LastAccessTime = latestAccess;
+          user.LastAccessTime = new Date(u.last_access).toISOString();
           user.IsCountryMatch = match;
         }
         // Duplicate Accounts
@@ -150,6 +154,8 @@ export class PendingComponent implements OnInit {
             duplicate.UserID = d.user_id;
             duplicate.RewardStatusChangeTrigger = d.reward_status_change_trigger;
             duplicate.IsRewardsApproved = d.reward_enabled;
+            duplicate.FirstIPMatch = d.first_ip_match;
+            duplicate.PrimaryEmail = d.primary_email;
             user.DuplicateAccounts.push(duplicate);
           });
         }
@@ -164,16 +170,22 @@ export class PendingComponent implements OnInit {
             user.Installs.push(install);
           });
         }
+        // Notes
+        if (u.notes) {
+          u.notes.forEach((n) => {
+            const note = new Note();
+            note.Note = n.note;
+            note.UpdatedAt = new Date(n.updated_at);
+            user.Notes.push(note);
+            user.LastNote = note.Note;
+          });
+        }
         // this.PendingUsers = this.PendingUsers.concat(user);
         this.PendingUsers.push(user);
       });
-      this.PendingUsers.sort(
-        (a: User, b: User) => (a.LastAccessTime < b.LastAccessTime) ? 1 : ((b.LastAccessTime < a.LastAccessTime) ? -1 : 0));
     });
   }
 
-
-  log(val) { console.log(val); }
 
   approve(user: User) {
 

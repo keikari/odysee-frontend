@@ -11,14 +11,14 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-    <tr>
+    <tr title="{{rowData.LastNote}}">
       <td>
         <a href="#" [pRowToggler]="rowData">
           <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
         </a>
       </td>
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}{{log(rowData)}}
+        {{rowData[col.field]}}
       </td>
       <td>
         <button type="button" pButton icon="fa fa-check" (click)="approve()" label="Approve"></button>
@@ -141,6 +141,25 @@
         </p-accordionTab>
         <p-accordionTab header="Installs">
           <p-table [columns]="installColumns" [value]="rowData.Installs">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns" [ngSwitch]="true">
+                  <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+                  <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
+        <p-accordionTab header="Notes">
+          <p-table [columns]="noteColumns" [value]="rowData.Notes">
             <ng-template pTemplate="header" let-columns>
               <tr>
                 <th *ngFor="let col of columns">
