@@ -89,7 +89,7 @@ export class PendingComponent implements OnInit {
             email.EmailAddress = e.email;
             email.IsVerified = e.verified;
             email.IsPrimary = e.primary;
-            if(email.IsPrimary) {
+            if (email.IsPrimary) {
               user.PrimaryEmail = email.EmailAddress;
             }
             user.Emails = user.Emails.concat(email);
@@ -138,6 +138,7 @@ export class PendingComponent implements OnInit {
             access.Country = a.country;
             access.Score = a.score;
             access.AccessTime = new Date(a.time);
+            access.ISP = a.isp;
             user.Accesses.push(access);
             if (lastCounty !== access.Country) {
               match = false;
@@ -188,10 +189,9 @@ export class PendingComponent implements OnInit {
 
 
   approve(user: User) {
-
     const params = new HttpParams().
-    set('user_id', user.UserID.toString()).
-    set('comment', 'Commander').
+    set('id', user.UserID.toString()).
+    set('comment', 'Commander Approved!').
     set('is_reward_approved', 'yes');
 
     this.rest.get('user', 'approve', params).subscribe((response) => {
@@ -201,6 +201,40 @@ export class PendingComponent implements OnInit {
       } else if (response && response.data) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Approved', detail: 'User approved for rewards!'});
+        const newPendingUsers = [];
+        this.PendingUsers.forEach((u) => {
+          if (u.UserID !== user.UserID) {
+            newPendingUsers.push(u);
+          }
+        });
+        this.PendingUsers = newPendingUsers;
+      } else {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
+      }
+    });
+  }
+
+  reject(user: User) {
+    const params = new HttpParams().
+    set('id', user.UserID.toString()).
+    set('comment', 'Commander Rejected!').
+    set('is_reward_approved', 'no');
+
+    this.rest.get('user', 'approve', params).subscribe((response) => {
+      if (response && response.error) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+      } else if (response && response.data) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'success', summary: 'Rejected', detail: 'User rejected for rewards!'});
+        const newPendingUsers = [];
+        this.PendingUsers.forEach((u) => {
+          if (u.UserID !== user.UserID) {
+            newPendingUsers.push(u);
+          }
+        });
+        this.PendingUsers = newPendingUsers;
       } else {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});

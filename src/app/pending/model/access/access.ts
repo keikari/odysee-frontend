@@ -4,4 +4,5 @@ export class Access {
   Country: string;
   Score: number;
   AccessTime: Date;
+  ISP: string;
 }
