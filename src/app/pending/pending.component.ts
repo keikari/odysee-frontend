@@ -47,8 +47,9 @@ export class PendingComponent implements OnInit {
     {field: 'UpdatedAt', header: 'Updated'}];
   accessColumns = [
     {field: 'IP', header: 'IP'},
+    {field: 'ISP', header: 'ISP'},
     {field: 'Country', header: 'Country'},
-    {field: 'Score', header: 'Score'},
+    // {field: 'Score', header: 'Score'},
     {field: 'AccessTime', header: 'Time'}];
   dupColumns = [
     {field: 'UserID', header: 'UserID'},
