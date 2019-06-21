@@ -182,7 +182,12 @@ export class PendingComponent implements OnInit {
             user.LastNote = note.Note;
           });
         }
-        // this.PendingUsers = this.PendingUsers.concat(user);
+        if (  user.CreditCards.length === 0
+              && user.YoutubeChannels.length === 0
+              && user.Phones.length === 0
+              && user.Duplicates === 0 ) {
+          return;
+        }
         this.PendingUsers.push(user);
       });
     });
