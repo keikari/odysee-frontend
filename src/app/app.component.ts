@@ -65,6 +65,7 @@ export class AppComponent implements OnInit {
         label: 'Admin',
         items: [
           {label: 'Pending', routerLink: ['/admin/pending']},
+          {label: 'Country Codes', routerLink: ['/admin/countrycodes']},
         ]
       },
     ];

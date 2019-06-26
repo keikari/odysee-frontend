@@ -1,0 +1,96 @@
+<div class="p-grid p-justify-center p-align-center">
+  <span class="p-col-9 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Country Codes</span>
+  <p-card class="p-col-9 tagfilecard">
+    Manages Country Codes for our Twilio integration. Can set the country code as grey listed or blocked entirely by adding it here. Double click to edit a Country Code.
+  </p-card>
+  <div class="p-col-11 p-col-align-start">
+    <p-table [columns]="codeCols"
+             [value]="CountryCodes" selectionMode="single" dataKey="ID"
+             [(selection)]="selectedCode"
+             columnResizeMode="expand"
+             [resizableColumns]="true"
+             (onRowSelect)="onCodeRowSelect($event)"
+             [metaKeySelection]="true">
+      <ng-template pTemplate="caption">
+        Country Codes
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" ngSwitch="true" pResizableColumn>
+            <span *ngSwitchDefault>{{col.header}}</span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns" class="ui-resizable-column">
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:center">
+          <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAddCode()" label="Add"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+<!-- COUNTRY CODE DIALOG -->
+
+
+<p-dialog header="Country Code Details" [(visible)]="displayCodeDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '400px'}">
+  <div class="ui-g ui-fluid" *ngIf="code">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="code">Code</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="code" [(ngModel)]="code.Code" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="expires_at">Expiration</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar id="expires_at" appendTo="body" hourFormat="12" showButtonBar="true" hideOnDateTimeSelect="true"
+                    [(ngModel)]="code.ExpiresAt"
+                    [showTime]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="grey_listed">GreyListed</label>
+      </div>
+      <div class="ui-g-8">
+        <p-checkbox id="grey_listed" [(ngModel)]="code.GreyListed" binary="true" ></p-checkbox>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <span class="ui-float-label">
+        <textarea id="float-comment" rows="5" cols="30" pInputTextarea [(ngModel)]="code.Comment"></textarea>
+        <label for="float-comment">Comment</label>
+      </span>
+    </div>
+    <div class="ui-g-12">
+      <span class="ui-float-label">
+        <textarea id="float-description" rows="5" cols="30" pInputTextarea [(ngModel)]="code.Description"></textarea>
+        <label for="float-description">Description</label>
+      </span>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-close" (click)="deleteCountryCode()" label="Delete"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="saveCountryCode()" label="Save"></button>
+    </div>
+  </p-footer>
+</p-dialog>
