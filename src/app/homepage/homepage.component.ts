@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {RestService} from '../rest.service';
 import {MessageService} from 'primeng/api';
-import {HttpClientModule, HttpParams} from '@angular/common/http';
-import { Category } from './category';
-import { File } from './file';
-import {getResponseURL} from '@angular/http/src/http_utils';
+import {HttpParams} from '@angular/common/http';
+import { Category } from './model/category';
+import { File } from './model/file';
 
 @Component({
   selector: 'app-homepage',

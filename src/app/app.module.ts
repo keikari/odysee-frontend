@@ -43,6 +43,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { TagchannelComponent } from './tag/tagchannel/tagchannel.component';
 import { PendingComponent } from './pending/pending.component';
 import {AccordionModule} from 'primeng/accordion';
+import { CountryCodesComponent } from './country-codes/country-codes.component';
 
 
 
@@ -59,6 +60,7 @@ const appRoutes: Routes = [
   { path: 'status', component: StatusComponent },
   { path: 'tag/channel', component: TagchannelComponent },
   { path: 'admin/pending', component: PendingComponent },
+  { path: 'admin/countrycodes', component: CountryCodesComponent },
   { path: '', component: StatusComponent}];
 
 @NgModule({
@@ -76,7 +78,8 @@ const appRoutes: Routes = [
     HomepageComponent,
     StatusComponent,
     TagchannelComponent,
-    PendingComponent
+    PendingComponent,
+    CountryCodesComponent
   ],
   imports: [
     BrowserAnimationsModule,

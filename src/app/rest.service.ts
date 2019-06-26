@@ -31,11 +31,49 @@ export class RestService {
     };
   }
 
+  patch(resource: string, action: string, params: HttpParams): Observable<any> {
+    params = params.set('auth_token', this.token);
+    const url = this.endpoint + '/' + resource + '/' + action;
+    return this.http.patch(url, null, {headers: null, params: params}).pipe(
+      map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
+    );
+  }
+
+  put(resource: string, action: string, params: HttpParams): Observable<any> {
+    params = params.set('auth_token', this.token);
+    const url = this.endpoint + '/' + resource + '/' + action;
+    return this.http.put(url, null, {headers: null, params: params}).pipe(
+      map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
+    );
+  }
+
+  post(resource: string, action: string, params: HttpParams): Observable<any> {
+    params = params.set('auth_token', this.token);
+    const url = this.endpoint + '/' + resource + '/' + action;
+    return this.http.post(url, null, {headers: null, params: params}).pipe(
+      map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
+    );
+  }
+
+  delete(resource: string, action: string, params: HttpParams): Observable<any> {
+    params = params.set('auth_token', this.token);
+    const url = this.endpoint + '/' + resource + '/' + action;
+    return this.http.delete(url, {headers: null, params: params}).pipe(
+      map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
+    );
+  }
+
   get(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
+    );
+  }
+
+  geturl(url: string, params: HttpParams): Observable<any> {
+    return this.http.get(url, {headers: null, params: params}).pipe(
+      map(this.extractData), catchError(this.handleError<any>(url))
     );
   }
 
