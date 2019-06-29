@@ -5,9 +5,7 @@
       <th *ngFor="let col of columns">
         {{col.header}}
       </th>
-      <th>
-        Approve
-      </th>
+      <th>Approve</th><th>Dismiss</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
@@ -21,13 +19,16 @@
         {{rowData[col.field]}}
       </td>
       <td>
-        <button type="button" pButton icon="fa fa-check" (click)="approve(rowData)" label="Approve"></button>
+        <button type="button" pButton icon="fa fa-check" (click)="approve(rowData)" label="Approve" class="ui-button-success"></button>
+      </td>
+      <td>
+        <button type="button" pButton icon="fa fa-check" (click)="dismiss(rowData)" label="Dismiss" class="ui-button-warning"></button>
       </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
     <tr>
-      <td  [attr.colspan]="columns.length + 2">
+      <td  [attr.colspan]="columns.length + 3">
       <p-accordion>
         <p-accordionTab header="Emails">
           <p-table [columns]="emailColumns" [value]="rowData.Emails">

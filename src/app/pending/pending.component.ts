@@ -199,14 +199,25 @@ export class PendingComponent implements OnInit {
     set('id', user.UserID.toString()).
     set('comment', 'Commander Approved!').
     set('is_reward_approved', 'yes');
+    this.callUserApprove(user, params, 'Approved', 'User approved for rewards!');
+  }
 
+  dismiss(user: User) {
+    const params = new HttpParams().
+    set('id', user.UserID.toString()).
+    set('comment', 'Commander - Auto ban confirmed!').
+    set('is_reward_approved', 'no');
+    this.callUserApprove(user, params, 'Dismissed', 'User auto rejection confirmed!');
+  }
+
+  callUserApprove(user: User, params: HttpParams, summary: string, detail: string) {
     this.rest.get('user', 'approve', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Approved', detail: 'User approved for rewards!'});
+        this.messageService.add({severity: 'success', summary: summary, detail: detail});
         const newPendingUsers = [];
         this.PendingUsers.forEach((u) => {
           if (u.UserID !== user.UserID) {
