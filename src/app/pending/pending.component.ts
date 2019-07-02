@@ -66,16 +66,26 @@ export class PendingComponent implements OnInit {
     {field: 'Note', header: 'Note'},
     {field: 'UpdatedAt', header: 'UpdatedAt'}];
 
+  triggerFilter: string;
+
   constructor(public rest: RestService, private messageService: MessageService) {
   }
 
   ngOnInit() {
+    this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
     this.loadPending();
   }
 
   private loadPending() {
     this.PendingUsers = [];
-    this.rest.get('administrative', 'list_pending', new HttpParams()).subscribe((userResponse) => {
+    let params = new HttpParams();
+    if ( this.triggerFilter.length > 0) {
+      params = params.set('trigger_filter', this.triggerFilter);
+      localStorage.setItem('triggerFilter', this.triggerFilter);
+    } else {
+      localStorage.setItem('triggerFilter', '');
+    }
+    this.rest.get('administrative', 'list_pending', params).subscribe((userResponse) => {
       userResponse.data.forEach((u) => {
         const user = new User();
         user.Duplicates = 0;

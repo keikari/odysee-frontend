@@ -1,3 +1,13 @@
+<p-card>
+  <div class="p-grid p-justify-center">
+    <span class="ui-float-label">
+      <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
+      <label for="float-input">Filter Trigger To</label>
+    </span>
+    <button pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
+  </div>
+</p-card>
+
 <p-table [columns]="userColumns" [value]="PendingUsers" [resizableColumns]="true" dataKey="UserID">
   <ng-template pTemplate="header" let-columns>
     <tr>
