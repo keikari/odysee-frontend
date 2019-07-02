@@ -76,7 +76,7 @@ export class PendingComponent implements OnInit {
     this.loadPending();
   }
 
-  private loadPending() {
+  public loadPending() {
     this.PendingUsers = [];
     let params = new HttpParams();
     if ( this.triggerFilter.length > 0) {
