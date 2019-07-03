@@ -22,6 +22,7 @@ export class PendingComponent implements OnInit {
   userColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'Duplicates', header: 'Duplicates', width: '13px'},
+    {field: 'Verification', header: 'Verification'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
     {field: 'LastAccessTime', header: 'Last Access'},
     {field: 'IsCountryMatch', header: 'Country Match'},
@@ -198,9 +199,20 @@ export class PendingComponent implements OnInit {
               && user.Duplicates === 0 ) {
           return;
         }
+        user.Verification = this.getVerificationMethod(user);
         this.PendingUsers.push(user);
       });
     });
+  }
+  private getVerificationMethod(user: User): string {
+    if (user.CreditCards.length > 0 ) {
+      return 'stripe';
+    } else if ( user.Phones.length > 0 ) {
+      return 'phone';
+    } else if ( user.YoutubeChannels.length > 0 ) {
+      return 'youtube';
+    }
+    return '';
   }
 
 

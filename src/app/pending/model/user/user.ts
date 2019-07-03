@@ -28,4 +28,5 @@ export class User {
   IsCountryMatch: boolean;
   Country: string;
   LastNote: string;
+  Verification: string;
 }
