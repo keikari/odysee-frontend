@@ -257,18 +257,32 @@ export class PendingComponent implements OnInit {
       } else if (response && response.data) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: summary, detail: detail});
-        const newPendingUsers = [];
-        this.pendingUsers.forEach((u) => {
-          if (u.UserID !== user.UserID) {
-            newPendingUsers.push(u);
-          }
-        });
-        this.pendingUsers = newPendingUsers;
+        this.removeUser(user);
       } else {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
       }
     });
+  }
+
+  removeUser(user: User) {
+
+    const newPendingUsers = [];
+    this.pendingUsers.forEach((u) => {
+      if (u.UserID !== user.UserID) {
+        newPendingUsers.push(u);
+      }
+    });
+    this.pendingUsers = newPendingUsers;
+
+    const newverifiedUsers = [];
+    this.verifiedUsers.forEach((u) => {
+      if (u.UserID !== user.UserID) {
+        newverifiedUsers.push(u);
+      }
+    });
+    this.verifiedUsers = newverifiedUsers;
+    this.setUsers();
   }
 
   reject(user: User) {
