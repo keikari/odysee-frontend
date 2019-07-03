@@ -1,14 +1,15 @@
 <p-card>
   <div class="p-grid p-justify-center">
+    <p-checkbox class="p-col-2" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
     <span class="ui-float-label">
       <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
       <label for="float-input">Filter Trigger To</label>
     </span>
-    <button pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
+    <button class="p-col-1" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
   </div>
 </p-card>
 
-<p-table [columns]="userColumns" [value]="PendingUsers" [resizableColumns]="true" dataKey="UserID">
+<p-table [columns]="userColumns" [value]="DisplayedUsers" [resizableColumns]="true" dataKey="UserID">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 4em"></th>

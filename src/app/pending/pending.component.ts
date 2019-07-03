@@ -18,7 +18,8 @@ import {Note} from './model/note/note';
   styleUrls: ['./pending.component.css']
 })
 export class PendingComponent implements OnInit {
-  PendingUsers: User[] = [];
+  DisplayedUsers: User[] = [];
+  pendingUsers: User[] = [];
   userColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'Duplicates', header: 'Duplicates', width: '13px'},
@@ -68,17 +69,21 @@ export class PendingComponent implements OnInit {
     {field: 'UpdatedAt', header: 'UpdatedAt'}];
 
   triggerFilter: string;
+  showVerified: boolean;
+  verifiedUsers: User[] = [];
 
   constructor(public rest: RestService, private messageService: MessageService) {
   }
 
   ngOnInit() {
     this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
+    this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
     this.loadPending();
+    this.setUsers();
   }
 
   public loadPending() {
-    this.PendingUsers = [];
+    this.pendingUsers = [];
     let params = new HttpParams();
     if ( this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
@@ -200,7 +205,10 @@ export class PendingComponent implements OnInit {
           return;
         }
         user.Verification = this.getVerificationMethod(user);
-        this.PendingUsers.push(user);
+        this.pendingUsers.push(user);
+        if ( user.Verification.length > 0 ) {
+          this.verifiedUsers.push(user);
+        }
       });
     });
   }
@@ -213,6 +221,15 @@ export class PendingComponent implements OnInit {
       return 'youtube';
     }
     return '';
+  }
+
+  setUsers() {
+    if ( this.showVerified ) {
+      this.DisplayedUsers = this.verifiedUsers;
+    } else {
+      this.DisplayedUsers = this.pendingUsers;
+    }
+    localStorage.setItem('showVerified', this.showVerified.toString());
   }
 
 
@@ -241,12 +258,12 @@ export class PendingComponent implements OnInit {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: summary, detail: detail});
         const newPendingUsers = [];
-        this.PendingUsers.forEach((u) => {
+        this.pendingUsers.forEach((u) => {
           if (u.UserID !== user.UserID) {
             newPendingUsers.push(u);
           }
         });
-        this.PendingUsers = newPendingUsers;
+        this.pendingUsers = newPendingUsers;
       } else {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
@@ -268,12 +285,12 @@ export class PendingComponent implements OnInit {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Rejected', detail: 'User rejected for rewards!'});
         const newPendingUsers = [];
-        this.PendingUsers.forEach((u) => {
+        this.pendingUsers.forEach((u) => {
           if (u.UserID !== user.UserID) {
             newPendingUsers.push(u);
           }
         });
-        this.PendingUsers = newPendingUsers;
+        this.pendingUsers = newPendingUsers;
       } else {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
