@@ -72,6 +72,17 @@ export class PendingComponent implements OnInit {
   showVerified: boolean;
   verifiedUsers: User[] = [];
 
+  static getVerificationMethod(user: User): string {
+    if (user.CreditCards.length > 0 ) {
+      return 'stripe';
+    } else if ( user.Phones.length > 0 ) {
+      return 'phone';
+    } else if ( user.YoutubeChannels.length > 0 ) {
+      return 'youtube';
+    }
+    return '';
+  }
+
   constructor(public rest: RestService, private messageService: MessageService) {
   }
 
@@ -204,23 +215,13 @@ export class PendingComponent implements OnInit {
               && user.Duplicates === 0 ) {
           return;
         }
-        user.Verification = this.getVerificationMethod(user);
+        user.Verification = PendingComponent.getVerificationMethod(user);
         this.pendingUsers.push(user);
         if ( user.Verification.length > 0 ) {
           this.verifiedUsers.push(user);
         }
       });
     });
-  }
-  private getVerificationMethod(user: User): string {
-    if (user.CreditCards.length > 0 ) {
-      return 'stripe';
-    } else if ( user.Phones.length > 0 ) {
-      return 'phone';
-    } else if ( user.YoutubeChannels.length > 0 ) {
-      return 'youtube';
-    }
-    return '';
   }
 
   setUsers() {
@@ -237,6 +238,7 @@ export class PendingComponent implements OnInit {
     const params = new HttpParams().
     set('id', user.UserID.toString()).
     set('comment', 'Commander Approved!').
+    set('notify', true.toString()).
     set('is_reward_approved', 'yes');
     this.callUserApprove(user, params, 'Approved', 'User approved for rewards!');
   }
