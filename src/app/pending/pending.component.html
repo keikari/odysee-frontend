@@ -1,6 +1,7 @@
 <p-card>
   <div class="p-grid p-justify-center">
     <p-checkbox class="p-col-2" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
+    <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="toggleAutoApprovals()"></p-checkbox>
     <span class="ui-float-label">
       <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
       <label for="float-input">Filter Trigger To</label>

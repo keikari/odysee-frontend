@@ -70,6 +70,7 @@ export class PendingComponent implements OnInit {
 
   triggerFilter: string;
   showVerified: boolean;
+  showAutoApprovals: boolean;
   verifiedUsers: User[] = [];
 
   static getVerificationMethod(user: User): string {
@@ -101,6 +102,9 @@ export class PendingComponent implements OnInit {
       localStorage.setItem('triggerFilter', this.triggerFilter);
     } else {
       localStorage.setItem('triggerFilter', '');
+    }
+    if (this.showAutoApprovals) {
+      params = params.set('auto_approved_only', String(this.showAutoApprovals));
     }
     this.rest.get('administrative', 'list_pending', params).subscribe((userResponse) => {
       userResponse.data.forEach((u) => {
@@ -209,12 +213,6 @@ export class PendingComponent implements OnInit {
             user.LastNote = note.Note;
           });
         }
-        if (  user.CreditCards.length === 0
-              && user.YoutubeChannels.length === 0
-              && user.Phones.length === 0
-              && user.Duplicates === 0 ) {
-          return;
-        }
         user.Verification = PendingComponent.getVerificationMethod(user);
         this.pendingUsers.push(user);
         if ( user.Verification.length > 0 ) {
@@ -231,6 +229,11 @@ export class PendingComponent implements OnInit {
       this.DisplayedUsers = this.pendingUsers;
     }
     localStorage.setItem('showVerified', this.showVerified.toString());
+  }
+
+  toggleAutoApprovals() {
+    this.loadPending();
+    this.setUsers();
   }
 
 
