@@ -45,7 +45,12 @@ import { PendingComponent } from './pending/pending.component';
 import {AccordionModule} from 'primeng/accordion';
 import { CountryCodesComponent } from './country-codes/country-codes.component';
 import { SqlTemplatesComponent } from './template/sql-templates/sql-templates.component';
-
+import { CodeHighlighterModule } from 'primeng/codehighlighter';
+import {InputSwitchModule} from 'primeng/primeng';
+/* Import the language you need to highlight */
+import 'prismjs';
+import 'prismjs/components/prism-sql.js';
+import { PrismComponent } from './prism/prism.component';
 
 
 const appRoutes: Routes = [
@@ -82,7 +87,8 @@ const appRoutes: Routes = [
     TagchannelComponent,
     PendingComponent,
     CountryCodesComponent,
-    SqlTemplatesComponent
+    SqlTemplatesComponent,
+    PrismComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -111,10 +117,12 @@ const appRoutes: Routes = [
     DialogModule,
     InputMaskModule,
     AccordionModule,
+    CodeHighlighterModule,
+    InputSwitchModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+      {enableTracing: true} // <-- debugging purposes only
+    ),
   ],
   providers: [RestService, MessageService, TerminalService],
   bootstrap: [AppComponent]

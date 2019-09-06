@@ -5,14 +5,15 @@ addons:
 
 language: node_js
 node_js:
-  - "8"
+  - "10"
 
 branches:
   only:
     - master
 
 before_script:
-  - npm install @angular/cli@7.3.1
+  - npm install @angular/cli@8.3.3
+  - npm install
 
 script:
   - ng build --prod -c production
