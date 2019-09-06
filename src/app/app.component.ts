@@ -50,7 +50,11 @@ export class AppComponent implements OnInit {
         ]
       },
       {
-        label: 'Templates', routerLink: ['/template']
+        label: 'Templates',
+        items: [
+          {label: 'Send Templates', routerLink: ['/templates/send']},
+          {label: 'SQL Templates', routerLink: ['/templates/sql']},
+        ]
       },
       {
         label: 'Codes', routerLink: ['/rewardcode']
