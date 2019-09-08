@@ -36,7 +36,8 @@
     <p-card class="p-col-9 tagfilecard">
       If you just want to send a template periodically and only need to use tags to defined the users to receive the email
       then leave the SQL query blank and it will send the email to users of the tag. If you don't specify a run period,
-      this is akin to disabling the automatic template.
+      this is akin to disabling the automatic template. The query needs to always select email, user_id at the 1st and
+      2nd position. For example, SELECT e.email, e.user_id FROM email WHERE email.email = "doit@right.com"
     </p-card>
   </div>
   <p-inplace class="p-col-7 p-col-align-center ui-widget" closable="closable">
