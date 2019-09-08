@@ -13,7 +13,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { ToastModule } from 'primeng/toast';
-import { TemplateComponent } from './template/template.component';
+import { TemplateComponent } from './template/send-templates/template.component';
 import { MergeComponent } from './user/merge/merge.component';
 import { ApproveComponent } from './user/approve/approve.component';
 import { InviteComponent } from './user/invite/invite.component';
@@ -44,12 +44,19 @@ import { TagchannelComponent } from './tag/tagchannel/tagchannel.component';
 import { PendingComponent } from './pending/pending.component';
 import {AccordionModule} from 'primeng/accordion';
 import { CountryCodesComponent } from './country-codes/country-codes.component';
-
+import { SqlTemplatesComponent } from './template/sql-templates/sql-templates.component';
+import { CodeHighlighterModule } from 'primeng/codehighlighter';
+import {InputSwitchModule} from 'primeng/primeng';
+/* Import the language you need to highlight */
+import 'prismjs';
+import 'prismjs/components/prism-sql.js';
+import { PrismComponent } from './prism/prism.component';
 
 
 const appRoutes: Routes = [
   { path: 'terminal', component: TerminalComponent },
-  { path: 'template', component: TemplateComponent },
+  { path: 'templates/send', component: TemplateComponent },
+  { path: 'templates/sql', component: SqlTemplatesComponent },
   { path: 'user/approve', component: ApproveComponent },
   { path: 'user/merge', component: MergeComponent },
   { path: 'user/invite', component: InviteComponent },
@@ -79,7 +86,9 @@ const appRoutes: Routes = [
     StatusComponent,
     TagchannelComponent,
     PendingComponent,
-    CountryCodesComponent
+    CountryCodesComponent,
+    SqlTemplatesComponent,
+    PrismComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -108,10 +117,12 @@ const appRoutes: Routes = [
     DialogModule,
     InputMaskModule,
     AccordionModule,
+    CodeHighlighterModule,
+    InputSwitchModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+      {enableTracing: true} // <-- debugging purposes only
+    ),
   ],
   providers: [RestService, MessageService, TerminalService],
   bootstrap: [AppComponent]

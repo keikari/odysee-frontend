@@ -1,0 +1,74 @@
+<div  class="p-grid p-justify-center p-align-center" style="margin:50px;">
+  <span class="p-col-12 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Manage SQL Template</span>
+  <div class="p-col-7 p-col-align-center ui-widget" style="display: inline-flex">
+    <div class="p-col-4 p-col-align-center ui-widget">
+      <button type="button" pButton icon="fa fa-check" (click)="newSQLTemplate()" label="New"></button>
+    </div>
+    <div class="p-col-4 p-col-align-center ui-widget">
+      <button type="button" pButton icon="fa fa-check" (click)="deleteSQLTemplate()" label="Delete"></button>
+    </div>
+    <div class="p-col-4 p-col-align-center ui-widget">
+      <button type="button" pButton icon="fa fa-check" (click)="saveSQLTemplate()" label="Save"></button>
+    </div>
+  </div>
+  <div class="p-col-7 p-justify-center" *ngIf="isNew">
+    <span class="p-col-12 p-col-align-center ui-widget" style="font-size:150%">Name</span>
+    <input class="p-col-12 p-justify-center" type="text" pInputText placeholder="Enter name" style="margin:10px" [(ngModel)]="selectedTemplate.Name">
+
+  </div>
+  <div class="p-col-7 p-col-align-center ui-widget"  *ngIf="!isNew">
+    <p-dropdown class="p-col-6 p-col-align-center" [style]="{'width':'75%'}" optionLabel="Name" [options]="templates" [(ngModel)]="selectedTemplate"></p-dropdown>
+    <span class="p-col-6 p-col-align-center">CreatedBy: {{selectedTemplate.CreatedBy}} </span>
+  </div>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Subject</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter subject" style="margin:10px" [(ngModel)]="selectedTemplate.Subject">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Template</span>
+  <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter template" style="margin:10px" [(ngModel)]="selectedTemplate.Template">
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Description</span>
+  <textarea class="p-col-7 p-col-align-center ui-widget"  [rows]="5" [cols]="30" pInputTextarea [(ngModel)]="selectedTemplate.Description" autoResize="autoResize"></textarea>
+
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">SQL Query</span>
+  <p-inplace class="p-col-7 p-col-align-center ui-widget" closable="closable">
+    <span pInplaceDisplay>
+      <div>
+        <prism-block [code]="selectedTemplate.UserQuery" [language]="'sql'"></prism-block>
+      </div>
+    </span>
+    <div  [style]="{'width':'100%'}"  pInplaceContent>
+        <textarea [rows]="5" [cols]="105" pInputTextarea [(ngModel)]="selectedTemplate.UserQuery" (ngModelChange)="selectedTemplate.UserQuery = $event"></textarea>
+    </div>
+  </p-inplace>
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tags</span>
+  <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="selectedTemplate.Tags" [addOnTab]="true" [addOnBlur]="true" [allowDuplicate]="false"></p-chips></div>
+  <div class="p-col-7 p-col-align-center">
+    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Ignore Rules"  [(ngModel)]="selectedTemplate.IgnoreRules" binary="true"></p-checkbox>
+    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Send Once"  [(ngModel)]="selectedTemplate.SendOnce" binary="true"></p-checkbox>
+    <input class="p-col-4 p-justify-center ui-widget" type="text" pInputText placeholder="Run every x hours" style="margin:10px" [(ngModel)]="selectedTemplate.RunPeriodHrs">
+  </div>
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Time Restrictions</span>
+  <div class="p-col-7 p-col-align-center">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <span class="ui-widget" for="start">Starting On</span>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar id="start" appendTo="body" hourFormat="12" showButtonBar="true" hideOnDateTimeSelect="true"
+                    [(ngModel)]="selectedTemplate.StartsOn"
+                    [showTime]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <span class="ui-widget" for="end">Expiring On</span>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar id="end" appendTo="body" hourFormat="12" showButtonBar="true" hideOnDateTimeSelect="true"
+                    [(ngModel)]="selectedTemplate.ExpiresOn"
+                    [showTime]="true"></p-calendar>
+      </div>
+    </div>
+  </div>
+</div>

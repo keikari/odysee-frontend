@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {RestService} from '../rest.service';
+import {RestService} from '../../rest.service';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
