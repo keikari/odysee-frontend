@@ -25,7 +25,7 @@ export class SqlTemplatesComponent implements OnInit {
     this.templates = [];
     this.rest.get('template', 'sql/', new HttpParams()).subscribe((templateResponse) => {
       if (templateResponse.data) {
-        console.log('RESONSE: ', templateResponse.data);
+        console.log('RESPONSE: ', templateResponse.data);
         if (isArray(templateResponse.data)) {
           templateResponse.data.forEach((c) => {
             const template = this.createSQLTemplate(c);
@@ -57,7 +57,8 @@ export class SqlTemplatesComponent implements OnInit {
     template.IgnoreRules = c.ignore_rules;
     template.RunPeriodHrs = c.run_period_hrs;
     template.CreatedBy = c.added_by_id;
-    template.TagsJoined = c.tags
+    template.TagsJoined = c.tags;
+    template.Subject = c.subject;
     template.ExpiresOn = c.expires_at ? new Date(c.expires_at) : null;
     template.StartsOn = c.starts_at ? new Date(c.starts_at) : null;
     if (template.TagsJoined && template.TagsJoined != null) {
@@ -82,6 +83,8 @@ export class SqlTemplatesComponent implements OnInit {
             if ( c.Name !== this.selectedTemplate.Name) {
               newTemplates.push(c);
             }
+            this.messageService.clear();
+            this.messageService.add({severity: 'success', summary: 'Success', detail: 'template deleted'});
           });
           this.templates = newTemplates;
         } else if ( response && response.error) {
@@ -100,6 +103,7 @@ export class SqlTemplatesComponent implements OnInit {
     const sendOnce = this.selectedTemplate.SendOnce;
     const runPeriodHrs = this.selectedTemplate.RunPeriodHrs;
     const tags  = this.selectedTemplate.Tags;
+    const subject = this.selectedTemplate.Subject;
 
     this.selectedTemplate.SendOnce = sendOnce && sendOnce !== null ? sendOnce : false;
     this.selectedTemplate.IgnoreRules = ignoreRules && ignoreRules !== null ? ignoreRules : false;
@@ -109,6 +113,7 @@ export class SqlTemplatesComponent implements OnInit {
     this.selectedTemplate.Description = description && description !== null ? description : '';
     this.selectedTemplate.RunPeriodHrs = runPeriodHrs && runPeriodHrs !== null ? runPeriodHrs : 0;
     this.selectedTemplate.TagsJoined = tags && tags !== null ? tags.join(',') : null;
+    this.selectedTemplate.Subject = subject && subject !== null ? subject : '';
 
     const params = new HttpParams().
     set('template', this.selectedTemplate.Template).
@@ -117,6 +122,7 @@ export class SqlTemplatesComponent implements OnInit {
     set('run_period_hrs', this.selectedTemplate.RunPeriodHrs.toString()).
     set('description', this.selectedTemplate.Description).
     set('user_query', this.selectedTemplate.UserQuery).
+    set('subject', this.selectedTemplate.Subject).
     set('expires_on', this.selectedTemplate.ExpiresOn !== null ? this.selectedTemplate.ExpiresOn.toISOString() : '').
     set('tags', this.selectedTemplate.TagsJoined).
     set('starts_on', this.selectedTemplate.StartsOn !== null ? this.selectedTemplate.StartsOn.toISOString() : '');
@@ -157,10 +163,6 @@ export class SqlTemplatesComponent implements OnInit {
         }
       });
     }
-  }
-
-  saveCountryCode() {
-
   }
 }
 

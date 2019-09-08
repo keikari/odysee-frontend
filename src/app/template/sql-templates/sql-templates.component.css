@@ -1,1 +1,3 @@
-
+:host ::ng-deep .ui-card-body{
+  background-color: #a2dff1;
+}
