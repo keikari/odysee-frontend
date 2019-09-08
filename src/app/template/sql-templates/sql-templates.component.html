@@ -25,12 +25,20 @@
   <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter subject" style="margin:10px" [(ngModel)]="selectedTemplate.Subject">
 
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Template</span>
+  <span class="p-col-7 ui-widget">Name of mailjet template</span>
   <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter template" style="margin:10px" [(ngModel)]="selectedTemplate.Template">
 
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Description</span>
   <textarea class="p-col-7 p-col-align-center ui-widget"  [rows]="5" [cols]="30" pInputTextarea [(ngModel)]="selectedTemplate.Description" autoResize="autoResize"></textarea>
 
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">SQL Query</span>
+  <div class="p-col-7 p-col-align-center">
+    <p-card class="p-col-9 tagfilecard">
+      If you just want to send a template periodically and only need to use tags to defined the users to receive the email
+      then leave the SQL query blank and it will send the email to users of the tag. If you don't specify a run period,
+      this is akin to disabling the automatic template.
+    </p-card>
+  </div>
   <p-inplace class="p-col-7 p-col-align-center ui-widget" closable="closable">
     <span pInplaceDisplay>
       <div>
@@ -44,6 +52,11 @@
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tags</span>
   <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="selectedTemplate.Tags" [addOnTab]="true" [addOnBlur]="true" [allowDuplicate]="false"></p-chips></div>
   <div class="p-col-7 p-col-align-center">
+    <p-card class="p-col-9 tagfilecard">
+      Ignoring the rules will ignore the following rules: Emails must be verified, enabled and primary. Users must not
+      have received a notification in the past 24 hrs. Send once will make sure the users have not recieved this template
+      yet.
+    </p-card>
     <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Ignore Rules"  [(ngModel)]="selectedTemplate.IgnoreRules" binary="true"></p-checkbox>
     <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Send Once"  [(ngModel)]="selectedTemplate.SendOnce" binary="true"></p-checkbox>
     <input class="p-col-4 p-justify-center ui-widget" type="text" pInputText placeholder="Run every x hours" style="margin:10px" [(ngModel)]="selectedTemplate.RunPeriodHrs">
