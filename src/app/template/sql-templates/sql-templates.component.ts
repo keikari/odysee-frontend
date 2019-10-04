@@ -15,6 +15,7 @@ export class SqlTemplatesComponent implements OnInit {
   selectedTemplate: SQLTemplate;
   newTemplate: boolean;
   isNew: boolean;
+  isBlocked: boolean;
 
   constructor(public rest: RestService, private messageService: MessageService) { }
   ngOnInit() {
@@ -163,6 +164,22 @@ export class SqlTemplatesComponent implements OnInit {
         }
       });
     }
+  }
+
+  validateSQLQuery() {
+    this.isBlocked = true;
+    this.rest.post('template', 'validate/' + this.selectedTemplate.Name, new HttpParams())
+      .subscribe((response) => {
+        if ( response && response.success) {
+          this.isBlocked = false;
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'template validated'});
+        } else if ( response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'SQL Template Validation:', detail: response.error});
+        }
+        this.isBlocked = false;
+      });
   }
 }
 

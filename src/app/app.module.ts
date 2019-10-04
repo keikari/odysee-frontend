@@ -46,7 +46,7 @@ import {AccordionModule} from 'primeng/accordion';
 import { CountryCodesComponent } from './country-codes/country-codes.component';
 import { SqlTemplatesComponent } from './template/sql-templates/sql-templates.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
-import {InputSwitchModule} from 'primeng/primeng';
+import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule} from 'primeng/primeng';
 /* Import the language you need to highlight */
 import 'prismjs';
 import 'prismjs/components/prism-sql.js';
@@ -123,6 +123,8 @@ const appRoutes: Routes = [
       appRoutes,
       {enableTracing: true} // <-- debugging purposes only
     ),
+    BlockUIModule,
+    ProgressSpinnerModule,
   ],
   providers: [RestService, MessageService, TerminalService],
   bootstrap: [AppComponent]
