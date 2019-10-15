@@ -181,6 +181,22 @@ export class SqlTemplatesComponent implements OnInit {
         this.isBlocked = false;
       });
   }
+
+  sendSQLTemplateNow() {
+    this.isBlocked = true;
+    this.rest.post('template', 'sql_send/' + this.selectedTemplate.Name, new HttpParams())
+      .subscribe((response) => {
+        if ( response && response.success) {
+          this.isBlocked = false;
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'template sent'});
+        } else if ( response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'SQL Template Sending:', detail: response.error});
+        }
+        this.isBlocked = false;
+      });
+  }
 }
 
 
