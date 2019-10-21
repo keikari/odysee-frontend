@@ -72,6 +72,9 @@ export class AppComponent implements OnInit {
           {label: 'Country Codes', routerLink: ['/admin/countrycodes']},
         ]
       },
+      {
+        label: 'Notifications', routerLink: ['/notifications']
+      },
     ];
   }
 

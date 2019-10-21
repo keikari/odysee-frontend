@@ -4,6 +4,8 @@ import {HttpParams} from '@angular/common/http';
 import {RestService} from '../../rest.service';
 import {MessageService} from 'primeng/api';
 import {isArray} from 'util';
+import {DeviceNotification} from '../../device-notification/model/device-notification';
+import {DeviceNotificationComponent} from '../../device-notification/device-notification.component';
 
 @Component({
   selector: 'app-sql-templates',
@@ -12,6 +14,7 @@ import {isArray} from 'util';
 })
 export class SqlTemplatesComponent implements OnInit {
   templates: SQLTemplate[] = [];
+  deviceNotifications: DeviceNotification[] = [];
   selectedTemplate: SQLTemplate;
   newTemplate: boolean;
   isNew: boolean;
@@ -19,14 +22,37 @@ export class SqlTemplatesComponent implements OnInit {
 
   constructor(public rest: RestService, private messageService: MessageService) { }
   ngOnInit() {
-    this.loadCountryCodes();
+    this.loadDeviceNotificationOptions();
+    this.loadSQLTemplates();
   }
-  private loadCountryCodes() {
+
+  private loadDeviceNotificationOptions() {
+    this.deviceNotifications = [];
+    this.rest.get('template', 'notification/', new HttpParams()).subscribe((catResponse) => {
+      if (catResponse.data === null) {
+        return;
+      }
+      catResponse.data.forEach((c) => {
+        const deviceNotification = new DeviceNotification();
+        deviceNotification.ID = c.id;
+        deviceNotification.Name = c.name;
+        deviceNotification.Title = c.title;
+        deviceNotification.Text = c.text;
+        deviceNotification.ImageURL = c.image_url;
+        deviceNotification.Type = c.type;
+        deviceNotification.Device = c.device;
+        deviceNotification.Target = c.target;
+        deviceNotification.AddedByID = c.added_by_id;
+        deviceNotification.ExpiresAt = c.expires_at ? new Date(c.expires_at) : null;
+        this.deviceNotifications = this.deviceNotifications.concat(deviceNotification);
+      });
+    });
+  }
+  private loadSQLTemplates() {
     this.selectedTemplate = new SQLTemplate('new template');
     this.templates = [];
     this.rest.get('template', 'sql/', new HttpParams()).subscribe((templateResponse) => {
       if (templateResponse.data) {
-        console.log('RESPONSE: ', templateResponse.data);
         if (isArray(templateResponse.data)) {
           templateResponse.data.forEach((c) => {
             const template = this.createSQLTemplate(c);
@@ -47,7 +73,7 @@ export class SqlTemplatesComponent implements OnInit {
   }
 
   private createSQLTemplate(c: any): SQLTemplate {
-    console.log(c);
+
     const template = new SQLTemplate('new template');
     template.ID = c.id;
     template.Name = c.name;
@@ -64,6 +90,13 @@ export class SqlTemplatesComponent implements OnInit {
     template.StartsOn = c.starts_at ? new Date(c.starts_at) : null;
     if (template.TagsJoined && template.TagsJoined != null) {
       template.Tags = template.TagsJoined.split(',');
+    }
+    if (c.device_notification_id && this.deviceNotifications.length > 0) {
+      this.deviceNotifications.forEach(deviceNotification => {
+        if (deviceNotification.ID === c.device_notification_id) {
+          template.DeviceNotification = deviceNotification;
+        }
+      });
     }
 
     return template;
@@ -105,6 +138,7 @@ export class SqlTemplatesComponent implements OnInit {
     const runPeriodHrs = this.selectedTemplate.RunPeriodHrs;
     const tags  = this.selectedTemplate.Tags;
     const subject = this.selectedTemplate.Subject;
+    const deviceNotification = this.selectedTemplate.DeviceNotification;
 
     this.selectedTemplate.SendOnce = sendOnce && sendOnce !== null ? sendOnce : false;
     this.selectedTemplate.IgnoreRules = ignoreRules && ignoreRules !== null ? ignoreRules : false;
@@ -126,6 +160,7 @@ export class SqlTemplatesComponent implements OnInit {
     set('subject', this.selectedTemplate.Subject).
     set('expires_on', this.selectedTemplate.ExpiresOn !== null ? this.selectedTemplate.ExpiresOn.toISOString() : '').
     set('tags', this.selectedTemplate.TagsJoined).
+    set('device_notification', deviceNotification !== null ? deviceNotification.ID.toString() : '0').
     set('starts_on', this.selectedTemplate.StartsOn !== null ? this.selectedTemplate.StartsOn.toISOString() : '');
     if (this.selectedTemplate.ID === 0) {
       this.rest.post('template', 'sql/' + this.selectedTemplate.Name, params).subscribe( (response) => {

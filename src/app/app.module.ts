@@ -45,6 +45,7 @@ import { PendingComponent } from './pending/pending.component';
 import {AccordionModule} from 'primeng/accordion';
 import { CountryCodesComponent } from './country-codes/country-codes.component';
 import { SqlTemplatesComponent } from './template/sql-templates/sql-templates.component';
+import { DeviceNotificationComponent } from './device-notification/device-notification.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
 import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule} from 'primeng/primeng';
 /* Import the language you need to highlight */
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
   { path: 'tag/channel', component: TagchannelComponent },
   { path: 'admin/pending', component: PendingComponent },
   { path: 'admin/countrycodes', component: CountryCodesComponent },
+  { path: 'notifications', component: DeviceNotificationComponent },
   { path: '', component: StatusComponent}];
 
 @NgModule({
@@ -88,7 +90,8 @@ const appRoutes: Routes = [
     PendingComponent,
     CountryCodesComponent,
     SqlTemplatesComponent,
-    PrismComponent
+    PrismComponent,
+    DeviceNotificationComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -119,12 +122,12 @@ const appRoutes: Routes = [
     AccordionModule,
     CodeHighlighterModule,
     InputSwitchModule,
+    BlockUIModule,
+    ProgressSpinnerModule,
     RouterModule.forRoot(
       appRoutes,
       {enableTracing: true} // <-- debugging purposes only
-    ),
-    BlockUIModule,
-    ProgressSpinnerModule,
+    )
   ],
   providers: [RestService, MessageService, TerminalService],
   bootstrap: [AppComponent]

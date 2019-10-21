@@ -1,3 +1,5 @@
+import {DeviceNotification} from '../../../device-notification/model/device-notification';
+
 export class SQLTemplate {
   ID: bigint | number = 0;
   public Name: string;
@@ -12,6 +14,7 @@ export class SQLTemplate {
   TagsJoined: string;
   Subject: string;
   Template: string;
+  DeviceNotification: DeviceNotification;
   CreatedBy: number;
 
   constructor(name: string) {
