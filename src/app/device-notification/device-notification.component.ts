@@ -14,7 +14,7 @@ export class DeviceNotificationComponent implements OnInit {
   selectedDeviceNotification: DeviceNotification;
   doubleSelectedDeviceNotification: DeviceNotification;
   deviceNotification: DeviceNotification;
-  deviceOptions = [{label: 'Mobile', value: 'Mobile'}, {label: 'Desktop', value: 'Desktop'}];
+  deviceOptions = [{label: 'Mobile', value: 'mobile'}, {label: 'Desktop', value: 'desktop'}, {label: 'Web', value: 'web'}];
   newDeviceNotification: boolean;
   displayDeviceNotificationDialog: boolean;
   deviceNotificationCols = [
