@@ -29,6 +29,10 @@
   <span class="p-col-7 ui-widget">Name of mailjet template</span>
   <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter template" style="margin:10px" [(ngModel)]="selectedTemplate.Template">
 
+  <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Device Notification</span>
+  <p-dropdown class="p-col-7 p-justify-center" optionLabel="Name" [autoDisplayFirst]="false" [style]="{'width':'400px'}" [options]="deviceNotifications"
+              [(ngModel)]="selectedTemplate.DeviceNotification" [showClear]="true"></p-dropdown>
+
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Description</span>
   <textarea class="p-col-7 p-col-align-center ui-widget"  [rows]="5" [cols]="30" pInputTextarea [(ngModel)]="selectedTemplate.Description" autoResize="autoResize"></textarea>
 

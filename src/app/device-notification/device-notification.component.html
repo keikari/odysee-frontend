@@ -1,0 +1,126 @@
+<div class="p-grid p-justify-center p-align-center">
+  <span class="p-col-9 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Device Notifications</span>
+  <p-card class="p-col-9 tagfilecard">
+    Manages Device Notifications. Double click to edit a Device Notification.
+  </p-card>
+  <div class="p-col-11 p-col-align-start">
+    <p-table [columns]="deviceNotificationCols"
+             [value]="deviceNotifications" selectionMode="single" dataKey="ID"
+             [(selection)]="selectedDeviceNotification"
+             columnResizeMode="expand"
+             [resizableColumns]="true"
+             (onRowSelect)="onDeviceNotificationRowSelect($event)"
+             [metaKeySelection]="true">
+      <ng-template pTemplate="caption">
+        Device Notifications
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" ngSwitch="true" pResizableColumn>
+            <span *ngSwitchDefault>{{col.header}}</span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns" class="ui-resizable-column">
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:center">
+          <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAddDeviceNotification()" label="Add"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+<!-- COUNTRY CODE DIALOG -->
+
+
+<p-dialog header="Device Notification Details" [(visible)]="displayDeviceNotificationDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '400px'}">
+  <div class="ui-g ui-fluid" *ngIf="deviceNotification">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="name">Name</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="name" [(ngModel)]="deviceNotification.Name" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="title">Title</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="title" [(ngModel)]="deviceNotification.Title" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="image_url">Image URL</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="image_url" [(ngModel)]="deviceNotification.ImageURL" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="type">Type</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="type" [(ngModel)]="deviceNotification.Type" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="target">Target</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="target" [(ngModel)]="deviceNotification.Target" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-8">
+        <div class="ui-g-4">
+          <label for="device">Device</label>
+        </div>
+        <div class="ui-g-8">
+        <p-dropdown id="device" [autoDisplayFirst]="false" [style]="{'width':'275px'}" [options]="deviceOptions"
+                     [(ngModel)]="deviceNotification.Device" [showClear]="true"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <span class="ui-float-label">
+        <textarea id="float-text" rows="3" cols="30" pInputTextarea [(ngModel)]="deviceNotification.Text"></textarea>
+        <label for="float-text">Text</label>
+      </span>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="expires_at">Expiration</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar id="expires_at" appendTo="body" hourFormat="12" showButtonBar="true" hideOnDateTimeSelect="true"
+                    [(ngModel)]="deviceNotification.ExpiresAt"
+                    [showTime]="true"></p-calendar>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-close" (click)="deleteDeviceNotification()" label="Delete"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="saveDeviceNotification()" label="Save"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
