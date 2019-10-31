@@ -14,7 +14,7 @@ export class RewardCodeComponent implements OnInit {
   code = '';
   quantity = '';
   maxUses = '';
-  platformOptions = [{name: 'Mobile', value: 'mobile'}, {name: 'Desktop', value: 'desktop'}];
+  platformOptions = [{name: 'Mobile', value: 'mobile'}, {name: 'Desktop', value: 'desktop'}, {name: 'Web', value: 'web'}];
   platform: any;
   versionConstraint = '';
 
