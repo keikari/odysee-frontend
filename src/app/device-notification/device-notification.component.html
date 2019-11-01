@@ -43,7 +43,7 @@
 </div>
 
 
-<!-- COUNTRY CODE DIALOG -->
+<!-- DEVICE NOTIFICATION DIALOG -->
 
 
 <p-dialog header="Device Notification Details" [(visible)]="displayDeviceNotificationDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '400px'}">
@@ -89,14 +89,15 @@
       </div>
     </div>
     <div class="ui-g-12">
-      <div class="ui-g-8">
-        <div class="ui-g-4">
-          <label for="device">Device</label>
-        </div>
-        <div class="ui-g-8">
-        <p-dropdown id="device" [autoDisplayFirst]="false" [style]="{'width':'275px'}" [options]="deviceOptions"
-                     [(ngModel)]="deviceNotification.Device" [showClear]="true"></p-dropdown>
-        </div>
+      <div class="ui-g-6">
+        <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Data Only"  [(ngModel)]="deviceNotification.IsDataOnly" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-2">
+        <label for="device">Device</label>
+      </div>
+      <div class="ui-g-4">
+      <p-dropdown id="device" [autoDisplayFirst]="false" [style]="{'width':'100px'}" [options]="deviceOptions"
+                   [(ngModel)]="deviceNotification.Device" [showClear]="true"></p-dropdown>
       </div>
     </div>
     <div class="ui-g-12">
