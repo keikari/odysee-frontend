@@ -1,5 +1,6 @@
 export class DeviceNotification {
   ID:         bigint | number = 0;
+  IsDataOnly:  true;
   Name:       string;
   Title:      string;
   Text:       string;

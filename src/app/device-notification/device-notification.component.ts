@@ -38,6 +38,7 @@ export class DeviceNotificationComponent implements OnInit {
 
         const deviceNotification = new DeviceNotification();
         deviceNotification.ID = c.id;
+        deviceNotification.IsDataOnly = c.is_data_only;
         deviceNotification.Name = c.name;
         deviceNotification.Title = c.title;
         deviceNotification.Text = c.text;
@@ -103,6 +104,7 @@ export class DeviceNotificationComponent implements OnInit {
     d.Type = d.Type && d.Type !== null ? d.Type : '';
     d.Target = d.Target && d.Target !== null ? d.Target : '';
      const params = new HttpParams().
+    set('is_data_only', d.IsDataOnly.toString()).
     set('title', d.Title.toString()).
     set('text', d.Text).
     set('image_url', d.ImageURL).
