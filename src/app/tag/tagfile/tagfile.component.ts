@@ -23,10 +23,9 @@ export class TagfileComponent implements OnInit {
       if (response !== undefined) {
         response.data.forEach((tag) => {
           const tagName = tag.display_name ? tag.display_name : tag.name;
-          console.log( tagName, tag.name);
           this.tagOptions = this.tagOptions.concat({name: tagName, value: tag.name});
         });
-        console.log(this.tagOptions);
+        this.selectedTag = this.tagOptions[0];
       }
     });
   }
