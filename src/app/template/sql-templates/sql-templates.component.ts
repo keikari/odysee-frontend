@@ -160,7 +160,7 @@ export class SqlTemplatesComponent implements OnInit {
     set('subject', this.selectedTemplate.Subject).
     set('expires_on', this.selectedTemplate.ExpiresOn !== null ? this.selectedTemplate.ExpiresOn.toISOString() : '').
     set('tags', this.selectedTemplate.TagsJoined).
-    set('device_notification', deviceNotification !== null ? deviceNotification.ID.toString() : '0').
+    set('device_notification', deviceNotification !== null && deviceNotification ? deviceNotification.ID.toString() : '0').
     set('starts_on', this.selectedTemplate.StartsOn !== null ? this.selectedTemplate.StartsOn.toISOString() : '');
     if (this.selectedTemplate.ID === 0) {
       this.rest.post('template', 'sql/' + this.selectedTemplate.Name, params).subscribe( (response) => {
