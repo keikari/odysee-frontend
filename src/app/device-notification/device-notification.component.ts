@@ -46,6 +46,7 @@ export class DeviceNotificationComponent implements OnInit {
         deviceNotification.Type = c.type;
         deviceNotification.Device = c.device;
         deviceNotification.Target = c.target;
+        deviceNotification.AnalyticsLabel = c.analytics_label;
         deviceNotification.AddedByID = c.added_by_id;
         deviceNotification.ExpiresAt = c.expires_at ? new Date(c.expires_at) : null;
         this.deviceNotifications = this.deviceNotifications.concat(deviceNotification);
@@ -111,6 +112,7 @@ export class DeviceNotificationComponent implements OnInit {
     set('type', d.Type).
     set('device', d.Device).
     set('target', d.Target).
+    set('analytics_label', d.AnalyticsLabel).
     set('expires_at', d.ExpiresAt !== null ? d.ExpiresAt.toISOString() : '');
     if (this.newDeviceNotification) {
       this.rest.post('template', 'notification/' + d.Name, params).subscribe( (response) => {

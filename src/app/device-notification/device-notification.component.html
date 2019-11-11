@@ -85,7 +85,15 @@
         <label for="target">Target</label>
       </div>
       <div class="ui-g-8">
-        <input pInputText id="target" [(ngModel)]="deviceNotification.Target" />
+        <input pInputText id="analytics_label" [(ngModel)]="deviceNotification.Target" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="analytics_label">Analytics</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="target" [(ngModel)]="deviceNotification.AnalyticsLabel" />
       </div>
     </div>
     <div class="ui-g-12">
