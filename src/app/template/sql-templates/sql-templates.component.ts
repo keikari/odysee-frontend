@@ -208,7 +208,7 @@ export class SqlTemplatesComponent implements OnInit {
         if ( response && response.success) {
           this.isBlocked = false;
           this.messageService.clear();
-          this.messageService.add({severity: 'success', summary: 'Success', detail: 'template validated'});
+          this.messageService.add({severity: 'success', summary: 'Success', detail: `template validated, will go to ${response.data.nr_users} users`});
         } else if ( response && response.error) {
           this.messageService.clear();
           this.messageService.add({severity: 'error', summary: 'SQL Template Validation:', detail: response.error});
