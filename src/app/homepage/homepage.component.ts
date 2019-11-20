@@ -38,7 +38,8 @@ export class HomepageComponent implements OnInit {
   private loadCategories() {
     this.Categories = [];
     this.rest.get('featured_category', 'list', new HttpParams()).subscribe((catResponse) => {
-      catResponse.data.forEach((cat) => {
+      if (catResponse.data && catResponse.data !== null) {
+        catResponse.data.forEach((cat) => {
 
         const category = new Category();
         category.ID = cat.id;
@@ -49,7 +50,8 @@ export class HomepageComponent implements OnInit {
         this.loadFilesForCategory(category);
         this.Categories = this.Categories.concat(category);
         this.selectedCategory = this.Categories[0];
-      });
+        });
+      }
     });
   }
 
@@ -83,7 +85,7 @@ export class HomepageComponent implements OnInit {
     }
     if (this.newCategory) {
       this.rest.get('featured_category', 'new', params).subscribe((response) => {
-        if (response && response.data) {
+        if (response && response.data && response.data !== null) {
           this.loadCategories();
           this.displayCategoryDialog = false;
           this.newCategory = false;

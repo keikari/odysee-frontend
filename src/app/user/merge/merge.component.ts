@@ -23,7 +23,7 @@ export class MergeComponent implements OnInit {
     set('secondary_user_id', this.secondary);
 
     this.rest.get('user', 'merge', params).subscribe((response: any) => {
-      if (response !== undefined) {
+      if (response.data && response.data !== null) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Success', detail: JSON.stringify(response.data, null, 1)});
       }
