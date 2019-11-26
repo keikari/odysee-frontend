@@ -3,8 +3,11 @@ import {DeviceNotification} from '../../../device-notification/model/device-noti
 export class SQLTemplate {
   ID: bigint | number = 0;
   public Name: string;
-  IgnoreRules:  boolean;
-  SendOnce:     boolean;
+  PrimaryEmails = true;
+  VerifiedEmails = true;
+  EnabledEmails = true;
+  OneNotificationPerDay = true;
+  SendOnce = true;
   RunPeriodHrs: bigint | number = 0;
   UserQuery:    string;
   StartsOn:     Date;
