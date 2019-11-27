@@ -66,14 +66,25 @@
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tags</span>
   <div class="p-col-7 p-col-align-center"><p-chips [(ngModel)]="selectedTemplate.Tags" [addOnTab]="true" [addOnBlur]="true" [allowDuplicate]="false"></p-chips></div>
   <div class="p-col-7 p-col-align-center">
+    <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Rules</span>
+  </div>
+  <div class="p-col-7 p-col-align-center">
     <p-card class="p-col-9 tagfilecard">
       Ignoring the rules will ignore the following rules: Emails must be verified, enabled and primary. Users must not
       have received a notification in the past 24 hrs. Send once will make sure the users have not recieved this template
       yet.
     </p-card>
-    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Ignore Rules"  [(ngModel)]="selectedTemplate.IgnoreRules" binary="true"></p-checkbox>
+  </div>
+  <div class="p-col-7 p-col-align-center">
     <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Send Once"  [(ngModel)]="selectedTemplate.SendOnce" binary="true"></p-checkbox>
-    <input class="p-col-4 p-justify-center ui-widget" type="text" pInputText placeholder="Run every x hours" style="margin:10px" [(ngModel)]="selectedTemplate.RunPeriodHrs">
+    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Primary Emails"  [(ngModel)]="selectedTemplate.PrimaryEmails" binary="true"></p-checkbox>
+    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Verified Emails"  [(ngModel)]="selectedTemplate.VerifiedEmails" binary="true"></p-checkbox>
+    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="Enabled Emails"  [(ngModel)]="selectedTemplate.EnabledEmails" binary="true"></p-checkbox>
+    <p-checkbox class="p-col-4 p-col-align-center ui-widget" label="One Notification/Day"  [(ngModel)]="selectedTemplate.OneNotificationPerDay" binary="true"></p-checkbox>
+  </div>
+  <div class="p-col-7 p-col-align-center">
+    <label class="p-col-6 p-justify-center ui-widget">Run every x hours</label>
+    <input class="p-col-6 p-justify-center ui-widget" type="text" pInputText placeholder="Run every x hours" style="margin:10px" [(ngModel)]="selectedTemplate.RunPeriodHrs">
   </div>
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Time Restrictions</span>
   <div class="p-col-7 p-col-align-center">

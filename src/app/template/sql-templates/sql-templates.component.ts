@@ -81,7 +81,10 @@ export class SqlTemplatesComponent implements OnInit {
     template.UserQuery = c.user_query;
     template.Template = c.template;
     template.SendOnce = c.send_once;
-    template.IgnoreRules = c.ignore_rules;
+    template.PrimaryEmails = c.primary_emails;
+    template.VerifiedEmails = c.verified_emails;
+    template.EnabledEmails = c.enabled_emails;
+    template.OneNotificationPerDay = c.one_notification_per_day;
     template.RunPeriodHrs = c.run_period_hrs;
     template.CreatedBy = c.added_by_id;
     template.TagsJoined = c.tags;
@@ -129,7 +132,10 @@ export class SqlTemplatesComponent implements OnInit {
   }
 
   saveSQLTemplate() {
-    const ignoreRules = this.selectedTemplate.IgnoreRules;
+    const primaryEmails = this.selectedTemplate.PrimaryEmails;
+    const verifiedEmails = this.selectedTemplate.VerifiedEmails;
+    const enabledEmails = this.selectedTemplate.EnabledEmails;
+    const oneNotificationPerDay = this.selectedTemplate.OneNotificationPerDay;
     const exipresOn = this.selectedTemplate.ExpiresOn;
     const startsOn = this.selectedTemplate.StartsOn;
     const description = this.selectedTemplate.Description;
@@ -141,7 +147,10 @@ export class SqlTemplatesComponent implements OnInit {
     const deviceNotification = this.selectedTemplate.DeviceNotification;
 
     this.selectedTemplate.SendOnce = sendOnce && sendOnce !== null ? sendOnce : false;
-    this.selectedTemplate.IgnoreRules = ignoreRules && ignoreRules !== null ? ignoreRules : false;
+    this.selectedTemplate.PrimaryEmails = primaryEmails && primaryEmails !== null ? primaryEmails : false;
+    this.selectedTemplate.VerifiedEmails = verifiedEmails && verifiedEmails !== null ? verifiedEmails : false;
+    this.selectedTemplate.EnabledEmails = enabledEmails && enabledEmails !== null ? enabledEmails : false;
+    this.selectedTemplate.OneNotificationPerDay = oneNotificationPerDay && oneNotificationPerDay !== null ? oneNotificationPerDay : false;
     this.selectedTemplate.ExpiresOn = exipresOn && exipresOn !== null ? exipresOn : null;
     this.selectedTemplate.StartsOn = startsOn && startsOn !== null ? startsOn : null;
     this.selectedTemplate.UserQuery = userQuery && userQuery !== null ? userQuery : '';
@@ -152,7 +161,10 @@ export class SqlTemplatesComponent implements OnInit {
 
     const params = new HttpParams().
     set('template', this.selectedTemplate.Template).
-    set('ignore_rules', this.selectedTemplate.IgnoreRules.toString()).
+    set('primary_emails', this.selectedTemplate.PrimaryEmails.toString()).
+    set('verified_emails', this.selectedTemplate.VerifiedEmails.toString()).
+    set('enabled_emails', this.selectedTemplate.EnabledEmails.toString()).
+    set('one_notification_per_day', this.selectedTemplate.OneNotificationPerDay.toString()).
     set('send_once', this.selectedTemplate.SendOnce.toString()).
     set('run_period_hrs', this.selectedTemplate.RunPeriodHrs.toString()).
     set('description', this.selectedTemplate.Description).
