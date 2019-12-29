@@ -89,8 +89,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
               <tr>
-                <td *ngFor="let col of columns">
-                  {{rowData[col.field]}}
+                <td *ngFor="let col of columns; let i = index">
+                  <a *ngIf="i === 0" href="https://youtube.com/channel/{{rowData.ChannelID}}/videos">{{rowData[col.field]}}</a>
+                  <span *ngIf="i !== 0">{{rowData[col.field]}}</span>
                 </td>
               </tr>
             </ng-template>

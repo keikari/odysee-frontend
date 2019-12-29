@@ -141,6 +141,7 @@ export class PendingComponent implements OnInit {
           u.youtube_channels.forEach((y)  => {
             const ytChannel = new YoutubeChannel();
             ytChannel.ChannelName = y.channel_name;
+            ytChannel.ChannelID = y.channel_id;
             ytChannel.LBRYChannelName = y.lbry_channel_name;
             ytChannel.Subscribers = y.subscribers;
             ytChannel.Videos = y.videos;
