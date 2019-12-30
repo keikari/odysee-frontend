@@ -20,6 +20,7 @@ import {Note} from './model/note/note';
 export class PendingComponent implements OnInit {
   DisplayedUsers: User[] = [];
   pendingUsers: User[] = [];
+  verifiedUsers: User[] = [];
   userColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'Duplicates', header: 'Duplicates', width: '13px'},
@@ -71,7 +72,7 @@ export class PendingComponent implements OnInit {
   triggerFilter: string;
   showVerified: boolean;
   showAutoApprovals: boolean;
-  verifiedUsers: User[] = [];
+  verificationMethod = 'all';
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0 ) {
@@ -91,11 +92,12 @@ export class PendingComponent implements OnInit {
     this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
     this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
     this.loadPending();
-    this.setUsers();
   }
 
   public loadPending() {
     this.pendingUsers = [];
+    this.verifiedUsers = [];
+    this.DisplayedUsers = [];
     let params = new HttpParams();
     if ( this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
@@ -105,6 +107,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.showAutoApprovals) {
       params = params.set('auto_approved_only', String(this.showAutoApprovals));
+    }
+    if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
+      params = params.set('verification_method', this.verificationMethod);
     }
     this.rest.get('administrative', 'list_pending', params).subscribe((userResponse) => {
       userResponse.data.forEach((u) => {
@@ -221,6 +226,7 @@ export class PendingComponent implements OnInit {
         }
       });
     });
+    this.setUsers();
   }
 
   setUsers() {
@@ -234,7 +240,6 @@ export class PendingComponent implements OnInit {
 
   toggleAutoApprovals() {
     this.loadPending();
-    this.setUsers();
   }
 
 

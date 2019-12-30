@@ -1,6 +1,11 @@
 <p-card>
   <div class="p-grid p-justify-center">
-    <p-checkbox class="p-col-2" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
+    <span class="p-col-1">Verification:</span>
+    <div class="p-col-1"><p-radioButton name="group1" value="all" label="Everything" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt1"></p-radioButton></div>
+    <div class="p-col-1"><p-radioButton name="group1" value="youtube" label="Youtuber" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt2"></p-radioButton></div>
+    <div class="p-col-1"><p-radioButton name="group1" value="stripe" label="CreditCard" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt3"></p-radioButton></div>
+    <div class="p-col-2"><p-radioButton name="group1" value="phone" label="Phone" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt4"></p-radioButton></div>
+    <p-checkbox class="p-col-1" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
     <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="toggleAutoApprovals()"></p-checkbox>
     <span class="ui-float-label">
       <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
