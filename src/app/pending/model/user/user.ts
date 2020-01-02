@@ -20,7 +20,7 @@ export class User {
   CreditCards: CreditCard[] = [];
   Accesses: Access[] = [];
   DuplicateAccounts: DuplicateAccount[] = [];
-  RedeemedReward: RedeemedReward[] = [];
+  RedeemedRewards: RedeemedReward[] = [];
   Installs: Install[] = [];
   Notes: Note[] = [];
   PrimaryEmail: string;

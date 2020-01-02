@@ -59,8 +59,7 @@ export class PendingComponent implements OnInit {
     {field: 'Type', header: 'Type'},
     {field: 'Amount', header: 'Amount'},
     {field: 'CreatedAt', header: 'Created At'},
-    {field: 'Platform', header: 'Platform'},
-  ];
+    {field: 'Platform', header: 'Platform'}];
   dupColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
@@ -213,7 +212,7 @@ export class PendingComponent implements OnInit {
             reward.Amount = r.amount;
             reward.CreatedAt = r.created_at;
             reward.Platform = r.platform;
-            user.RedeemedReward.push(reward);
+            user.RedeemedRewards.push(reward);
           });
         }
         // Installs
