@@ -11,6 +11,7 @@ import {Access} from './model/access/access';
 import {DuplicateAccount} from './model/duplicate_account/duplicate-account';
 import {Install} from './model/install/install';
 import {Note} from './model/note/note';
+import {RedeemedReward} from './model/redeemed-reward/redeemed-reward';
 
 @Component({
   selector: 'app-pending',
@@ -54,6 +55,12 @@ export class PendingComponent implements OnInit {
     {field: 'Country', header: 'Country'},
     // {field: 'Score', header: 'Score'},
     {field: 'AccessTime', header: 'Time'}];
+  redeemedRewardColumns = [
+    {field: 'Type', header: 'Type'},
+    {field: 'Amount', header: 'Amount'},
+    {field: 'CreatedAt', header: 'Created At'},
+    {field: 'Platform', header: 'Platform'},
+  ];
   dupColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
@@ -196,6 +203,17 @@ export class PendingComponent implements OnInit {
             duplicate.FirstIPMatch = d.first_ip_match;
             duplicate.PrimaryEmail = d.primary_email;
             user.DuplicateAccounts.push(duplicate);
+          });
+        }
+        // Redeemed Rewards
+        if (u.redeemed_rewards) {
+          u.redeemed_rewards.forEach((r) => {
+            const reward = new RedeemedReward();
+            reward.Type = r.type;
+            reward.Amount = r.amount;
+            reward.CreatedAt = r.created_at;
+            reward.Platform = r.platform;
+            user.RedeemedReward.push(reward);
           });
         }
         // Installs

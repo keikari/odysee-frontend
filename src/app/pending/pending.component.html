@@ -140,6 +140,25 @@
             </ng-template>
           </p-table>
         </p-accordionTab>
+        <p-accordionTab header="Rewards">
+          <p-table [columns]="redeemedRewardColumns" [value]="rowData.RedemeedRewards">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns" [ngSwitch]="true">
+                  <span *ngSwitchCase="col.field === 'CreatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+                  <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordionTab>
         <p-accordionTab header="Duplicate Accounts">
           <p-table [columns]="dupColumns" [value]="rowData.DuplicateAccounts">
             <ng-template pTemplate="header" let-columns>
