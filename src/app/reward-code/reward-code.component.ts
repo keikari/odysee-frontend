@@ -17,6 +17,7 @@ export class RewardCodeComponent implements OnInit {
   platformOptions = [{name: 'Mobile', value: 'mobile'}, {name: 'Desktop', value: 'desktop'}, {name: 'Web', value: 'web'}];
   platform: any;
   versionConstraint = '';
+  rewardClass = '';
 
   constructor(public rest: RestService, private messageService: MessageService) { }
 
@@ -46,9 +47,13 @@ export class RewardCodeComponent implements OnInit {
       params = params.set('app_version_constraint', this.versionConstraint);
     }
 
+    if ( this.rewardClass !== '') {
+      params = params.set('class', this.rewardClass);
+    }
+
     this.rest.get('reward_code', 'new', params).subscribe((response: any) => {
       if (response !== undefined) {
-        this.messageService.clear()
+        this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Success', detail: response.data});
       }
     });
