@@ -1,0 +1,36 @@
+<p-table [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th style="width: 4em"></th>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+      <th>Approve</th><th>Dismiss</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+    <tr title="{{rowData.LastNote}}">
+      <td>
+        <a href="#" [pRowToggler]="rowData">
+          <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+        </a>
+      </td>
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+      <td>
+        <button type="button" pButton icon="fa fa-check" (click)="approve(rowData)" label="Approve" class="ui-button-success"></button>
+      </td>
+      <td>
+        <button type="button" pButton icon="fa fa-check" (click)="dismiss(rowData)" label="Dismiss" class="ui-button-warning"></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+    <tr>
+      <td  [attr.colspan]="columns.length + 3">
+        <app-user-detail [DisplayedUser]="rowData" (userReject)="reject($event)"></app-user-detail>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

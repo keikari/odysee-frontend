@@ -41,11 +41,14 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TagchannelComponent } from './tag/tagchannel/tagchannel.component';
-import { PendingComponent } from './pending/pending.component';
+import { PendingComponent } from './scams/pending.component';
 import {AccordionModule} from 'primeng/accordion';
 import { CountryCodesComponent } from './country-codes/country-codes.component';
 import { SqlTemplatesComponent } from './template/sql-templates/sql-templates.component';
 import { DeviceNotificationComponent } from './device-notification/device-notification.component';
+import { AuditUserComponent } from './scams/audit-user.component';
+import { UserDetailComponent } from './scams/user-detail/user-detail.component';
+import { UserReviewComponent } from './scams/user-review/user-review.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
 import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule} from 'primeng/primeng';
 /* Import the language you need to highlight */
@@ -68,6 +71,8 @@ const appRoutes: Routes = [
   { path: 'status', component: StatusComponent },
   { path: 'tag/channel', component: TagchannelComponent },
   { path: 'admin/pending', component: PendingComponent },
+  { path: 'admin/audit', component: AuditUserComponent },
+  { path: 'admin/audit/:id', component: AuditUserComponent },
   { path: 'admin/countrycodes', component: CountryCodesComponent },
   { path: 'notifications', component: DeviceNotificationComponent },
   { path: '', component: StatusComponent}];
@@ -91,7 +96,10 @@ const appRoutes: Routes = [
     CountryCodesComponent,
     SqlTemplatesComponent,
     PrismComponent,
-    DeviceNotificationComponent
+    DeviceNotificationComponent,
+    AuditUserComponent,
+    UserDetailComponent,
+    UserReviewComponent
   ],
   imports: [
     BrowserAnimationsModule,
