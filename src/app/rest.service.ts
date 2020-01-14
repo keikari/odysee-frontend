@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import {MessageService} from 'primeng/api';
 import {environment} from '../environments/environment';
+import {JSHttpParamEncoder} from './util/jshttp-param-encoder';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,7 @@ export class RestService {
 
   patch(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
+    params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.patch(url, null, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
@@ -41,6 +43,7 @@ export class RestService {
 
   put(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
+    params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.put(url, null, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
@@ -49,6 +52,7 @@ export class RestService {
 
   post(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
+    params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.post(url, null, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
@@ -57,6 +61,7 @@ export class RestService {
 
   delete(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
+    params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.delete(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
@@ -65,6 +70,7 @@ export class RestService {
 
   get(resource: string, action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
+    params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
@@ -72,6 +78,7 @@ export class RestService {
   }
 
   geturl(url: string, params: HttpParams): Observable<any> {
+    params = this.setEncoder(params);
     return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(url))
     );
@@ -79,6 +86,7 @@ export class RestService {
 
   getAction(action: string, params: HttpParams): Observable<any> {
     params = params.set('auth_token', this.token);
+    params = this.setEncoder(params);
     const url = this.endpoint + '/' + action;
     return this.http.get(url, {headers: null, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>( action))
@@ -92,6 +100,14 @@ export class RestService {
 
   public setEndpoint(endpoint: string) {
     this.endpoint = endpoint;
+  }
+
+  private setEncoder(params: HttpParams): HttpParams {
+    let p = new HttpParams({ encoder: new JSHttpParamEncoder() });
+    params.keys().forEach((key) => {
+      p = p.set(key, params.get(key));
+    });
+    return p;
   }
 }
 
