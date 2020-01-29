@@ -49,7 +49,8 @@ export class UserDetailComponent implements OnInit {
     {field: 'Type', header: 'Type'},
     {field: 'Amount', header: 'Amount'},
     {field: 'CreatedAt', header: 'Created At'},
-    {field: 'Platform', header: 'Platform'}];
+    {field: 'Platform', header: 'Platform'},
+    {field: 'TransactionID', header: 'TransactionID'}];
   dupColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},

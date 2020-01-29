@@ -126,6 +126,7 @@ export class User {
         reward.Amount = r.amount;
         reward.CreatedAt = r.created_at;
         reward.Platform = r.platform;
+        reward.TransactionID = r.transaction_id;
         this.RedeemedRewards.push(reward);
       });
     }

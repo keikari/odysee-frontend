@@ -3,4 +3,5 @@ export class RedeemedReward {
   Amount: Number;
   CreatedAt: Date;
   Platform: string;
+  TransactionID: string;
 }

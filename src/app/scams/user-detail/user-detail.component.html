@@ -103,7 +103,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td *ngFor="let col of columns" [ngSwitch]="true">
+          <td *ngFor="let col of columns; let i = index" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'TransactionID'"><a href="https://explorer.lbry.com/tx/{{rowData[col.field]}}">{{rowData[col.field]}}</a></span>
             <span *ngSwitchCase="col.field === 'CreatedAt'">{{ rowData[col.field] | date:'short' }} </span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
