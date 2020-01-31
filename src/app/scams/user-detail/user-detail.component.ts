@@ -65,6 +65,16 @@ export class UserDetailComponent implements OnInit {
   noteColumns = [
     {field: 'Note', header: 'Note'},
     {field: 'UpdatedAt', header: 'UpdatedAt'}];
+  inviterColumns = [
+    {field: 'UserID', header: 'UserID'},
+    {field: 'PrimaryEmail', header: 'Email'},
+    {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
+    {field: 'RewardEnabled', header: 'Rewards Enabled'},
+    {field: 'IsEmailVerified', header: 'Verified'},
+    {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
+    {field: 'InvitedUsers', header: 'Invited Users'},
+    {field: 'InviteRewards', header: 'Invite Rewards'},
+  ];
 
   constructor(public rest: RestService, private messageService: MessageService) {
   }

@@ -7,6 +7,7 @@ import {DuplicateAccount} from '../duplicate_account/duplicate-account';
 import {RedeemedReward} from '../redeemed-reward/redeemed-reward';
 import {Install} from '../install/install';
 import {Note} from '../note/note';
+import {Inviter} from '../inviter/inviter';
 
 
 export class User {
@@ -24,6 +25,7 @@ export class User {
   RedeemedRewards: RedeemedReward[] = [];
   Installs: Install[] = [];
   Notes: Note[] = [];
+  Inviter: Inviter[] = [];
   PrimaryEmail: string;
   LastAccessTime: string;
   // Calculated Columns
@@ -150,6 +152,19 @@ export class User {
         this.Notes.push(note);
         this.LastNote = note.Note;
       });
+    }
+    // Inviter
+    if (u.inviter) {
+        const inviter = new Inviter();
+        inviter.InvitedUsers = u.inviter.invited_users;
+        inviter.InviteRewards = u.inviter.invite_rewards;
+        inviter.IsEmailVerified = u.inviter.is_email_verified;
+        inviter.PrimaryEmail = u.inviter.primary_email;
+        inviter.RewardEnabled = u.inviter.reward_enabled;
+        inviter.RewardStatusChangeTrigger = u.inviter.reward_status_change_trigger;
+        inviter.TotalRedeemedRewards = u.inviter.total_redeemed_rewards;
+        inviter.UserID = u.inviter.user_id;
+        this.Inviter.push(inviter);
     }
     return this;
   }

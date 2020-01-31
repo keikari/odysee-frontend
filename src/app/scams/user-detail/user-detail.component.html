@@ -178,4 +178,23 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
+  <p-accordionTab header="Inviter">
+    <p-table [columns]="inviterColumns" [value]="DisplayedUser.Inviter">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{col.header}}
+            <p>{{DisplayedUser.Inviter[col.field]}}</p>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <span>{{rowData[col.field]}}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
 </p-accordion>

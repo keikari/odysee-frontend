@@ -11,6 +11,7 @@ import {Access} from './user-detail/model/access/access';
 import {DuplicateAccount} from './user-detail/model/duplicate_account/duplicate-account';
 import {Install} from './user-detail/model/install/install';
 import {Note} from './user-detail/model/note/note';
+import {Inviter} from './user-detail/model/inviter/inviter';
 import {RedeemedReward} from './user-detail/model/redeemed-reward/redeemed-reward';
 
 @Component({
