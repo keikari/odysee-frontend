@@ -25,10 +25,15 @@ export class AppComponent implements OnInit {
   settingsVisible: boolean;
   defaultAPI = environment.apiurl;
   customAPI = '';
-  disabled = true;
+  customAPIEnabled = false;
 
   ngOnInit() {
     this.token = localStorage.getItem('token');
+    const apiUrl = localStorage.getItem('api_url');
+    if (apiUrl !== '') {
+      this.customAPIEnabled = true;
+      this.customAPI = apiUrl;
+    }
     if (this.token) {
       this.authenticate(this.token);
     }
@@ -100,16 +105,18 @@ export class AppComponent implements OnInit {
   }
 
   setCustomAPIHost() {
-    if ( this.disabled ) {
+    if ( !this.customAPIEnabled ) {
       this.rest.setEndpoint(this.defaultAPI);
+      localStorage.removeItem('api_url');
     } else {
       this.rest.setEndpoint(this.customAPI);
+      localStorage.setItem('api_url', this.customAPI);
     }
   }
 
-  setChecked() {
-    this.disabled = !this.disabled;
-    if (this.disabled) {
+  toggleCustomAPI(checked: boolean) {
+    this.customAPIEnabled = checked;
+    if (!this.customAPIEnabled) {
       this.customAPI = '';
       this.rest.setEndpoint(this.defaultAPI);
     }

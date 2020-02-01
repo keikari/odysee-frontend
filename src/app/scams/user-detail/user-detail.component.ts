@@ -75,6 +75,18 @@ export class UserDetailComponent implements OnInit {
     {field: 'InvitedUsers', header: 'Invited Users'},
     {field: 'InviteRewards', header: 'Invite Rewards'},
   ];
+  ownedChannelsColumns = [
+    {field: 'URI', header: 'URI'},
+    {field: 'SignedStreams', header: 'Signed Streams'},
+  ];
+  invitedUsersColumns = [
+    {field: 'UserID', header: 'UserID'},
+    {field: 'PrimaryEmail', header: 'Email'},
+    {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
+    {field: 'RewardEnabled', header: 'Rewards Enabled'},
+    {field: 'IsEmailVerified', header: 'Verified'},
+    {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
+  ];
 
   constructor(public rest: RestService, private messageService: MessageService) {
   }

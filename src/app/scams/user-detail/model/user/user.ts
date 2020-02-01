@@ -8,6 +8,8 @@ import {RedeemedReward} from '../redeemed-reward/redeemed-reward';
 import {Install} from '../install/install';
 import {Note} from '../note/note';
 import {Inviter} from '../inviter/inviter';
+import {OwnedChannel} from '../owned-channel/owned-channel';
+import {InvitedUser} from '../invited-user/invited-user';
 
 
 export class User {
@@ -26,8 +28,12 @@ export class User {
   Installs: Install[] = [];
   Notes: Note[] = [];
   Inviter: Inviter[] = [];
+  OwnedChannels: OwnedChannel[] = [];
+  InvitedUsers: InvitedUser[] = [];
   PrimaryEmail: string;
   LastAccessTime: string;
+  ReferredUsers: number;
+  AcceptedInvites: number;
   // Calculated Columns
   Duplicates: number;
   IsCountryMatch: boolean;
@@ -41,6 +47,8 @@ export class User {
     this.GivenName = u.given_name;
     this.FamilyName = u.family_name;
     this.RewardStatusChangeTrigger = u.reward_status_change_trigger;
+    this.ReferredUsers = u.referred_users;
+    this.AcceptedInvites = u.accepted_invites;
     // Emails
     if (u.emails) {
       u.emails.forEach((e) => {
@@ -166,6 +174,69 @@ export class User {
         inviter.UserID = u.inviter.user_id;
         this.Inviter.push(inviter);
     }
+    // OwnedChannels
+    if (u.owned_channels) {
+      u.owned_channels.forEach((o) => {
+      const ownedChannel = new OwnedChannel();
+      ownedChannel.URI = o.uri;
+      ownedChannel.SignedStreams = o.signed_streams;
+      this.OwnedChannels.push(ownedChannel);
+      });
+    }
+    // InvitedUsers
+    if (u.invited_users) {
+      u.invited_users.forEach((i) => {
+        const invitedUser = new InvitedUser();
+        invitedUser.UserID = i.user_id;
+        invitedUser.IsEmailVerified = i.is_email_verified;
+        invitedUser.PrimaryEmail = i.primary_email;
+        invitedUser.RewardEnabled = i.reward_enabled;
+        invitedUser.RewardStatusChangeTrigger = i.reward_status_change_trigger;
+        invitedUser.TotalRedeemedRewards = i.total_redeemed_rewards;
+        this.InvitedUsers.push(invitedUser);
+      });
+    }
     return this;
+  }
+  getCSSColor(fieldName: string): any {
+    const defaultColor = {
+      'background-color': '#FFFFFF'
+    };
+
+    if (fieldName !== 'UserID') {
+      return defaultColor;
+    }
+
+    if (this.InvitedUsers.length === 0 && this.Inviter.length === 0) {
+      return defaultColor;
+    } else if (this.InvitedUsers.length === 0 && this.Inviter.length > 0) {
+      return {
+        'background-color': '#10fcff'
+      };
+    } else if (this.InvitedUsers.length > 0 && this.Inviter.length === 0) {
+      return {
+        'background-color': '#8bff86'
+      };
+    } else if (this.InvitedUsers.length > 0 && this.Inviter.length > 0) {
+      return {
+        'background-color': '#ffb7e0'
+      };
+    }
+
+    return defaultColor;
+  }
+
+  getTitle(fieldName: string): string {
+    if (fieldName === 'LastAccessTime') {
+      return this.LastAccessTime;
+    }
+    if (fieldName === 'PrimaryEmail') {
+      return this.PrimaryEmail;
+    }
+    if (fieldName !== 'UserID') {
+      return this.LastNote;
+    }
+    return 'Invited:' + this.ReferredUsers + '  Inviter:' + this.Inviter.length +
+      ' Accepted:' + this.AcceptedInvites;
   }
 }

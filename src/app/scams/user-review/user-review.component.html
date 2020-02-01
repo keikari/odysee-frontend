@@ -15,8 +15,9 @@
           <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
         </a>
       </td>
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+      <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)" [title]="rowData.getTitle(col.field)">
+        <span *ngSwitchCase="col.field === 'UserID'">{{ rowData[col.field] }} </span>
+        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
       </td>
       <td>
         <button type="button" pButton icon="fa fa-check" (click)="approve(rowData)" label="Approve" class="ui-button-success"></button>

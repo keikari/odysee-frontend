@@ -18,9 +18,9 @@
       <span id="appname" class="p-col-12 ui-widget" style="font-size:300%;justify-content: center;display: flex;">Commander Login</span>
       <div class="p-col-12 ui-inputgroup">
         <span class="ui-inputgroup-addon">
-          <p-checkbox label="Custom API" (onChange)="setChecked()" binary="true"></p-checkbox>
+          <p-checkbox label="Custom API" (onChange)="toggleCustomAPI($event)" binary="true" [(ngModel)]="customAPIEnabled"></p-checkbox>
         </span>
-        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="disabled" [(ngModel)]="customAPI"
+        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="!customAPIEnabled" [(ngModel)]="customAPI"
                (keyup.enter)="setCustomAPIHost()" (blur)="setCustomAPIHost()">
       </div>
       <p-card class="p-col-4">
