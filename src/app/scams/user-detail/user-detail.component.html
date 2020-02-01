@@ -170,7 +170,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td *ngFor="let col of columns" [ngSwitch]="true">
+          <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)">
             <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>

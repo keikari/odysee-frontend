@@ -34,6 +34,7 @@ export class User {
   LastAccessTime: string;
   ReferredUsers: number;
   AcceptedInvites: number;
+  RewardApproved: boolean;
   // Calculated Columns
   Duplicates: number;
   IsCountryMatch: boolean;
@@ -49,6 +50,7 @@ export class User {
     this.RewardStatusChangeTrigger = u.reward_status_change_trigger;
     this.ReferredUsers = u.referred_users;
     this.AcceptedInvites = u.accepted_invites;
+    this.RewardApproved = u.reward_approved;
     // Emails
     if (u.emails) {
       u.emails.forEach((e) => {
@@ -156,6 +158,8 @@ export class User {
       u.notes.forEach((n) => {
         const note = new Note();
         note.Note = n.note;
+        note.OldStatus = n.old_status;
+        note.NewStatus = n.new_status;
         note.UpdatedAt = new Date(n.updated_at);
         this.Notes.push(note);
         this.LastNote = note.Note;
@@ -203,6 +207,16 @@ export class User {
       'background-color': '#FFFFFF'
     };
 
+    if (fieldName === 'RewardStatusChangeTrigger' || fieldName === 'Note') {
+      if (this.RewardApproved) {
+        return {
+          'background-color': '#8bff86'
+        };
+      }
+      return {
+        'background-color': '#ffab99'
+      };
+    }
     if (fieldName !== 'UserID') {
       return defaultColor;
     }
