@@ -213,7 +213,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
+        <tr *ngIf="rowData.PrimaryEmail !== ''">
           <td>
             <a target="_blank" [routerLink]="['/admin/audit',rowData.UserID]"><i class="pi pi-info-circle"></i></a>
           </td>
