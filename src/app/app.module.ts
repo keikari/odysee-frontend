@@ -143,7 +143,7 @@ const appRoutes: Routes = [
     MessageService,
     TerminalService,
     [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
-    [{ provide: DEFAULT_TIMEOUT, useValue: 360000 }],
+    [{ provide: DEFAULT_TIMEOUT, useValue: 900000 }],
   ],
   bootstrap: [AppComponent]
 })
