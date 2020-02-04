@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -55,6 +55,7 @@ import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule} from 'primeng/p
 import 'prismjs';
 import 'prismjs/components/prism-sql.js';
 import { PrismComponent } from './prism/prism.component';
+import {DEFAULT_TIMEOUT, TimeoutInterceptor} from './timeout-interceptor';
 
 
 const appRoutes: Routes = [
@@ -137,7 +138,13 @@ const appRoutes: Routes = [
       {enableTracing: true} // <-- debugging purposes only
     )
   ],
-  providers: [RestService, MessageService, TerminalService],
+  providers: [
+    RestService,
+    MessageService,
+    TerminalService,
+    [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
+    [{ provide: DEFAULT_TIMEOUT, useValue: 360000 }],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
