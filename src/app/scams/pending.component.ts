@@ -28,6 +28,7 @@ export class PendingComponent implements OnInit {
   showVerified: boolean;
   showAutoApprovals: boolean;
   verificationMethod = 'all';
+  invitedByFilter: bigint;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0 ) {
@@ -65,6 +66,10 @@ export class PendingComponent implements OnInit {
     }
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
+    }
+    if ( this.invitedByFilter > 0 ) {
+      params = params.set('invited_by_filter', this.invitedByFilter.toString());
+      localStorage.setItem('invited_by_filter', this.invitedByFilter.toString());
     }
     this.rest.get('administrative', 'list_pending', params).subscribe((userResponse) => {
       userResponse.data.forEach((u) => {
