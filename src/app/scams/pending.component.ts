@@ -27,6 +27,7 @@ export class PendingComponent implements OnInit {
   triggerFilter: string;
   showVerified: boolean;
   showAutoApprovals: boolean;
+  showTriggeredOnly: boolean;
   verificationMethod = 'all';
   invitedByFilter: bigint;
 
@@ -64,6 +65,9 @@ export class PendingComponent implements OnInit {
     if (this.showAutoApprovals) {
       params = params.set('auto_approved_only', String(this.showAutoApprovals));
     }
+    if (this.showTriggeredOnly) {
+      params = params.set('triggered_only', String(this.showTriggeredOnly));
+    }
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
     }
@@ -95,6 +99,10 @@ export class PendingComponent implements OnInit {
   }
 
   toggleAutoApprovals() {
+    this.loadPending();
+  }
+
+  toggleTriggeredOnly() {
     this.loadPending();
   }
 

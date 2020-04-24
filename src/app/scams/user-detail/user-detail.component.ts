@@ -43,7 +43,7 @@ export class UserDetailComponent implements OnInit {
     {field: 'IP', header: 'IP'},
     {field: 'ISP', header: 'ISP'},
     {field: 'Country', header: 'Country'},
-    // {field: 'Score', header: 'Score'},
+    {field: 'Score', header: 'Score'},
     {field: 'AccessTime', header: 'Time'}];
   redeemedRewardColumns = [
     {field: 'Type', header: 'Type'},
