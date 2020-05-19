@@ -84,6 +84,8 @@ export class PendingComponent implements OnInit {
           this.verifiedUsers.push(user);
         }
       });
+      this.pendingUsers = this.pendingUsers.reverse();
+      this.verifiedUsers = this.verifiedUsers.reverse();
     });
     this.setUsers();
   }
