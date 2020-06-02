@@ -9,6 +9,10 @@
     <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="toggleAutoApprovals()"></p-checkbox>
     <p-checkbox class="p-col-3" label="Triggered Only"  binary="true" [(ngModel)]="showTriggeredOnly" (onChange)="toggleTriggeredOnly()"></p-checkbox>
     <span class="ui-float-label">
+      <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>
+      <label for="float-input-lookback">look back 2 days</label>
+    </span>
+    <span class="ui-float-label">
       <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
       <label for="float-input">Filter Trigger To</label>
     </span>

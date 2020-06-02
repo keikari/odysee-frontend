@@ -30,6 +30,7 @@ export class PendingComponent implements OnInit {
   showTriggeredOnly: boolean;
   verificationMethod = 'all';
   invitedByFilter: bigint;
+  lookback: number = 2;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0 ) {
@@ -56,6 +57,7 @@ export class PendingComponent implements OnInit {
     this.verifiedUsers = [];
     this.DisplayedUsers = [];
     let params = new HttpParams();
+    params.set('look_back_days', this.lookback.toString());
     if ( this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
       localStorage.setItem('triggerFilter', this.triggerFilter);
