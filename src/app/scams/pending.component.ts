@@ -57,7 +57,7 @@ export class PendingComponent implements OnInit {
     this.verifiedUsers = [];
     this.DisplayedUsers = [];
     let params = new HttpParams();
-    params.set('look_back_days', this.lookback.toString());
+    
     if ( this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
       localStorage.setItem('triggerFilter', this.triggerFilter);
@@ -77,6 +77,7 @@ export class PendingComponent implements OnInit {
       params = params.set('invited_by_filter', this.invitedByFilter.toString());
       localStorage.setItem('invited_by_filter', this.invitedByFilter.toString());
     }
+    params = params.set('look_back_days', this.lookback.toString());
     this.rest.get('administrative', 'list_pending', params).subscribe((userResponse) => {
       userResponse.data.forEach((u) => {
         const user = new User(u);
