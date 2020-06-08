@@ -6,5 +6,9 @@ export class YoutubeChannel {
   Videos: number;
   RewardAmount: number;
   IsRedeemed: boolean;
+  IsRedeemable: boolean;
+  ShouldSync: boolean;
   Status: string;
+  ShouldEmail: boolean;
+  ApplyDisabled: boolean;
 }

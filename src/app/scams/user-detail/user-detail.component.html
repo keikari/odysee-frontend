@@ -47,8 +47,12 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns; let i = index">
-            <a *ngIf="i === 0" href="https://youtube.com/channel/{{rowData.ChannelID}}/videos">{{rowData[col.field]}}</a>
-            <span *ngIf="i !== 0">{{rowData[col.field]}}</span>
+            <a *ngIf="col.field === 'ChannelName'" href="https://youtube.com/channel/{{rowData.ChannelID}}/videos">{{rowData[col.field]}}</a>
+            <input  *ngIf="col.field === 'ShouldSync'" [(ngModel)]="rowData.ShouldSync" (change)="changeEvent(rowData)" type="checkbox" disabled="disabled"/>
+            <input  *ngIf="col.field === 'IsRedeemable'" [(ngModel)]="rowData.IsRedeemable" (change)="changeEvent(rowData)" type="checkbox" disabled="disabled"/>
+            <button *ngIf="col.field === 'Action'" type="button" pButton icon="fa fa-check" (click)="rejectChannel(rowData)" label="Apply" class="ui-button-warning" [disabled]="rowData.ApplyDisabled"></button>
+            <input  *ngIf="col.field === 'Action'" [(ngModel)]="rowData.ShouldEmail" type="checkbox" disabled="disabled"/><span *ngIf="col.field === 'Action'" > Email too</span>
+            <span *ngIf="col.field !== 'ChannelName' && col.field !== 'ShouldSync'&& col.field !== 'IsRedeemable'&& col.field !== 'Action'">{{rowData[col.field]}}</span>
           </td>
         </tr>
       </ng-template>

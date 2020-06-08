@@ -85,6 +85,10 @@ export class User {
         ytChannel.RewardAmount = y.redeemable_reward;
         ytChannel.IsRedeemed = y.redeemed;
         ytChannel.Status = y.status;
+        ytChannel.ShouldEmail = false;
+        ytChannel.ApplyDisabled = true;
+        ytChannel.IsRedeemable = y.redeemable;
+        ytChannel.ShouldSync = y.should_sync;
         this.YoutubeChannels.push(ytChannel);
       });
     }

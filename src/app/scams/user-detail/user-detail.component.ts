@@ -3,6 +3,7 @@ import {User} from './model/user/user';
 import {HttpParams} from '@angular/common/http';
 import {RestService} from '../../rest.service';
 import {MessageService} from 'primeng/api';
+import {YoutubeChannel} from './model/youtube_channel/youtube-channel';
 
 @Component({
   selector: 'app-user-detail',
@@ -33,9 +34,12 @@ export class UserDetailComponent implements OnInit {
     {field: 'LBRYChannelName', header: 'LBRY Channel'},
     {field: 'Subscribers', header: 'Subscribers'},
     {field: 'Videos', header: 'Videos'},
+    {field: 'Status', header: 'Status'},
     {field: 'RewardAmount', header: 'Reward Amount'},
     {field: 'IsRedeemed', header: 'Redeemed'},
-    {field: 'Status', header: 'Status'}];
+    {field: 'IsRedeemable', header: 'Redeemable'},
+    {field: 'ShouldSync', header: 'ShouldSync'},
+    {field: 'Action', header: 'Action'}];
   creditColumns = [
     {field: 'CreatedAt', header: 'Created'},
     {field: 'UpdatedAt', header: 'Updated'}];
@@ -108,6 +112,31 @@ export class UserDetailComponent implements OnInit {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Rejected', detail: 'User rejected for rewards!'});
         this.userReject.emit(user);
+      } else {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
+      }
+    });
+  }
+
+  changeEvent(channel: YoutubeChannel) {
+    channel.ApplyDisabled = false;
+  }
+
+  rejectChannel(channel: YoutubeChannel) {
+    const params = new HttpParams().
+    set('channel_id', channel.ChannelID.toString()).
+    set('should_sync', channel.ShouldSync.toString()).
+    set('should_email', channel.ShouldEmail.toString()).
+    set('redeemable', channel.IsRedeemable.toString());
+
+    this.rest.get('yt', 'disapprove', params).subscribe((response) => {
+      if (response && response.error) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+      } else if (response && response.data) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'success', summary: 'Changed', detail: 'Channel edited!'});
       } else {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
