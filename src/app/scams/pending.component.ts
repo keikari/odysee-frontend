@@ -57,7 +57,7 @@ export class PendingComponent implements OnInit {
     this.verifiedUsers = [];
     this.DisplayedUsers = [];
     let params = new HttpParams();
-    
+
     if ( this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
       localStorage.setItem('triggerFilter', this.triggerFilter);

@@ -136,6 +136,7 @@ export class UserDetailComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
+        channel.ApplyDisabled = true;
         this.messageService.add({severity: 'success', summary: 'Changed', detail: 'Channel edited!'});
       } else {
         this.messageService.clear();
