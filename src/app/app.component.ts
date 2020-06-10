@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
-import { RestService } from './rest.service';
+import { ApiService } from './services/api.service';
 import {MessageService} from 'primeng/api';
 import { Router } from '@angular/router';
 import {environment} from '../environments/environment';
@@ -17,7 +17,7 @@ import {environment} from '../environments/environment';
 
 export class AppComponent implements OnInit {
 
-  constructor(public rest: RestService, private messageService: MessageService, private router: Router, ) { }
+  constructor(public rest: ApiService, private messageService: MessageService, private router: Router, ) { }
   title = 'app';
   isAuthenticated = false;
   items: MenuItem[];
@@ -68,14 +68,12 @@ export class AppComponent implements OnInit {
         label: 'Homepage', routerLink: ['/homepage']
       },
       {
-        label: 'Terminal', routerLink: ['/terminal']
-      },
-      {
         label: 'Admin',
         items: [
           {label: 'Pending', routerLink: ['/admin/pending']},
           {label: 'Audit', routerLink: ['/admin/audit']},
           {label: 'Country Codes', routerLink: ['/admin/countrycodes']},
+          {label: 'Verifications', routerLink: ['/admin/verification']},
         ]
       },
       {

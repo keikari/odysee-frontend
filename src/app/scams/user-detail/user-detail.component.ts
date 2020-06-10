@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {User} from './model/user/user';
 import {HttpParams} from '@angular/common/http';
-import {RestService} from '../../rest.service';
+import {ApiService} from '../../services/api.service';
 import {MessageService} from 'primeng/api';
 import {YoutubeChannel} from './model/youtube_channel/youtube-channel';
 
@@ -92,7 +92,7 @@ export class UserDetailComponent implements OnInit {
     {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
   ];
 
-  constructor(public rest: RestService, private messageService: MessageService) {
+  constructor(public rest: ApiService, private messageService: MessageService) {
   }
 
   ngOnInit() {

@@ -1,18 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpParams} from '@angular/common/http';
-import {RestService} from '../rest.service';
+import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 import {User} from './user-detail/model/user/user';
-import {Email} from './user-detail/model/email/email';
-import {Phone} from './user-detail/model/phone/phone';
-import {YoutubeChannel} from './user-detail/model/youtube_channel/youtube-channel';
-import {CreditCard} from './user-detail/model/credit_card/credit-card';
-import {Access} from './user-detail/model/access/access';
-import {DuplicateAccount} from './user-detail/model/duplicate_account/duplicate-account';
-import {Install} from './user-detail/model/install/install';
-import {Note} from './user-detail/model/note/note';
-import {Inviter} from './user-detail/model/inviter/inviter';
-import {RedeemedReward} from './user-detail/model/redeemed-reward/redeemed-reward';
 
 @Component({
   selector: 'app-pending',
@@ -30,7 +20,7 @@ export class PendingComponent implements OnInit {
   showTriggeredOnly: boolean;
   verificationMethod = 'all';
   invitedByFilter: bigint;
-  lookback: number = 2;
+  lookback = 2;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0 ) {
@@ -43,7 +33,7 @@ export class PendingComponent implements OnInit {
     return '';
   }
 
-  constructor(public rest: RestService, private messageService: MessageService) {
+  constructor(public rest: ApiService, private messageService: MessageService) {
   }
 
   ngOnInit() {

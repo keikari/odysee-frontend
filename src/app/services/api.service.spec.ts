@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RestService } from './rest.service';
-import {AppModule} from './app.module';
+import { ApiService } from './api.service';
+import {AppModule} from '../app.module';
 import {APP_BASE_HREF} from '@angular/common';
 
 describe('RestService', () => {
@@ -12,7 +12,7 @@ describe('RestService', () => {
   }));
 
   it('should be created', () => {
-    const service: RestService = TestBed.get(RestService);
+    const service: ApiService = TestBed.get(ApiService);
     expect(service).toBeTruthy();
   });
 });

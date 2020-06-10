@@ -1,0 +1,15 @@
+<div class="p-grid p-justify-even" style="width: 100%">
+  <div class="p-col-1"></div>
+  <div class="p-col-12">
+    <div class="p-grid">
+      <div class="p-col-5">
+        <app-list-review [tree]="tree" (selectNode)="setSelected($event)"></app-list-review>
+      </div>
+      <div class="p-col-7">
+        <app-list-detail [selectedUser]="selectedNode.data"></app-list-detail>
+      </div>
+    </div>
+  </div>
+</div>
+
+

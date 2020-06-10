@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {RestService} from '../../rest.service';
+import {ApiService} from '../../services/api.service';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
@@ -10,7 +10,7 @@ import {HttpParams} from '@angular/common/http';
 })
 export class TemplateComponent implements OnInit {
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   subject = '';
   buttonLabel = 'Submit';

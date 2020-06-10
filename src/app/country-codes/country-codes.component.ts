@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RestService} from '../rest.service';
+import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 import {CountryCode} from './model/country-code';
 import {HttpParams} from '@angular/common/http';
@@ -25,7 +25,7 @@ export class CountryCodesComponent implements OnInit {
     {field: 'ExpiresAt', header: 'ExpiresAt', width: '90px'},
     {field: 'Comment', header: 'Comment', width: '150px'}];
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.loadCountryCodes();
