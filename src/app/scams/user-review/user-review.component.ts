@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../user-detail/model/user/user';
 import {HttpParams} from '@angular/common/http';
-import {RestService} from '../../rest.service';
+import {ApiService} from '../../services/api.service';
 import {MessageService} from 'primeng/api';
 
 @Component({
@@ -22,7 +22,7 @@ export class UserReviewComponent implements OnInit {
     {field: 'Country', header: 'Country'},
     {field: 'PrimaryEmail', header: 'Email'}];
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
   }

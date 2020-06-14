@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from './user-detail/model/user/user';
-import {RestService} from '../rest.service';
+import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 import {HttpParams} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
@@ -18,7 +18,7 @@ export class AuditUserComponent implements OnInit {
   userEmail = '';
   paramsSub: Subscription;
 
-  constructor(public rest: RestService, private messageService: MessageService, private activatedroute: ActivatedRoute) { }
+  constructor(public rest: ApiService, private messageService: MessageService, private activatedroute: ActivatedRoute) { }
 
   ngOnInit() {
     this.paramsSub  = this.activatedroute.paramMap.subscribe(params => {

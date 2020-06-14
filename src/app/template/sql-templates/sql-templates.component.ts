@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SQLTemplate} from './model/sqltemplate';
 import {HttpParams} from '@angular/common/http';
-import {RestService} from '../../rest.service';
+import {ApiService} from '../../services/api.service';
 import {MessageService} from 'primeng/api';
 import {isArray} from 'util';
 import {DeviceNotification} from '../../device-notification/model/device-notification';
@@ -20,7 +20,7 @@ export class SqlTemplatesComponent implements OnInit {
   isNew: boolean;
   isBlocked: boolean;
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
   ngOnInit() {
     this.loadDeviceNotificationOptions();
     this.loadSQLTemplates();

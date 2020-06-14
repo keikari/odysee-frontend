@@ -8,10 +8,9 @@ import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { AppComponent } from './app.component';
-import { RestService } from './rest.service';
+import { ApiService } from './services/api.service';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
-import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { ToastModule } from 'primeng/toast';
 import { TemplateComponent } from './template/send-templates/template.component';
 import { MergeComponent } from './user/merge/merge.component';
@@ -19,7 +18,6 @@ import { ApproveComponent } from './user/approve/approve.component';
 import { InviteComponent } from './user/invite/invite.component';
 import { TaguserComponent } from './tag/taguser/taguser.component';
 import { TagfileComponent } from './tag/tagfile/tagfile.component';
-import { TerminalComponent } from './terminal/terminal.component';
 import { ChipsModule } from 'primeng/chips';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TerminalModule } from 'primeng/terminal';
@@ -50,16 +48,26 @@ import { AuditUserComponent } from './scams/audit-user.component';
 import { UserDetailComponent } from './scams/user-detail/user-detail.component';
 import { UserReviewComponent } from './scams/user-review/user-review.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
-import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule} from 'primeng/primeng';
+import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule, TabViewModule, ToolbarModule, TreeTableModule} from 'primeng';
 /* Import the language you need to highlight */
 import 'prismjs';
 import 'prismjs/components/prism-sql.js';
 import { PrismComponent } from './prism/prism.component';
 import {DEFAULT_TIMEOUT, TimeoutInterceptor} from './timeout-interceptor';
+import { PendingVerificationComponent } from './pending-verification/pending-verification.component';
+import { ListReviewComponent } from './pending-verification/list-review/list-review.component';
+import { ListDetailComponent } from './pending-verification/list-detail/list-detail.component';
+import { VerificationToolbarComponent } from './pending-verification/list-detail/verification-toolbar/verification-toolbar.component';
+import { DiscordComponent } from './pending-verification/list-detail/discord/discord.component';
+import { FacebookComponent } from './pending-verification/list-detail/facebook/facebook.component';
+import { LinkedinComponent } from './pending-verification/list-detail/linkedin/linkedin.component';
+import { GithubComponent } from './pending-verification/list-detail/github/github.component';
+import { FormDataComponent } from './pending-verification/list-detail/form-data/form-data.component';
+import { LbryIncComponent } from './pending-verification/list-detail/lbry-inc/lbry-inc.component';
+import { TwitterComponent } from './pending-verification/list-detail/twitter/twitter.component';
 
 
 const appRoutes: Routes = [
-  { path: 'terminal', component: TerminalComponent },
   { path: 'templates/send', component: TemplateComponent },
   { path: 'templates/sql', component: SqlTemplatesComponent },
   { path: 'user/approve', component: ApproveComponent },
@@ -76,6 +84,7 @@ const appRoutes: Routes = [
   { path: 'admin/audit/:id', component: AuditUserComponent },
   { path: 'admin/countrycodes', component: CountryCodesComponent },
   { path: 'notifications', component: DeviceNotificationComponent },
+  { path: 'admin/verification', component: PendingVerificationComponent },
   { path: '', component: StatusComponent}];
 
 @NgModule({
@@ -87,7 +96,6 @@ const appRoutes: Routes = [
     InviteComponent,
     TaguserComponent,
     TagfileComponent,
-    TerminalComponent,
     RewardCodeComponent,
     SettingsComponent,
     HomepageComponent,
@@ -100,7 +108,18 @@ const appRoutes: Routes = [
     DeviceNotificationComponent,
     AuditUserComponent,
     UserDetailComponent,
-    UserReviewComponent
+    UserReviewComponent,
+    PendingVerificationComponent,
+    ListReviewComponent,
+    ListDetailComponent,
+    VerificationToolbarComponent,
+    DiscordComponent,
+    FacebookComponent,
+    LinkedinComponent,
+    GithubComponent,
+    FormDataComponent,
+    LbryIncComponent,
+    TwitterComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -136,12 +155,14 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {enableTracing: true} // <-- debugging purposes only
-    )
+    ),
+    ToolbarModule,
+    TabViewModule,
+    TreeTableModule
   ],
   providers: [
-    RestService,
+    ApiService,
     MessageService,
-    TerminalService,
     [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
     [{ provide: DEFAULT_TIMEOUT, useValue: 900000 }],
   ],

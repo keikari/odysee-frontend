@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpParams} from '@angular/common/http';
-import {RestService} from '../rest.service';
+import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 
 @Component({
@@ -19,7 +19,7 @@ export class RewardCodeComponent implements OnInit {
   versionConstraint = '';
   rewardClass = '';
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
   }

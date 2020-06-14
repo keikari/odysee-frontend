@@ -1,5 +1,5 @@
 import {Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {RestService} from '../../rest.service';
+import {ApiService} from '../../services/api.service';
 import {MessageService} from 'primeng/api';
 import {HttpParams} from '@angular/common/http';
 
@@ -15,7 +15,7 @@ export class TagfileComponent implements OnInit {
   claim_id = '';
   comment = '';
 
-  constructor(public rest: RestService, private messageService: MessageService) {
+  constructor(public rest: ApiService, private messageService: MessageService) {
   }
 
   ngOnInit() {

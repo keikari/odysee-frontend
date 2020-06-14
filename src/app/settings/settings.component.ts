@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RestService} from '../rest.service';
+import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 import {HttpParams} from '@angular/common/http';
 
@@ -12,7 +12,7 @@ export class SettingsComponent implements OnInit {
   identityVerificationOn: boolean;
   rewardsEnabled: boolean;
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.rest.get('flag', 'list', new HttpParams()).subscribe((response: any) => {

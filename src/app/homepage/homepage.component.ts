@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RestService} from '../rest.service';
+import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 import {HttpParams} from '@angular/common/http';
 import { Category } from './model/category';
@@ -29,7 +29,7 @@ export class HomepageComponent implements OnInit {
   category: Category;
   file: File;
 
-  constructor(public rest: RestService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.loadCategories();

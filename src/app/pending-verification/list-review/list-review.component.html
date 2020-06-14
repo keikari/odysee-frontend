@@ -1,0 +1,38 @@
+
+<p-treeTable [columns]="userCols"
+         [value]="tree"
+         [resizableColumns]="true"
+         [scrollable]="true"
+         [(selection)]="selectedNode"
+         (onNodeSelect)="onSelectNode($event)"
+         dataKey="name"
+         scrollHeight="500px"
+         selectionMode="single"
+         dataKey="form.id">
+  <ng-template pTemplate="colgroup" let-columns>
+    <colgroup>
+      <col *ngFor="let col of columns" [style.width]="col.width">
+    </colgroup>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" ttResizableColumn>
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+      <td *ngFor="let col of columns; let i = index"  class="ui-resizable-column">
+        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+        <img *ngIf="i == 0 && rowData.github.user_id" alt="github" src="assets/github.png" width="24" style="vertical-align: middle" />
+        <img *ngIf="i == 0 && rowData.twitter.user_id" alt="github" src="assets/twitter.png" width="24" style="vertical-align: middle" />
+        <img *ngIf="i == 0 && rowData.linkedin.user_id" alt="github" src="assets/linkedin.png" width="24" style="vertical-align: middle" />
+        <img *ngIf="i == 0 && rowData.discord.user_id" alt="github" src="assets/discord.png" width="24" style="vertical-align: middle" />
+        <img *ngIf="i == 0 && rowData.facebook.user_id" alt="github" src="assets/facebook.png" width="24" style="vertical-align: middle" />
+        {{rowData.form[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-treeTable>
+

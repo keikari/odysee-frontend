@@ -1,0 +1,30 @@
+<div class="p-grid p-justify-even">
+<div class="p-col-12">
+  <app-verification-toolbar></app-verification-toolbar>
+</div>
+<div class="p-col-12">
+<p-tabView>
+  <p-tabPanel header="Form">
+    <app-form-data [user]="selectedUser.form"></app-form-data>
+  </p-tabPanel>
+  <p-tabPanel header="Discord">
+    <app-discord [discord]="selectedUser.discord"></app-discord>
+  </p-tabPanel>
+  <p-tabPanel header="Twitter">
+    <app-twitter [twitter]="selectedUser.twitter"></app-twitter>
+  </p-tabPanel>
+  <p-tabPanel header="Facebook">
+    <app-facebook [facebook]="selectedUser.facebook"></app-facebook>
+  </p-tabPanel>
+  <p-tabPanel header="Linkedin">
+    <app-linkedin [linkedin]="selectedUser.linkedin"></app-linkedin>
+  </p-tabPanel>
+  <p-tabPanel header="Github">
+    <app-github [github]="selectedUser.github"></app-github>
+  </p-tabPanel>
+  <p-tabPanel header="Lbry Inc.">
+    <app-lbry-inc></app-lbry-inc>
+  </p-tabPanel>
+</p-tabView>
+</div>
+</div>
