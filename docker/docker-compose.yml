@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  ###############
+  ## Commander ##
+  ###############
+  commander:
+    image: lbry/commander:verification
+    restart: "always"
+    ports:
+      - "7070:80"
