@@ -214,6 +214,7 @@
             {{col.header}}
             <p>{{DisplayedUser.Inviter[col.field]}}</p>
           </th>
+          <th>Action Buttons</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -223,6 +224,9 @@
           </td>
           <td *ngFor="let col of columns">
             <span>{{rowData[col.field]}}</span>
+          </td>
+          <td>
+            <button pButton type="button" label="Disable Rewards" class="ui-button-warning" (click)="reject(rowData)"></button>
           </td>
         </tr>
       </ng-template>
