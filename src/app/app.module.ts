@@ -48,7 +48,15 @@ import { AuditUserComponent } from './scams/audit-user.component';
 import { UserDetailComponent } from './scams/user-detail/user-detail.component';
 import { UserReviewComponent } from './scams/user-review/user-review.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
-import {BlockUIModule, InputSwitchModule, ProgressSpinnerModule, TabViewModule, ToolbarModule, TreeTableModule} from 'primeng';
+import {
+    BlockUIModule,
+    InputSwitchModule,
+    ProgressSpinnerModule,
+    SplitButtonModule,
+    TabViewModule,
+    ToolbarModule,
+    TreeTableModule
+} from 'primeng';
 /* Import the language you need to highlight */
 import 'prismjs';
 import 'prismjs/components/prism-sql.js';
@@ -121,45 +129,46 @@ const appRoutes: Routes = [
     LbryIncComponent,
     TwitterComponent
   ],
-  imports: [
-    BrowserAnimationsModule,
-    FormsModule,
-    BrowserModule,
-    HttpClientModule,
-    MenubarModule,
-    InputTextModule,
-    ButtonModule,
-    MessagesModule,
-    ToastModule,
-    ChipsModule,
-    RadioButtonModule,
-    TerminalModule,
-    PasswordModule,
-    InputTextareaModule,
-    SidebarModule,
-    CheckboxModule,
-    DataViewModule,
-    InplaceModule,
-    DropdownModule,
-    CardModule,
-    TableModule,
-    CalendarModule,
-    ContextMenuModule,
-    DialogModule,
-    InputMaskModule,
-    AccordionModule,
-    CodeHighlighterModule,
-    InputSwitchModule,
-    BlockUIModule,
-    ProgressSpinnerModule,
-    RouterModule.forRoot(
-      appRoutes,
-      {enableTracing: true} // <-- debugging purposes only
-    ),
-    ToolbarModule,
-    TabViewModule,
-    TreeTableModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        FormsModule,
+        BrowserModule,
+        HttpClientModule,
+        MenubarModule,
+        InputTextModule,
+        ButtonModule,
+        MessagesModule,
+        ToastModule,
+        ChipsModule,
+        RadioButtonModule,
+        TerminalModule,
+        PasswordModule,
+        InputTextareaModule,
+        SidebarModule,
+        CheckboxModule,
+        DataViewModule,
+        InplaceModule,
+        DropdownModule,
+        CardModule,
+        TableModule,
+        CalendarModule,
+        ContextMenuModule,
+        DialogModule,
+        InputMaskModule,
+        AccordionModule,
+        CodeHighlighterModule,
+        InputSwitchModule,
+        BlockUIModule,
+        ProgressSpinnerModule,
+        RouterModule.forRoot(
+            appRoutes,
+            {enableTracing: true} // <-- debugging purposes only
+        ),
+        ToolbarModule,
+        TabViewModule,
+        TreeTableModule,
+        SplitButtonModule
+    ],
   providers: [
     ApiService,
     MessageService,

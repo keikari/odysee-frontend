@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../user-detail/model/user/user';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../../services/api.service';
-import {MessageService} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-user-review',
@@ -11,7 +11,12 @@ import {MessageService} from 'primeng/api';
 })
 export class UserReviewComponent implements OnInit {
   @Input() users: User[] = [];
-
+  approvedItems: MenuItem[];
+  rejectItems: MenuItem[];
+  display = false;
+  approved = false;
+  message = '';
+  splitButtonUser: User;
   userColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'Duplicates', header: 'Duplicates', width: '13px'},
@@ -25,14 +30,29 @@ export class UserReviewComponent implements OnInit {
   constructor(public rest: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
+    this.approvedItems = [
+      {label: 'Custom Message', icon: 'pi pi-refresh', command: () => {
+          this.display = true;
+          this.approved = true;
+        }},
+    ];
+    this.rejectItems = [
+      {label: 'Custom Message', icon: 'pi pi-refresh', command: () => {
+          this.display = true;
+          this.approved = false;
+        }},
+    ];
   }
 
   approve(user: User) {
-    const params = new HttpParams().
+    let params = new HttpParams().
     set('id', user.UserID.toString()).
-    set('comment', 'Commander Approved!').
     set('notify', true.toString()).
+    set('comment', 'Commander Approved!').
     set('is_reward_approved', 'yes');
+    if ( this.message !== '') {
+      params = params.set('comment', this.message);
+    }
     this.callUserApprove(user, params, 'Approved', 'User approved for rewards!');
   }
 
@@ -63,10 +83,13 @@ export class UserReviewComponent implements OnInit {
   }
 
   dismiss(user: User) {
-    const params = new HttpParams().
+    let params = new HttpParams().
     set('id', user.UserID.toString()).
     set('comment', 'Commander - Auto ban confirmed!').
     set('is_reward_approved', 'no');
+    if ( this.message !== '') {
+      params = params.set('comment', this.message);
+    }
     this.callUserApprove(user, params, 'Dismissed', 'User auto rejection confirmed!');
   }
 
@@ -78,6 +101,20 @@ export class UserReviewComponent implements OnInit {
       }
     });
     this.users = newUsers;
+  }
+
+  done() {
+    this.display = false;
+    if ( this.approved ) {
+      this.approve(this.splitButtonUser);
+    } else {
+      this.dismiss(this.splitButtonUser);
+    }
+    this.message = '';
+  }
+
+  setSplitButtonUser(user: User) {
+    this.splitButtonUser = user;
   }
 
 }

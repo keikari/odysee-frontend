@@ -20,10 +20,10 @@
         <span *ngSwitchDefault>{{rowData[col.field]}}</span>
       </td>
       <td>
-        <button type="button" pButton icon="fa fa-check" (click)="approve(rowData)" label="Approve" class="ui-button-success"></button>
+        <p-splitButton icon="fa fa-check" appendTo="body" [model]="approvedItems" (onClick)="approve(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Approve" styleClass="ui-button-success"></p-splitButton>
       </td>
       <td>
-        <button type="button" pButton icon="fa fa-check" (click)="dismiss(rowData)" label="Dismiss" class="ui-button-warning"></button>
+        <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onClick)="dismiss(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss" styleClass="ui-button-warning"></p-splitButton>
       </td>
     </tr>
   </ng-template>
@@ -35,3 +35,9 @@
     </tr>
   </ng-template>
 </p-table>
+<p-dialog header="Enter Why" [(visible)]="display">
+  <textarea [(ngModel)]="message" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize"></textarea>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" (click)="done()" label="Done" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
