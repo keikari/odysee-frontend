@@ -130,6 +130,7 @@ export class User {
         duplicate.RewardStatusChangeTrigger = d.reward_status_change_trigger;
         duplicate.IsRewardsApproved = d.reward_enabled;
         duplicate.FirstIPMatch = d.first_ip_match;
+        duplicate.CreatedAt = new Date(d.created_at);
         duplicate.PrimaryEmail = d.primary_email;
         this.DuplicateAccounts.push(duplicate);
       });

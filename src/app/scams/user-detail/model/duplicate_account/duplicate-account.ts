@@ -4,4 +4,5 @@ export class DuplicateAccount {
   IsRewardsApproved: boolean;
   PrimaryEmail: string;
   FirstIPMatch: string;
+  CreatedAt: Date;
 }

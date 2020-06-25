@@ -60,7 +60,8 @@ export class UserDetailComponent implements OnInit {
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
     {field: 'IsRewardsApproved', header: 'Rewards Approved'},
     {field: 'PrimaryEmail', header: 'Primary Email'},
-    {field: 'FirstIPMatch', header: 'First Matched IP'}];
+    {field: 'FirstIPMatch', header: 'First Matched IP'},
+    {field: 'CreatedAt', header: 'Created at'}];
   installColumns = [
     {field: 'Platform', header: 'Platform'},
     {field: 'DeviceType', header: 'Device'},
