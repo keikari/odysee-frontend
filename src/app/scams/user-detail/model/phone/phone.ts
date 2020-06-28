@@ -1,4 +1,4 @@
 export class Phone {
   PhoneNumber: string;
-  CountryCode: string;
+  Country: string;
 }

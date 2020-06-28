@@ -28,7 +28,7 @@ export class UserDetailComponent implements OnInit {
     {field: 'IsVerified', header: 'Verified'}];
   phoneColumns = [
     {field: 'PhoneNumber', header: 'Number'},
-    {field: 'CountryCode', header: 'CountryCode'}];
+    {field: 'Country', header: 'Country'}];
   youtubeColumns = [
     {field: 'ChannelName', header: 'Channel Name'},
     {field: 'LBRYChannelName', header: 'LBRY Channel'},

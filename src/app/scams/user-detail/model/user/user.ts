@@ -51,6 +51,7 @@ export class User {
     this.ReferredUsers = u.referred_users;
     this.AcceptedInvites = u.accepted_invites;
     this.RewardApproved = u.reward_approved;
+    this.IsCountryMatch = true;
     // Emails
     if (u.emails) {
       u.emails.forEach((e) => {
@@ -62,15 +63,6 @@ export class User {
           this.PrimaryEmail = email.EmailAddress;
         }
         this.Emails = this.Emails.concat(email);
-      });
-    }
-    // Phones
-    if (u.phones) {
-      u.phones.forEach((p) => {
-        const phone = new Phone();
-        phone.PhoneNumber = p.number;
-        phone.CountryCode = p.country_code;
-        this.Phones.push(phone);
       });
     }
     // Youtube Channels
@@ -103,9 +95,9 @@ export class User {
     }
     // Accesses
     if (u.accesses) {
-      let match = true;
-      const lastCounty = u.accesses[0].country;
-      this.Country = lastCounty;
+      let match = this.IsCountryMatch;
+      const lastCountry = u.accesses[0].country;
+      this.Country = lastCountry;
       u.accesses.forEach((a) => {
         const access = new Access();
         access.IP = a.ip;
@@ -114,12 +106,26 @@ export class User {
         access.AccessTime = new Date(a.time);
         access.ISP = a.isp;
         this.Accesses.push(access);
-        if (lastCounty !== access.Country) {
+        if (lastCountry !== access.Country) {
           match = false;
         }
       });
       this.LastAccessTime = new Date(u.last_access).toISOString();
       this.IsCountryMatch = match;
+    }
+    // Phones
+    if (u.phones) {
+      let countryMatch = this.IsCountryMatch;
+      u.phones.forEach((p) => {
+        const phone = new Phone();
+        phone.PhoneNumber = p.number;
+        phone.Country = p.country;
+        if (this.Country !== p.country) {
+          countryMatch = false;
+        }
+        this.Phones.push(phone);
+      });
+      this.IsCountryMatch = countryMatch;
     }
     // Duplicate Accounts
     if (u.duplicate_accounts) {
