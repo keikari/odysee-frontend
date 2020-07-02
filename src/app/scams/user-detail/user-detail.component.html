@@ -190,7 +190,6 @@
           <th style="width: 4em"></th>
           <th *ngFor="let col of columns">
             {{col.header}}
-            <p>{{DisplayedUser.Inviter[col.field]}}</p>
           </th>
         </tr>
       </ng-template>
@@ -213,7 +212,6 @@
           <th style="width: 4em"></th>
           <th *ngFor="let col of columns">
             {{col.header}}
-            <p>{{DisplayedUser.Inviter[col.field]}}</p>
           </th>
           <th>Action Buttons</th>
         </tr>
@@ -239,14 +237,14 @@
         <tr>
           <th *ngFor="let col of columns">
             {{col.header}}
-            <p>{{DisplayedUser.Inviter[col.field]}}</p>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td *ngFor="let col of columns">
-            <span>{{rowData[col.field]}}</span>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'URI'"><a href="https://lbry.tv/{{rowData[col.field]}}" target="_blank">{{rowData[col.field]}}</a></span>
+            <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
         </tr>
       </ng-template>
