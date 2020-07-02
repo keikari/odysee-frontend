@@ -12,6 +12,7 @@ export class StatusComponent implements OnInit {
   version = '';
   commit = '';
   balance = '';
+  tipperBalance = '';
   upTime = '';
   responseTime = '';
 
@@ -28,6 +29,7 @@ export class StatusComponent implements OnInit {
         this.version = response.data.version;
         this.commit = response.data.commit_message;
         this.balance = response.data.balance;
+        this.tipperBalance = response.data.tipper_balance;
         this.upTime = response.data.request_stats.uptime;
         this.responseTime = response.data.request_stats.average_response_time;
       }
