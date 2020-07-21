@@ -73,6 +73,7 @@ import { GithubComponent } from './pending-verification/list-detail/github/githu
 import { FormDataComponent } from './pending-verification/list-detail/form-data/form-data.component';
 import { LbryIncComponent } from './pending-verification/list-detail/lbry-inc/lbry-inc.component';
 import { TwitterComponent } from './pending-verification/list-detail/twitter/twitter.component';
+import { RetentionComponent } from './retention/retention.component';
 
 
 const appRoutes: Routes = [
@@ -93,6 +94,7 @@ const appRoutes: Routes = [
   { path: 'admin/countrycodes', component: CountryCodesComponent },
   { path: 'notifications', component: DeviceNotificationComponent },
   { path: 'admin/verification', component: PendingVerificationComponent },
+  { path: 'retention', component: RetentionComponent },
   { path: '', component: StatusComponent}];
 
 @NgModule({
@@ -127,7 +129,8 @@ const appRoutes: Routes = [
     GithubComponent,
     FormDataComponent,
     LbryIncComponent,
-    TwitterComponent
+    TwitterComponent,
+    RetentionComponent
   ],
     imports: [
         BrowserAnimationsModule,

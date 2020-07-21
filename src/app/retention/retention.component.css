@@ -1,0 +1,17 @@
+body {
+  max-width: 100%;
+}
+tr {
+  white-space: nowrap;
+}
+.one{ background-color: #453B80; color: #ffffff; }
+.two{ background-color: #4B529F; color: #ffffff; }
+.three{ background-color: #5C7ABF; color: #ffffff; }
+.four{ background-color: #6DA8DF; color: #ffffff; }
+.five{ background-color: #7FDBFF; }
+.six{ background-color: #8EF6FF; }
+.seven{ background-color: #9EFFF9; }
+.eight{ background-color: #AEFFEB; }
+.nine{ background-color: #BFFFE4; }
+.ten{ background-color: #D1FFE2; }
+.eleven{ background-color: #E3FFE8; }

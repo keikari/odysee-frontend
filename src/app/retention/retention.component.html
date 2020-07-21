@@ -1,0 +1,14 @@
+<div class="p-grid p-justify-center">
+  <div class="p-col-12 p-col-align-center ui-widget"></div>
+  <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" style="text-align: center;" optionLabel="label" [options]="retentionOptions.intervals" [(ngModel)]="selectedInterval"></p-dropdown>
+  <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" style="text-align: center;" optionLabel="label" [options]="retentionOptions.tags" [(ngModel)]="selectedTag"></p-dropdown>
+  <button class="p-col-3 p-col-align-center ui-widget" type="button" pButton icon="fa fa-check" (click)="loadRetentionData()" label="Get Data"></button>
+  <div class="p-col-12 p-col-align-center ui-widget">
+    <table>
+      <th *ngFor="let retention of retentionData">{{retention.cohort}}</th>
+      <tr *ngFor="let retention of retentionData">
+        <td *ngFor="let r of retention.data" [className]="color(r/retention.data[0]*100)">{{r}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
