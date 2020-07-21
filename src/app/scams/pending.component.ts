@@ -18,7 +18,7 @@ export class PendingComponent implements OnInit {
   showVerified: boolean;
   showAutoApprovals: boolean;
   showTriggeredOnly: boolean;
-  verificationMethod = 'all';
+  verificationMethod = 'phone';
   invitedByFilter: bigint;
   lookback = 2;
 
