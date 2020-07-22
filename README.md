@@ -7,12 +7,15 @@
 This project is used as a user interface for LBRY Inc APIs commonly used by the growth team. 
 
 ## Development server
+Pre-requisites:
+- NPM v6
+- Node.js v14
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run the following commands:
+- `npm install` 
+- `ng serve`
 
-The above requires ng to be installed. You can also connect this directly to webstorm to make your life easy, however in case you want to do it:
-
-`npm install @angular/cli@7.3.1` after which you can run `ng serve` as suggested.
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
