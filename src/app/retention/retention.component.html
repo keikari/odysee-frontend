@@ -1,13 +1,34 @@
-<div class="p-grid p-justify-center">
-  <div class="p-col-12 p-col-align-center ui-widget"></div>
-  <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" style="text-align: center;" optionLabel="label" [options]="retentionOptions.intervals" [(ngModel)]="selectedInterval"></p-dropdown>
-  <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" style="text-align: center;" optionLabel="label" [options]="retentionOptions.tags" [(ngModel)]="selectedTag"></p-dropdown>
-  <button class="p-col-3 p-col-align-center ui-widget" type="button" pButton icon="fa fa-check" (click)="loadRetentionData()" label="Get Data"></button>
+<p-blockUI [blocked]="loading" [target]="filters"></p-blockUI>
+
+<div class="p-grid">
+  <p-panel #filters class="p-col-12" header="Filters">
+    Interval <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label" [options]="retentionOptions.intervals" [(ngModel)]="selectedInterval"></p-dropdown>
+    Tag <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label" [options]="retentionOptions.tags" [(ngModel)]="selectedTag" filter="true"></p-dropdown>
+    <button class="p-col-3 p-col-align-center ui-widget" type="button" pButton icon="fa fa-check" (click)="loadRetentionData()" label="Get Data"></button>
+  </p-panel>
+
+  <p-progressSpinner *ngIf="this.loading"></p-progressSpinner>
+
+  <h2 *ngIf="retentionData">
+    {{selectedInterval.value.charAt(0).toUpperCase() + selectedInterval.value.slice(1)}} retention for {{selectedTag.value}}
+  </h2>
+
   <div class="p-col-12 p-col-align-center ui-widget">
-    <table>
-      <th *ngFor="let retention of retentionData">{{retention.cohort}}</th>
+
+    <p *ngIf="!retentionData">No data</p>
+
+    <table *ngIf="retentionData">
+      <thead>
+        <tr>
+          <th>Cohort</th>
+          <th># Users</th>
+          <th *ngFor="let n of retentionData[0].data.slice(1).keys()">{{n+1}}</th>
+        </tr>
+      </thead>
       <tr *ngFor="let retention of retentionData">
-        <td *ngFor="let r of retention.data" [className]="color(r/retention.data[0]*100)">{{r}}</td>
+        <th>{{retention.cohort}}</th>
+        <td>{{retention.data[0]}}</td>
+        <td *ngFor="let r of retention.data.slice(1)" [className]="color(r/retention.data[0]*100)">{{(r/retention.data[0]*100).toFixed(2)}}%</td>
       </tr>
     </table>
   </div>

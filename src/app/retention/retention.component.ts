@@ -3,6 +3,7 @@ import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
 import {RetentionOptions} from './model/retention-options';
 import {Retention} from './model/rentention';
+import {MessageService} from 'primeng';
 
 @Component({
   selector: 'app-retention',
@@ -11,14 +12,16 @@ import {Retention} from './model/rentention';
 })
 export class RetentionComponent implements OnInit {
 
-  constructor(public rest: ApiService) { }
+  constructor(public rest: ApiService, private messageService: MessageService) { }
 
   retentionOptions: RetentionOptions;
   retentionData: Retention[];
   selectedInterval: any;
   selectedTag: any;
+  loading: boolean;
 
   ngOnInit(): void {
+    this.loading = false;
     this.loadOptions();
   }
 
@@ -35,26 +38,34 @@ export class RetentionComponent implements OnInit {
         newOptions.tags.push({ label : t, value : t});
       });
       this.retentionOptions = newOptions;
+      this.selectedInterval = this.retentionOptions.intervals[0];
+      this.selectedTag = this.retentionOptions.tags[0];
     });
   }
 
   loadRetentionData() {
     const newRetentionData = [];
     let params = new HttpParams();
-    console.log('interval: ', this.selectedInterval);
-    console.log('tag:', this.selectedTag);
     params = params.set('interval', this.selectedInterval.value);
     params = params.set('tag', this.selectedTag.value);
+    this.loading = true;
     this.rest.get('administrative', 'retention', params).subscribe((r) => {
-      console.log(r);
-      r.data.forEach((d) => {
-        console.log(d);
-        const data = new Retention();
-        data.cohort = d.cohort;
-        data.data = d.data;
-        newRetentionData.push(data);
-      });
-      this.retentionData = newRetentionData;
+      this.loading = false;
+      if (!r) {
+        return;
+      } else if (r.error) {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: r.error});
+      } else if (!r.data) {
+        this.messageService.add({severity: 'warn', summary: 'No data', detail: "No retention data for this tag"});
+      } else {
+        r.data.forEach((d) => {
+          const data = new Retention();
+          data.cohort = d.cohort;
+          data.data = d.data;
+          newRetentionData.push(data);
+        });
+        this.retentionData = newRetentionData;
+      }
     });
   }
 

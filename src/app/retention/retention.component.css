@@ -1,9 +1,31 @@
 body {
   max-width: 100%;
 }
+p-panel {
+  margin-top: 1rem;
+}
 tr {
   white-space: nowrap;
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #E5E7EB;
+  text-align: left;
+  padding: .5rem;
+}
+
+th {
+  background: #F6F8FA;
+}
+
+tr:nth-child(even) {
+  background: #F6F8FA;
+}
+
 .one{ background-color: #453B80; color: #ffffff; }
 .two{ background-color: #4B529F; color: #ffffff; }
 .three{ background-color: #5C7ABF; color: #ffffff; }
