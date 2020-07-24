@@ -72,7 +72,11 @@ export class PendingComponent implements OnInit {
       userResponse.data.forEach((u) => {
         const user = new User(u);
         user.Verification = PendingComponent.getVerificationMethod(user);
-        this.pendingUsers.push(user);
+        if (this.verificationMethod == "phone"|| this.verificationMethod == "stripe") {
+          if (!user.YoutubeChannels.length)
+            this.pendingUsers.push(user)
+        }
+        else this.pendingUsers.push(user);
         if ( user.Verification.length > 0 ) {
           this.verifiedUsers.push(user);
         }
