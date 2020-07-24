@@ -13,13 +13,13 @@ Pre-requisites:
 
 Run the following commands:
 - `npm install` 
-- `ng serve`
+- `npx ng serve`
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `npx ng generate component component-name` to generate a new component. You can also use `npx ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 There are 3 files generated with the following suffices, `.css` for styling, `.html` for structure, nested components, etc and `.ts` which is for the business logic. Once created it needs to be linked to the router in `app.module.ts` as referenced below:
 
@@ -67,7 +67,7 @@ You will notice `allowDuplicate`. This is listed as a property of the PrimeNg co
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npx ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 There are also different environments that can be put into npm scripts in the package.json. We have one for the production envronment. See there to see how the site is deployed. Since this is a SPA special settings are required on the web server. We are using caddy so the below rewrite is required:
 
@@ -87,17 +87,17 @@ The `master` branch is regularly built and deployed.
 
 ## Running unit tests
 
-Developers are strongly encouraged to write unit tests for new code, and to submit new unit tests for old code. Unit tests can be compiled and run with: `ng test` from the source directory.
+Developers are strongly encouraged to write unit tests for new code, and to submit new unit tests for old code. Unit tests can be compiled and run with: `npx ng test` from the source directory.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npx ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `npx ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To get more help on the Angular CLI use `npx ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 
 ## License
