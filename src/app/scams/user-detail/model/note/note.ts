@@ -4,6 +4,7 @@ export class Note {
   UpdatedAt: Date;
   OldStatus: boolean;
   NewStatus: boolean;
+  CommenterEmail: string;
 
   getCSSColor(fieldName: string): any {
     const defaultColor = {

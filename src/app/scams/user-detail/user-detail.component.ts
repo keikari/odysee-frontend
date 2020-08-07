@@ -69,7 +69,8 @@ export class UserDetailComponent implements OnInit {
     {field: 'UpdatedAt', header: 'Updated'}];
   noteColumns = [
     {field: 'Note', header: 'Note'},
-    {field: 'UpdatedAt', header: 'UpdatedAt'}];
+    {field: 'UpdatedAt', header: 'UpdatedAt'},
+    {field: 'CommenterEmail', header: 'Changed by'}];
   inviterColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'PrimaryEmail', header: 'Email'},
