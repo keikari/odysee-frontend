@@ -47,6 +47,10 @@ export class RetentionComponent implements OnInit {
         {label: queryTag, value: queryTag} :
         this.retentionOptions.tags[0];
       this.selectedTag = initTag;
+
+      if (queryInterval && queryTag) {
+        this.loadRetentionData();
+      }
     });
   }
 
