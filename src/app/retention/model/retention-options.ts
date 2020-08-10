@@ -1,4 +1,4 @@
 export class RetentionOptions {
-  intervals: any[];
-  tags: any[];
+  intervals: {label: string, value: string}[];
+  tags: {label: string, value: string}[];
 }

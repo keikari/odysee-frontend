@@ -4,6 +4,7 @@ import {ApiService} from '../services/api.service';
 import {RetentionOptions} from './model/retention-options';
 import {Retention} from './model/rentention';
 import {MessageService} from 'primeng';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-retention',
@@ -12,12 +13,12 @@ import {MessageService} from 'primeng';
 })
 export class RetentionComponent implements OnInit {
 
-  constructor(public rest: ApiService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) { }
 
   retentionOptions: RetentionOptions;
   retentionData: Retention[];
-  selectedInterval: any;
-  selectedTag: any;
+  selectedInterval: { label: string, value: string };
+  selectedTag: { label: string, value: string };
   loading: boolean;
 
   ngOnInit(): void {
@@ -31,19 +32,33 @@ export class RetentionComponent implements OnInit {
     newOptions.tags = [];
     const params = new HttpParams();
     this.rest.get('administrative', 'retention_options', params).subscribe((r) => {
-      r.data.intervals.forEach((i) => {
-        newOptions.intervals.push({ label : i, value : i});
-      });
-      r.data.tags.forEach((t) => {
-        newOptions.tags.push({ label : t, value : t});
-      });
+      r.data.intervals.forEach((i) => { newOptions.intervals.push({label: i, value: i}); });
+      r.data.tags.forEach((t) => { newOptions.tags.push({label: t, value: t}); });
       this.retentionOptions = newOptions;
-      this.selectedInterval = this.retentionOptions.intervals[0];
-      this.selectedTag = this.retentionOptions.tags[0];
+
+      const queryInterval = this.route.snapshot.queryParams['interval'];
+      const initInterval = this.retentionOptions.intervals.map(i => i.value).includes(queryInterval) ?
+        {label: queryInterval, value: queryInterval} :
+        this.retentionOptions.intervals[0];
+      this.selectedInterval = initInterval;
+
+      const queryTag = this.route.snapshot.queryParams['tag'];
+      const initTag = this.retentionOptions.tags.map(t => t.value).includes(queryTag) ?
+        {label: queryTag, value: queryTag} :
+        this.retentionOptions.tags[0];
+      this.selectedTag = initTag;
     });
   }
 
   loadRetentionData() {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {interval: this.selectedInterval.value, tag: this.selectedTag.value},
+        queryParamsHandling: 'merge'
+      });
+
     const newRetentionData = [];
     let params = new HttpParams();
     params = params.set('interval', this.selectedInterval.value);
@@ -56,7 +71,7 @@ export class RetentionComponent implements OnInit {
       } else if (r.error) {
         this.messageService.add({severity: 'error', summary: 'Error', detail: r.error});
       } else if (!r.data) {
-        this.messageService.add({severity: 'warn', summary: 'No data', detail: "No retention data for this tag"});
+        this.messageService.add({severity: 'warn', summary: 'No data', detail: 'No retention data for this tag'});
       } else {
         r.data.forEach((d) => {
           const data = new Retention();
