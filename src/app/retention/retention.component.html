@@ -3,12 +3,12 @@
 <div class="p-grid">
   <p-panel #filters class="p-col-12" header="Filters">
     Tag <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label"
-                    [options]="retentionOptions.tags" [(ngModel)]="selectedTag" filter="true"></p-dropdown>
+                    [options]="retentionOptions.tags" [(ngModel)]="selected.tag" filter="true"></p-dropdown>
 
     Interval <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label"
-                         [options]="retentionOptions.intervals" [(ngModel)]="selectedInterval"></p-dropdown>
+                         [options]="retentionOptions.intervals" [(ngModel)]="selected.interval"></p-dropdown>
 
-    Since <p-calendar [(ngModel)]="since" dateFormat="yy-mm-dd" [yearNavigator]="true" yearRange="2016:2025"></p-calendar>
+    Since <p-calendar [(ngModel)]="selected.since" dateFormat="yy-mm-dd" [yearNavigator]="true" yearRange="2016:2025"></p-calendar>
 
     &nbsp;&nbsp;
 
@@ -19,9 +19,7 @@
   <p-progressSpinner *ngIf="this.loading"></p-progressSpinner>
 
   <h2 *ngIf="retentionData">
-    {{selectedInterval.value.charAt(0).toUpperCase() + selectedInterval.value.slice(1)}} retention
-    for {{selectedTag.value}}
-    since {{dateToString(since)}}
+    {{active.describe()}}
   </h2>
 
   <div class="p-col-12 p-col-align-center ui-widget">

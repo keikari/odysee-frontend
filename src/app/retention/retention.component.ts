@@ -3,6 +3,7 @@ import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
 import {RetentionOptions} from './model/retention-options';
 import {Retention} from './model/rentention';
+import {RetentionParams} from './model/retention-params';
 import {MessageService} from 'primeng';
 import {Router, ActivatedRoute} from '@angular/router';
 
@@ -11,18 +12,21 @@ import {Router, ActivatedRoute} from '@angular/router';
   templateUrl: './retention.component.html',
   styleUrls: ['./retention.component.css']
 })
+
 export class RetentionComponent implements OnInit {
 
   constructor(public rest: ApiService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) { }
 
   retentionOptions: RetentionOptions;
   retentionData: Retention[];
-  selectedInterval: { label: string, value: string };
-  selectedTag: { label: string, value: string };
-  since: Date = new Date(2020, 0, 1);
+  selected: RetentionParams;
+  active: RetentionParams;
   loading: boolean;
 
   ngOnInit(): void {
+    this.selected = new RetentionParams();
+    this.selected.since = new Date(2020, 0, 1);
+    this.active = new RetentionParams();
     this.loading = false;
     this.loadOptions();
   }
@@ -41,17 +45,17 @@ export class RetentionComponent implements OnInit {
       const initInterval = this.retentionOptions.intervals.map(i => i.value).includes(queryInterval) ?
         {label: queryInterval, value: queryInterval} :
         this.retentionOptions.intervals[0];
-      this.selectedInterval = initInterval;
+      this.selected.interval = initInterval;
 
       const queryTag = this.route.snapshot.queryParams['tag'];
       const initTag = this.retentionOptions.tags.map(t => t.value).includes(queryTag) ?
         {label: queryTag, value: queryTag} :
         this.retentionOptions.tags[0];
-      this.selectedTag = initTag;
+      this.selected.tag = initTag;
 
       const querySince = this.route.snapshot.queryParams['since'];
       if (querySince) {
-        this.since = new Date(querySince);
+        this.selected.since = new Date(querySince);
       }
 
       if (queryInterval && queryTag) {
@@ -65,15 +69,19 @@ export class RetentionComponent implements OnInit {
       [],
       {
         relativeTo: this.route,
-        queryParams: {tag: this.selectedTag.value, interval: this.selectedInterval.value, since: this.dateToString(this.since)},
+        queryParams: {tag: this.selected.tag.value, interval: this.selected.interval.value, since: this.selected.sinceStr()},
         queryParamsHandling: 'merge'
       });
 
+    this.active.tag = this.selected.tag;
+    this.active.interval = this.selected.interval;
+    this.active.since = this.selected.since;
+
     const newRetentionData = [];
     const params = new HttpParams()
-      .set('interval', this.selectedInterval.value)
-      .set('tag', this.selectedTag.value)
-      .set('since', this.dateToString(this.since));
+      .set('interval', this.selected.interval.value)
+      .set('tag', this.selected.tag.value)
+      .set('since', this.selected.sinceStr());
     this.loading = true;
     this.rest.get('administrative', 'retention', params).subscribe((r) => {
       this.loading = false;
@@ -93,16 +101,6 @@ export class RetentionComponent implements OnInit {
         this.retentionData = newRetentionData;
       }
     });
-  }
-
-  dateToString(date: Date): string {
-    return date.getFullYear()
-      + '-' + this.leftpad(date.getMonth() + 1, 2)
-      + '-' + this.leftpad(date.getDate(), 2);
-  }
-
-  leftpad(val, resultLength = 2, leftpadChar = '0'): string {
-    return (String(leftpadChar).repeat(resultLength) + String(val)).slice(String(val).length);
   }
 
   color(percent) {
