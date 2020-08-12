@@ -19,6 +19,7 @@ export class RetentionComponent implements OnInit {
   retentionData: Retention[];
   selectedInterval: { label: string, value: string };
   selectedTag: { label: string, value: string };
+  since: Date = new Date(2020, 0, 1);
   loading: boolean;
 
   ngOnInit(): void {
@@ -48,6 +49,11 @@ export class RetentionComponent implements OnInit {
         this.retentionOptions.tags[0];
       this.selectedTag = initTag;
 
+      const querySince = this.route.snapshot.queryParams['since'];
+      if (querySince) {
+        this.since = new Date(querySince);
+      }
+
       if (queryInterval && queryTag) {
         this.loadRetentionData();
       }
@@ -59,14 +65,15 @@ export class RetentionComponent implements OnInit {
       [],
       {
         relativeTo: this.route,
-        queryParams: {interval: this.selectedInterval.value, tag: this.selectedTag.value},
+        queryParams: {tag: this.selectedTag.value, interval: this.selectedInterval.value, since: this.dateToString(this.since)},
         queryParamsHandling: 'merge'
       });
 
     const newRetentionData = [];
-    let params = new HttpParams();
-    params = params.set('interval', this.selectedInterval.value);
-    params = params.set('tag', this.selectedTag.value);
+    const params = new HttpParams()
+      .set('interval', this.selectedInterval.value)
+      .set('tag', this.selectedTag.value)
+      .set('since', this.dateToString(this.since));
     this.loading = true;
     this.rest.get('administrative', 'retention', params).subscribe((r) => {
       this.loading = false;
@@ -86,6 +93,16 @@ export class RetentionComponent implements OnInit {
         this.retentionData = newRetentionData;
       }
     });
+  }
+
+  dateToString(date: Date): string {
+    return date.getFullYear()
+      + '-' + this.leftpad(date.getMonth() + 1, 2)
+      + '-' + this.leftpad(date.getDate(), 2);
+  }
+
+  leftpad(val, resultLength = 2, leftpadChar = '0'): string {
+    return (String(leftpadChar).repeat(resultLength) + String(val)).slice(String(val).length);
   }
 
   color(percent) {
