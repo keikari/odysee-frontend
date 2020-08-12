@@ -171,6 +171,7 @@ export class User {
         note.Note = n.note;
         note.OldStatus = n.old_status;
         note.NewStatus = n.new_status;
+        note.CommenterEmail = n.commenter_email;
         note.UpdatedAt = new Date(n.updated_at);
         this.Notes.push(note);
         this.LastNote = note.Note;
