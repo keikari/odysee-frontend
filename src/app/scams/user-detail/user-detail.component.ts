@@ -39,6 +39,7 @@ export class UserDetailComponent implements OnInit {
     {field: 'IsRedeemed', header: 'Redeemed'},
     {field: 'IsRedeemable', header: 'Redeemable'},
     {field: 'ShouldSync', header: 'ShouldSync'},
+    {field: 'Reviewed', header: 'Reviewed'},
     {field: 'Action', header: 'Action'}];
   creditColumns = [
     {field: 'CreatedAt', header: 'Created'},
@@ -130,7 +131,8 @@ export class UserDetailComponent implements OnInit {
     set('channel_id', channel.ChannelID.toString()).
     set('should_sync', channel.ShouldSync.toString()).
     set('should_email', channel.ShouldEmail.toString()).
-    set('redeemable', channel.IsRedeemable.toString());
+    set('redeemable', channel.IsRedeemable.toString()).
+    set('reviewed', channel.Reviewed.toString());
 
     this.rest.get('yt', 'disapprove', params).subscribe((response) => {
       if (response && response.error) {

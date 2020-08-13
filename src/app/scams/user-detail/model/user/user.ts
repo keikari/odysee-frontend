@@ -80,6 +80,7 @@ export class User {
         ytChannel.ShouldEmail = false;
         ytChannel.ApplyDisabled = true;
         ytChannel.IsRedeemable = y.redeemable;
+        ytChannel.Reviewed = y.reviewed;
         ytChannel.ShouldSync = y.should_sync;
         this.YoutubeChannels.push(ytChannel);
       });
