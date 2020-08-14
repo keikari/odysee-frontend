@@ -37,10 +37,9 @@ export class UserDetailComponent implements OnInit {
     {field: 'Status', header: 'Status'},
     {field: 'RewardAmount', header: 'Reward Amount'},
     {field: 'IsRedeemed', header: 'Redeemed'},
-    {field: 'IsRedeemable', header: 'Redeemable'},
-    {field: 'ShouldSync', header: 'ShouldSync'},
-    {field: 'Reviewed', header: 'Reviewed'},
-    {field: 'Action', header: 'Action'}];
+    {field: 'IsRedeemable', header: 'Redeemable', api_field: 'redeemable'},
+    {field: 'ShouldSync', header: 'ShouldSync', api_field: 'should_sync'},
+    {field: 'Reviewed', header: 'Reviewed', api_field: 'reviewed'}];
   creditColumns = [
     {field: 'CreatedAt', header: 'Created'},
     {field: 'UpdatedAt', header: 'Updated'}];
@@ -122,25 +121,17 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-  changeEvent(channel: YoutubeChannel) {
-    channel.ApplyDisabled = false;
-  }
-
-  rejectChannel(channel: YoutubeChannel) {
+  // param came from column.api_field
+  changeFieldStatus(channel: YoutubeChannel, param: string, event) {
     const params = new HttpParams().
     set('channel_id', channel.ChannelID.toString()).
-    set('should_sync', channel.ShouldSync.toString()).
-    set('should_email', channel.ShouldEmail.toString()).
-    set('redeemable', channel.IsRedeemable.toString()).
-    set('reviewed', channel.Reviewed.toString());
-
+    set(param, event.checked.toString());
     this.rest.get('yt', 'disapprove', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
-        channel.ApplyDisabled = true;
         this.messageService.add({severity: 'success', summary: 'Changed', detail: 'Channel edited!'});
       } else {
         this.messageService.clear();

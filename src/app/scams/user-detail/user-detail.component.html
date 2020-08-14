@@ -36,7 +36,7 @@
     </p-table>
   </p-accordionTab>
   <p-accordionTab header="Youtube Channels">
-    <p-table [columns]="youtubeColumns" [value]="DisplayedUser.YoutubeChannels">
+    <p-table [columns]="youtubeColumns" [value]="DisplayedUser.YoutubeChannels" [autoLayout]="true">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns">
@@ -47,13 +47,14 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns; let i = index">
-            <a *ngIf="col.field === 'ChannelName'" href="https://youtube.com/channel/{{rowData.ChannelID}}/videos">{{rowData[col.field]}}</a>
-            <input  *ngIf="col.field === 'ShouldSync'" [(ngModel)]="rowData.ShouldSync" (change)="changeEvent(rowData)" type="checkbox"/>
-            <input  *ngIf="col.field === 'IsRedeemable'" [(ngModel)]="rowData.IsRedeemable" (change)="changeEvent(rowData)" type="checkbox"/>
-            <input  *ngIf="col.field === 'Reviewed'" [(ngModel)]="rowData.Reviewed" (change)="changeEvent(rowData)" type="checkbox"/>
-            <button *ngIf="col.field === 'Action'" type="button" pButton icon="fa fa-check" (click)="rejectChannel(rowData)" label="Apply" class="ui-button-warning" [disabled]="rowData.ApplyDisabled"></button>
-            <input  *ngIf="col.field === 'Action'" [(ngModel)]="rowData.ShouldEmail" type="checkbox" disabled="disabled"/><span *ngIf="col.field === 'Action'" > Email too</span>
-            <span *ngIf="col.field !== 'ChannelName' && col.field !== 'ShouldSync'&& col.field !== 'IsRedeemable' && col.field !== 'Reviewed' && col.field !== 'Action'">{{rowData[col.field]}}</span>
+            <a *ngIf="col.field === 'ChannelName'"
+              href="https://youtube.com/channel/{{rowData.ChannelID}}/videos">{{rowData[col.field]}}</a>
+            <p-inputSwitch
+              *ngIf="col.field === 'ShouldSync' || col.field === 'IsRedeemable' || col.field === 'Reviewed'"
+              (onChange)="changeFieldStatus(rowData, col.api_field, $event)" [(ngModel)]="rowData[col.field]">
+            </p-inputSwitch>
+            <span
+              *ngIf="col.field !== 'ChannelName' && col.field !== 'ShouldSync'&& col.field !== 'IsRedeemable' && col.field !== 'Reviewed'">{{rowData[col.field]}}</span>
           </td>
         </tr>
       </ng-template>
@@ -71,7 +72,9 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true">
-            <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+            <span
+              *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }}
+            </span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
         </tr>
@@ -109,7 +112,9 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns;" [ngSwitch]="true">
-            <span *ngSwitchCase="col.field === 'TransactionID'"><a href="https://explorer.lbry.com/tx/{{rowData[col.field]}}" target="_blank">{{rowData[col.field]}}</a></span>
+            <span *ngSwitchCase="col.field === 'TransactionID'"><a
+                href="https://explorer.lbry.com/tx/{{rowData[col.field]}}"
+                target="_blank">{{rowData[col.field]}}</a></span>
             <span *ngSwitchCase="col.field === 'CreatedAt'">{{ rowData[col.field] | date:'short' }} </span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
@@ -140,7 +145,8 @@
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
           <td>
-            <button type="button" pButton icon="fa fa-check" (click)="reject(rowData)" label="Reject" class="ui-button-warning"></button>
+            <button type="button" pButton icon="fa fa-check" (click)="reject(rowData)" label="Reject"
+              class="ui-button-warning"></button>
           </td>
         </tr>
       </ng-template>
@@ -158,7 +164,9 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true">
-            <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+            <span
+              *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }}
+            </span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
         </tr>
@@ -177,7 +185,9 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)">
-            <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+            <span
+              *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }}
+            </span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
         </tr>
@@ -226,7 +236,8 @@
             <span>{{rowData[col.field]}}</span>
           </td>
           <td>
-            <button pButton type="button" label="Disable Rewards" class="ui-button-warning" (click)="reject(rowData)"></button>
+            <button pButton type="button" label="Disable Rewards" class="ui-button-warning"
+              (click)="reject(rowData)"></button>
           </td>
         </tr>
       </ng-template>
@@ -244,7 +255,8 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true">
-            <span *ngSwitchCase="col.field === 'URI'"><a href="https://lbry.tv/{{rowData[col.field]}}" target="_blank">{{rowData[col.field]}}</a></span>
+            <span *ngSwitchCase="col.field === 'URI'"><a href="https://lbry.tv/{{rowData[col.field]}}"
+                target="_blank">{{rowData[col.field]}}</a></span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
         </tr>
