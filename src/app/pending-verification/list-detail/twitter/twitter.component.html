@@ -17,8 +17,8 @@
   <span class="p-col-4">{{twitter.statuses_count}}</span>
   <span class="p-col-2" style="font-weight: bold">Location:</span>
   <span class="p-col-4">{{twitter.location}}</span>
-  <span class="p-col-2" style="font-weight: bold">Profile URL:</span>
-  <span class="p-col-4">{{twitter.profile_image_url}}</span>
+  <span class="p-col-2" style="font-weight: bold">Profile Image URL:</span>
+  <span class="p-col-4"><a [href]="twitter.profile_image_url">{{twitter.profile_image_url}}</a></span>
   <span class="p-col-2" style="font-weight: bold">Description:</span>
   <span class="p-col-4">{{twitter.description}}</span>
   <span class="p-col-2" style="font-weight: bold">Created:</span>

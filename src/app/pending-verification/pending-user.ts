@@ -82,18 +82,18 @@ export class PendingUser {
 
     if (u.twitter) {
       this.twitter.user_id = u.twitter.user_id;
-      this.twitter.name = u.name;
-      this.twitter.screen_name = u.screen_name;
-      this.twitter.email = u.email;
-      this.twitter.twitter_created_at = u.twitter_created_at;
-      this.twitter.followers_count = u.followers_count;
-      this.twitter.friends_count = u.friends_count;
-      this.twitter.statuses_count = u.statuses_count;
-      this.twitter.location = u.location;
-      this.twitter.profile_image_url = u.profile_image_url;
-      this.twitter.description = u.description;
-      this.twitter.created_at = u.created_at;
-      this.twitter.updated_at = u.updated_at;
+      this.twitter.name = u.twitter.name;
+      this.twitter.screen_name = u.twitter.screen_name;
+      this.twitter.email = u.twitter.email;
+      this.twitter.twitter_created_at = u.twitter.twitter_created_at;
+      this.twitter.followers_count = u.twitter.followers_count;
+      this.twitter.friends_count = u.twitter.friends_count;
+      this.twitter.statuses_count = u.twitter.statuses_count;
+      this.twitter.location = u.twitter.location;
+      this.twitter.profile_image_url = u.twitter.profile_image_url;
+      this.twitter.description = u.twitter.description;
+      this.twitter.created_at = u.twitter.created_at;
+      this.twitter.updated_at = u.twitter.updated_at;
     }
 
     if (u.facebook) {
