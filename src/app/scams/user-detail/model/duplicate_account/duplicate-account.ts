@@ -5,4 +5,5 @@ export class DuplicateAccount {
   PrimaryEmail: string;
   FirstIPMatch: string;
   CreatedAt: Date;
+  IsYouTuber: boolean;
 }

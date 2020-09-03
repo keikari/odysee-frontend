@@ -137,6 +137,7 @@ export class User {
         duplicate.FirstIPMatch = d.first_ip_match;
         duplicate.CreatedAt = new Date(d.created_at);
         duplicate.PrimaryEmail = d.primary_email;
+        duplicate.IsYouTuber = d.is_youtuber;
         this.DuplicateAccounts.push(duplicate);
       });
     }
@@ -187,6 +188,7 @@ export class User {
         inviter.RewardStatusChangeTrigger = u.inviter.reward_status_change_trigger;
         inviter.TotalRedeemedRewards = u.inviter.total_redeemed_rewards;
         inviter.UserID = u.inviter.user_id;
+        inviter.IsYouTuber = u.inviter.is_youtuber;
         this.Inviter.push(inviter);
     }
     // OwnedChannels
@@ -208,6 +210,7 @@ export class User {
         invitedUser.RewardEnabled = i.reward_enabled;
         invitedUser.RewardStatusChangeTrigger = i.reward_status_change_trigger;
         invitedUser.TotalRedeemedRewards = i.total_redeemed_rewards;
+        invitedUser.IsYouTuber = i.is_youtuber;
         this.InvitedUsers.push(invitedUser);
       });
     }

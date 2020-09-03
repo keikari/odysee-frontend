@@ -7,4 +7,5 @@ export class Inviter {
   TotalRedeemedRewards: Number;
   InvitedUsers: Number;
   InviteRewards: Number;
+  IsYouTuber: Boolean;
 }

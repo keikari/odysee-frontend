@@ -142,6 +142,7 @@
           </td>
           <td *ngFor="let col of columns" [ngSwitch]="true">
             <span *ngSwitchCase="col.field === 'CreatedAt'">{{ rowData[col.field] | date:'short' }} </span>
+            <span *ngSwitchCase="col.field === 'UserID'">{{rowData[col.field]}}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em></span>
             <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
           <td>
@@ -209,8 +210,9 @@
           <td>
             <a target="_blank" [routerLink]="['/admin/audit',rowData.UserID]"><i class="pi pi-info-circle"></i></a>
           </td>
-          <td *ngFor="let col of columns">
-            <span>{{rowData[col.field]}}</span>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'UserID'">{{rowData[col.field]}}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em></span>
+            <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
         </tr>
       </ng-template>
@@ -232,8 +234,9 @@
           <td>
             <a target="_blank" [routerLink]="['/admin/audit',rowData.UserID]"><i class="pi pi-info-circle"></i></a>
           </td>
-          <td *ngFor="let col of columns">
-            <span>{{rowData[col.field]}}</span>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'UserID'">{{rowData[col.field]}}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em></span>
+            <span *ngSwitchDefault>{{rowData[col.field]}}</span>
           </td>
           <td>
             <button pButton type="button" label="Disable Rewards" class="ui-button-warning"

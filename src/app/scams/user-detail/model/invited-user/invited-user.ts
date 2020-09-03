@@ -5,4 +5,5 @@ export class InvitedUser {
   RewardEnabled = false;
   IsEmailVerified = false;
   TotalRedeemedRewards = 0;
+  IsYouTuber = false;
 }
