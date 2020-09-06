@@ -1,0 +1,17 @@
+.tags {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.tag {
+  display: block;
+  margin: 5px;
+}
+
+.is-removed {
+  background-color: transparent;
+  color: #2196F3;
+  border: 1px solid;
+}

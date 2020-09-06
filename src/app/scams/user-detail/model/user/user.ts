@@ -10,6 +10,7 @@ import {Note} from '../note/note';
 import {Inviter} from '../inviter/inviter';
 import {OwnedChannel} from '../owned-channel/owned-channel';
 import {InvitedUser} from '../invited-user/invited-user';
+import {Tag} from '../tag/tag';
 
 
 export class User {
@@ -30,6 +31,7 @@ export class User {
   Inviter: Inviter[] = [];
   OwnedChannels: OwnedChannel[] = [];
   InvitedUsers: InvitedUser[] = [];
+  Tags: Tag[] = [];
   PrimaryEmail: string;
   LastAccessTime: string;
   ReferredUsers: number;
@@ -214,6 +216,15 @@ export class User {
         invitedUser.IsYouTuber = i.is_youtuber;
         this.InvitedUsers.push(invitedUser);
       });
+    }
+    // UserTags
+    if (u.user_tags) {
+      u.user_tags.forEach((t) => {
+        const tag = new Tag();
+        tag.Id = t.tag_id;
+        tag.IsRemoved = t.is_removed;
+        this.Tags.push(tag)
+      })
     }
     return this;
   }

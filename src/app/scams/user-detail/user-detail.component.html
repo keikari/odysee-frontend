@@ -266,4 +266,19 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
+  <p-accordionTab header="Tags">
+    <div>
+      <div>
+        <p-dropdown class="p-col-7 p-justify-center" [style]="{'width':'300px'}" [options]="tagOptions"
+        [(ngModel)]="selectedTag" optionLabel="name" [showClear]="true" [filter]="true"></p-dropdown>
+      <p-button (click)="tagUser(selectedTag.name, DisplayedUser.UserID, false)" label="Tag User" filter="true"></p-button>
+      </div>
+      <ul class="tags">
+        <li *ngFor="let tag of DisplayedUser.Tags; last as last">
+          <button (click)="changeTagStatus(DisplayedUser.UserID,tag)" class="tag" pButton type="button" [label]="tag.Name"
+            [ngClass]="{'is-removed': tag.IsRemoved}"></button>
+        </li>
+      </ul>
+    </div>
+  </p-accordionTab>
 </p-accordion>

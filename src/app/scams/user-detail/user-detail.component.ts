@@ -3,7 +3,9 @@ import {User} from './model/user/user';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../../services/api.service';
 import {MessageService} from 'primeng/api';
+import {TagService} from '../../services/tag.service'
 import {YoutubeChannel} from './model/youtube_channel/youtube-channel';
+import { Tag } from './model/tag/tag';
 
 @Component({
   selector: 'app-user-detail',
@@ -94,11 +96,27 @@ export class UserDetailComponent implements OnInit {
     {field: 'IsEmailVerified', header: 'Verified'},
     {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
   ];
+  selectedTag: any;
+  tagOptions: any[] = [];
+  comment = '';
 
-  constructor(public rest: ApiService, private messageService: MessageService) {
+  constructor(public rest: ApiService, private messageService: MessageService, private tagService: TagService) {
   }
 
   ngOnInit() {
+      this.tagService.getTags().subscribe(response => {
+        if (response !== undefined) {
+          response.data.forEach((tag) => {
+            this.tagOptions = this.tagOptions.concat({name: tag.name, value: tag.name});
+            this.DisplayedUser.Tags.forEach((userTag)=> {
+              if (userTag.Id == tag.id) {
+                userTag.Name = tag.name;
+              }
+            })
+          });
+          this.selectedTag = this.tagOptions[0];
+        }
+      });
   }
 
   reject(user: User) {
@@ -139,5 +157,23 @@ export class UserDetailComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
       }
     });
+  }
+
+  changeTagStatus(id :bigint, tag: Tag) {
+    let changedStatus = !tag.IsRemoved;
+    for (let i = 0; i < this.DisplayedUser.Tags.length; i++) {
+      if (this.DisplayedUser.Tags[i].Id == tag.Id)
+        this.DisplayedUser.Tags[i].IsRemoved = changedStatus
+    }
+    this.tagUser(tag.Name, id, changedStatus);
+  }
+
+  tagUser(tag: string, id: bigint, status: boolean) {
+    this.tagService.tagUser(tag,id.toString(),status).subscribe((response: any) => {
+        if (response !== undefined) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Success', detail: JSON.stringify(response.data, null, 1)});
+        }
+      });
   }
 }

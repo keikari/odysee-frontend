@@ -17,7 +17,7 @@
 
   <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">Tag</span>
   <p-dropdown  class="p-col-7 p-justify-center" [style]="{'width':'300px'}" [options]="tagOptions"
-               [(ngModel)]="selectedTag" optionLabel="name" [showClear]="true"></p-dropdown>
+               [(ngModel)]="selectedTag" optionLabel="name" [showClear]="true" [filter]="true"></p-dropdown>
 
   <div class="p-col-7" style="margin-top:20px;"><p-button label="Submit" icon="pi pi-check" iconPos="left" (onClick)="tagFile()"></p-button></div>
 </div>
