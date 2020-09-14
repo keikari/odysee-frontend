@@ -1,7 +1,7 @@
 <p-blockUI [blocked]="loading" [target]="filters"></p-blockUI>
 
 <div class="p-grid">
-  <p-panel #filters class="p-col-12" header="Filters">
+  <p-panel #filters class="p-col-12" header="Params">
     Tag <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label"
                     [options]="retentionOptions.tags" [(ngModel)]="selected.tag" filter="true"></p-dropdown>
 
@@ -10,8 +10,10 @@
 
     Since <p-calendar [(ngModel)]="selected.since" dateFormat="yy-mm-dd" [yearNavigator]="true" yearRange="2016:2025"></p-calendar>
 
-    &nbsp;&nbsp;
+    Intervals <p-inputNumber [(ngModel)]="selected.intervals"></p-inputNumber>
 
+
+    &nbsp;&nbsp;
     <button class="p-col-3 p-col-align-center ui-widget" type="button" pButton icon="fa fa-check"
             (click)="loadRetentionData()" label="Get Data"></button>
   </p-panel>
@@ -31,7 +33,7 @@
         <tr>
           <th>Cohort</th>
           <th># Users</th>
-          <th *ngFor="let n of retentionData[0].data.slice(1).keys()">{{n+1}}</th>
+          <th *ngFor="let n of retentionDataColHeaders">{{n}}</th>
         </tr>
       </thead>
       <tr *ngFor="let retention of retentionData">

@@ -2,15 +2,19 @@ export class RetentionParams {
   interval: { label: string, value: string };
   tag: { label: string, value: string };
   since: Date;
+  intervals: number;
 
   describe(): string {
-    return this.interval.value.charAt(0).toUpperCase() + this.interval.value.slice(1) +
-      ' retention for ' + this.tag.value +
-      ' since ' + this.sinceStr();
+    let s = this.interval.value.charAt(0).toUpperCase() + this.interval.value.slice(1) +
+      ' retention for ' + this.tag.value;
+    if (this.since) {
+      s += ' since ' + this.sinceStr();
+    }
+    return s;
   }
 
   sinceStr(): string {
-    return this.dateToString(this.since);
+    return this.since ? this.dateToString(this.since) : '';
   }
 
   dateToString(date: Date): string {

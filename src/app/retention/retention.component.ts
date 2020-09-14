@@ -19,6 +19,7 @@ export class RetentionComponent implements OnInit {
 
   retentionOptions: RetentionOptions;
   retentionData: Retention[];
+  retentionDataColHeaders: number[];
   selected: RetentionParams;
   active: RetentionParams;
   loading: boolean;
@@ -58,6 +59,11 @@ export class RetentionComponent implements OnInit {
         this.selected.since = new Date(querySince);
       }
 
+      const queryIntervals = this.route.snapshot.queryParams['intervals'];
+      if (queryIntervals) {
+        this.selected.intervals = parseInt(queryIntervals, 10);
+      }
+
       if (queryInterval && queryTag) {
         this.loadRetentionData();
       }
@@ -69,7 +75,12 @@ export class RetentionComponent implements OnInit {
       [],
       {
         relativeTo: this.route,
-        queryParams: {tag: this.selected.tag.value, interval: this.selected.interval.value, since: this.selected.sinceStr()},
+        queryParams: {
+          tag: this.selected.tag.value,
+          interval: this.selected.interval.value,
+          since: this.selected.sinceStr(),
+          intervals: this.selected.intervals,
+        },
         queryParamsHandling: 'merge'
       });
 
@@ -78,10 +89,16 @@ export class RetentionComponent implements OnInit {
     this.active.since = this.selected.since;
 
     const newRetentionData = [];
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('interval', this.selected.interval.value)
-      .set('tag', this.selected.tag.value)
-      .set('since', this.selected.sinceStr());
+      .set('tag', this.selected.tag.value);
+    if (this.selected.since) {
+      params = params.set('since', this.selected.sinceStr());
+    }
+    if (this.selected.intervals > 0) {
+      params = params.set('intervals', this.selected.intervals.toString());
+    }
+
     this.loading = true;
     this.rest.get('administrative', 'retention', params).subscribe((r) => {
       this.loading = false;
@@ -90,7 +107,7 @@ export class RetentionComponent implements OnInit {
       } else if (r.error) {
         this.messageService.add({severity: 'error', summary: 'Error', detail: r.error});
       } else if (!r.data) {
-        this.messageService.add({severity: 'warn', summary: 'No data', detail: 'No retention data for this tag'});
+        this.messageService.add({severity: 'warn', summary: 'No data', detail: 'No retention data for these params'});
       } else {
         r.data.forEach((d) => {
           const data = new Retention();
@@ -99,6 +116,8 @@ export class RetentionComponent implements OnInit {
           newRetentionData.push(data);
         });
         this.retentionData = newRetentionData;
+        this.retentionDataColHeaders =
+          [...Array(this.retentionData.map(i => i.data.length).reduce((acc, d) => Math.max(acc, d))).keys()].slice(1);
       }
     });
   }

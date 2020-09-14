@@ -49,7 +49,7 @@ import { UserDetailComponent } from './scams/user-detail/user-detail.component';
 import { UserReviewComponent } from './scams/user-review/user-review.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
 import {
-    BlockUIModule,
+    BlockUIModule, InputNumberModule,
     InputSwitchModule, PanelModule,
     ProgressSpinnerModule,
     SplitButtonModule,
@@ -171,7 +171,8 @@ const appRoutes: Routes = [
         TabViewModule,
         TreeTableModule,
         SplitButtonModule,
-        PanelModule
+        PanelModule,
+        InputNumberModule
     ],
   providers: [
     ApiService,
