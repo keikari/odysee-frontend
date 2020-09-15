@@ -1,15 +1,17 @@
+import { SelectItem } from 'primeng/api';
+
 export class RetentionParams {
   interval: { label: string, value: string };
-  tag: { label: string, value: string };
+  tags: SelectItem[];
   since: Date;
   intervals: number;
 
   describe(): string {
-    let s = this.interval.value.charAt(0).toUpperCase() + this.interval.value.slice(1) +
-      ' retention for ' + this.tag.value;
+    let s = this.interval.value.charAt(0).toUpperCase() + this.interval.value.slice(1) + ' retention';
     if (this.since) {
       s += ' since ' + this.sinceStr();
     }
+    s += ' for ' + this.tags.map(t => t.label).join(', ');
     return s;
   }
 

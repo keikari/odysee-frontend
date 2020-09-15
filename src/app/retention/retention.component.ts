@@ -4,9 +4,9 @@ import {ApiService} from '../services/api.service';
 import {RetentionOptions} from './model/retention-options';
 import {Retention} from './model/rentention';
 import {RetentionParams} from './model/retention-params';
-import {MessageService} from 'primeng';
+import {MessageService, MultiSelectItem} from 'primeng';
 import {Router, ActivatedRoute} from '@angular/router';
-import {max} from 'rxjs/operators';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-retention',
@@ -49,11 +49,9 @@ export class RetentionComponent implements OnInit {
         this.retentionOptions.intervals[0];
       this.selected.interval = initInterval;
 
-      const queryTag = this.route.snapshot.queryParams['tag'];
-      const initTag = this.retentionOptions.tags.map(t => t.value).includes(queryTag) ?
-        {label: queryTag, value: queryTag} :
-        this.retentionOptions.tags[0];
-      this.selected.tag = initTag;
+      const queryTags = (this.route.snapshot.queryParams['tag'] || this.route.snapshot.queryParams['tags']).split(',');
+      const initTags = this.retentionOptions.tags.map(t => t.value).filter(t => queryTags.includes(t));
+      this.selected.tags = initTags.map(t => ({label: t, value: t}));
 
       const querySince = this.route.snapshot.queryParams['since'];
       if (querySince) {
@@ -65,7 +63,7 @@ export class RetentionComponent implements OnInit {
         this.selected.intervals = parseInt(queryIntervals, 10);
       }
 
-      if (queryInterval && queryTag) {
+      if (queryInterval && queryTags.length) {
         this.loadRetentionData();
       }
     });
@@ -77,7 +75,7 @@ export class RetentionComponent implements OnInit {
       {
         relativeTo: this.route,
         queryParams: {
-          tag: this.selected.tag.value,
+          tags: this.selected.tags.map(t => t.value).join(','),
           interval: this.selected.interval.value,
           since: this.selected.sinceStr(),
           intervals: this.selected.intervals,
@@ -85,14 +83,15 @@ export class RetentionComponent implements OnInit {
         queryParamsHandling: 'merge'
       });
 
-    this.active.tag = this.selected.tag;
+    this.active.tags = this.selected.tags;
     this.active.interval = this.selected.interval;
     this.active.since = this.selected.since;
+    this.active.intervals = this.selected.intervals;
 
     const newRetentionData = [];
     let params = new HttpParams()
       .set('interval', this.selected.interval.value)
-      .set('tag', this.selected.tag.value);
+      .set('tags', this.selected.tags.map(t => t.value).join(','));
     if (this.selected.since) {
       params = params.set('since', this.selected.sinceStr());
     }

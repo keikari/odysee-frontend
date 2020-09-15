@@ -2,8 +2,8 @@
 
 <div class="p-grid">
   <p-panel #filters class="p-col-12" header="Params">
-    Tag <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label"
-                    [options]="retentionOptions.tags" [(ngModel)]="selected.tag" filter="true"></p-dropdown>
+    Tags <p-multiSelect *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label"
+                       [options]="retentionOptions.tags" [(ngModel)]="selected.tags" filter="true" autofocusFilter="true"></p-multiSelect>
 
     Interval <p-dropdown *ngIf="retentionOptions" class="p-col-12 p-col-align-center ui-widget" optionLabel="label"
                          [options]="retentionOptions.intervals" [(ngModel)]="selected.interval"></p-dropdown>
