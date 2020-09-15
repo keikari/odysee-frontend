@@ -26,14 +26,14 @@ tr:nth-child(even) {
   background: #F6F8FA;
 }
 
-.one{ background-color: #453B80; color: #ffffff; }
-.two{ background-color: #4B529F; color: #ffffff; }
-.three{ background-color: #5C7ABF; color: #ffffff; }
-.four{ background-color: #6DA8DF; color: #ffffff; }
-.five{ background-color: #7FDBFF; }
-.six{ background-color: #8EF6FF; }
-.seven{ background-color: #9EFFF9; }
-.eight{ background-color: #AEFFEB; }
-.nine{ background-color: #BFFFE4; }
-.ten{ background-color: #D1FFE2; }
-.eleven{ background-color: #E3FFE8; }
+/*https://gka.github.io/palettes*/
+.bg-9{ background-color: #200d97; color: #ffffff; }
+.bg-8{ background-color: #4529a3; color: #ffffff; }
+.bg-7{ background-color: #6042ae; color: #ffffff; }
+.bg-6{ background-color: #785ab9; color: #ffffff; }
+.bg-5{ background-color: #8e73c5; }
+.bg-4{ background-color: #a48cd0; }
+.bg-3{ background-color: #b9a6da; }
+.bg-2{ background-color: #cec1e5; }
+.bg-1{ background-color: #e3dcf0; }
+.bg-0{ background-color: #f7f7fa; }

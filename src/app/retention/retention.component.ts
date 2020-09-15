@@ -6,6 +6,7 @@ import {Retention} from './model/rentention';
 import {RetentionParams} from './model/retention-params';
 import {MessageService} from 'primeng';
 import {Router, ActivatedRoute} from '@angular/router';
+import {max} from 'rxjs/operators';
 
 @Component({
   selector: 'app-retention',
@@ -122,29 +123,10 @@ export class RetentionComponent implements OnInit {
     });
   }
 
-  color(percent) {
-    if (percent > 60) {
-      return 'one';
-    } else if (percent > 50) {
-      return 'two';
-    } else if (percent > 40) {
-      return 'three';
-    } else if (percent > 30) {
-      return 'four';
-    } else if (percent > 25) {
-      return 'five';
-    } else if (percent > 20) {
-      return 'six';
-    } else if (percent > 15) {
-      return 'seven';
-    } else if (percent > 10) {
-      return 'eight';
-    } else if (percent > 6) {
-      return 'nine';
-    } else if (percent > 3) {
-      return 'ten';
-    } else {
-      return 'eleven';
-    }
+  color(percent: number) {
+    const maxBg = 9;
+    const realisticMaxPercent = 70;
+    const scaledPercent = Math.min(percent, realisticMaxPercent);
+    return 'bg-' + (Math.round(scaledPercent / realisticMaxPercent * maxBg)).toString();
   }
 }
