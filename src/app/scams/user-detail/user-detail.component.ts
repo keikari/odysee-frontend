@@ -66,7 +66,8 @@ export class UserDetailComponent implements OnInit {
     {field: 'Platform', header: 'Platform'},
     {field: 'DeviceType', header: 'Device'},
     {field: 'CreatedAt', header: 'Created'},
-    {field: 'UpdatedAt', header: 'Updated'}];
+    {field: 'UpdatedAt', header: 'Updated'},
+    {field: 'Domain', header: 'Domain'}];
   noteColumns = [
     {field: 'Note', header: 'Note'},
     {field: 'UpdatedAt', header: 'UpdatedAt'},

@@ -161,6 +161,7 @@ export class User {
         install.DeviceType = i.type;
         install.CreatedAt = new Date(i.created_at);
         install.UpdatedAt = new Date(i.updated_at);
+        install.Domain = i.domain;
         this.Installs.push(install);
       });
     }

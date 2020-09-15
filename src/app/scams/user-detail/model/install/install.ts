@@ -4,4 +4,5 @@ export class Install {
   DeviceType: string;
   CreatedAt: Date;
   UpdatedAt: Date;
+  Domain: string;
 }

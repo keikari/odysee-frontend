@@ -18,6 +18,8 @@ export class PendingComponent implements OnInit {
   showVerified: boolean;
   showAutoApprovals: boolean;
   showTriggeredOnly: boolean;
+  showOdyseeUsers: boolean;
+  showOdyseeOnly: boolean;
   verificationMethod: string;
   invitedByFilter: bigint;
   lookback = 2;
@@ -60,6 +62,9 @@ export class PendingComponent implements OnInit {
     if (this.showTriggeredOnly) {
       params = params.set('triggered_only', String(this.showTriggeredOnly));
     }
+    if (this.showOdyseeUsers) {
+      params = params.set('odysee_users_only', String(this.showOdyseeUsers));
+    }
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
     }
@@ -94,6 +99,7 @@ export class PendingComponent implements OnInit {
     } else {
       this.DisplayedUsers = this.pendingUsers;
     }
+
     localStorage.setItem('showVerified', this.showVerified.toString());
   }
 
@@ -104,5 +110,13 @@ export class PendingComponent implements OnInit {
   toggleTriggeredOnly() {
     this.loadPending();
   }
-
+  toggleOdyseeUsers() {
+    this.loadPending();
+  }
+  filterOdysee() {
+    if (this.showOdyseeOnly) {
+      console.log(this.DisplayedUsers)
+      this.DisplayedUsers = this.DisplayedUsers.filter((user)=> user.Installs.length==1&&user.Installs[0].Domain=='odysee.com')
+    } else this.setUsers()
+  }
 }
