@@ -12,19 +12,19 @@
       <p-checkbox class="p-col-4" label="Odysee User"  binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="toggleOdyseeUsers()"></p-checkbox>
       <p-checkbox class="p-col-4" label="Odysee Only"  binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="filterOdysee()"></p-checkbox>
     </div>
-    <span class="ui-float-label">
-      <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>
-      <label for="float-input-lookback">look back 2 days</label>
-    </span>
-    <span class="ui-float-label">
-      <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
-      <label for="float-input">Filter Trigger To</label>
-    </span>
-    <span class="ui-float-label">
-      <input id="float-input-invitedby" [(ngModel)]="invitedByFilter" type="text" size="30" pInputText>
-      <label for="float-input-invitedby">Invited By</label>
-    </span>
-    <button class="p-col-1" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
+      <span class="ui-float-label margin-15">
+        <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>
+        <label for="float-input-lookback">look back 2 days</label>
+      </span>
+      <span class="ui-float-label margin-15">
+        <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
+        <label for="float-input">Filter Trigger To</label>
+      </span>
+      <span class="ui-float-label margin-15">
+        <input id="float-input-invitedby" [(ngModel)]="invitedByFilter" type="text" size="30" pInputText>
+        <label for="float-input-invitedby">Invited By</label>
+      </span>
+      <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
   </div>
 </p-card>
 

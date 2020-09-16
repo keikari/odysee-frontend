@@ -15,3 +15,7 @@
   color: #2196F3;
   border: 1px solid;
 }
+
+.tags-accordion{
+  min-height: 300px;
+}
