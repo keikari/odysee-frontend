@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../user-detail/model/user/user';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../../services/api.service';
+import {ConfirmationService} from 'primeng/api';
 import {MenuItem, MessageService} from 'primeng/api';
 
 @Component({
@@ -27,7 +28,7 @@ export class UserReviewComponent implements OnInit {
     {field: 'Country', header: 'Country'},
     {field: 'PrimaryEmail', header: 'Email'}];
 
-  constructor(public rest: ApiService, private messageService: MessageService) { }
+  constructor(public rest: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.approvedItems = [
@@ -116,5 +117,36 @@ export class UserReviewComponent implements OnInit {
   setSplitButtonUser(user: User) {
     this.splitButtonUser = user;
   }
-
+  
+  confirmDeletion(user: User) {
+      this.confirmationService.confirm({
+          message: 'Are you sure that you want to proceed?',
+          header: 'Confirmation',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.deleteUser(user)
+          },
+          reject: () => {
+            this.messageService.clear();
+            this.messageService.add({severity: 'success', summary: 'Rejected', detail: 'You just saived the life'});
+          }
+      });
+  }
+  deleteUser(user: User) {
+    let params = new HttpParams().
+    set('user_id', user.UserID.toString())
+    this.rest.get('administrative', 'delete_user', params).subscribe((response) => {
+      if (response && response.error) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+      } else if (response && response.data) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'success', summary: 'Confirmed', detail: 'User have been deleted'});
+        this.removeUser(user);
+      } else {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
+      }
+    });
+  }
 }

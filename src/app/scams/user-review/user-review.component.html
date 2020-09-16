@@ -1,11 +1,11 @@
-<p-table [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID">
+<p-table [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 4em"></th>
       <th *ngFor="let col of columns">
         {{col.header}}
       </th>
-      <th>Approve</th><th>Dismiss</th>
+      <th>Approve</th><th>Dismiss</th><th>Delete</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
@@ -25,11 +25,14 @@
       <td>
         <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onClick)="dismiss(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss" styleClass="ui-button-warning"></p-splitButton>
       </td>
+      <td>
+        <button type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button> 
+      </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
     <tr>
-      <td  [attr.colspan]="columns.length + 3">
+      <td  [attr.colspan]="columns.length + 4">
         <app-user-detail [DisplayedUser]="rowData" (userReject)="reject($event)"></app-user-detail>
       </td>
     </tr>
@@ -41,3 +44,4 @@
     <button type="button" pButton icon="pi pi-times" (click)="done()" label="Done" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>

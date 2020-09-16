@@ -6,11 +6,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { TemplateComponent } from './template/send-templates/template.component';
 import { MergeComponent } from './user/merge/merge.component';
@@ -173,11 +175,13 @@ const appRoutes: Routes = [
     SplitButtonModule,
     PanelModule,
     InputNumberModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ConfirmDialogModule,
   ],
   providers: [
     ApiService,
     MessageService,
+    ConfirmationService,
     [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
     [{ provide: DEFAULT_TIMEOUT, useValue: 900000 }],
   ],
