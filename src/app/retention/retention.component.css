@@ -26,6 +26,29 @@ tr:nth-child(even) {
   background: #F6F8FA;
 }
 
+/* row headers */
+table > tr th {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+/*table > tr td:last-of-type {*/
+/*  position: -webkit-sticky;*/
+/*  position: sticky;*/
+/*  right: 0;*/
+/*  z-index: 1;*/
+/*}*/
+
+/* col headers */
+thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 /*https://gka.github.io/palettes*/
 .bg-9{ background-color: #200d97; color: #ffffff; }
 .bg-8{ background-color: #4529a3; color: #ffffff; }
