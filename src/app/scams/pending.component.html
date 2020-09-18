@@ -9,8 +9,8 @@
       <p-checkbox class="p-col-1" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
       <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="toggleAutoApprovals()"></p-checkbox>
       <p-checkbox class="p-col-3" label="Triggered Only"  binary="true" [(ngModel)]="showTriggeredOnly" (onChange)="toggleTriggeredOnly()"></p-checkbox>
-      <p-checkbox class="p-col-4" label="Odysee User"  binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="toggleOdyseeUsers()"></p-checkbox>
-      <p-checkbox class="p-col-4" label="Odysee Only"  binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="filterOdysee()"></p-checkbox>
+      <p-checkbox class="p-col-4" label="Odysee User"  binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="filterOdysee()"></p-checkbox>
+      <p-checkbox class="p-col-4" label="Odysee Only"  binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="toggleOdyseeUsers()"></p-checkbox>
     </div>
       <span class="ui-float-label margin-15">
         <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>
