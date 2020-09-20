@@ -65,6 +65,9 @@ export class PendingComponent implements OnInit {
     if (this.showOdyseeOnly) {
       params = params.set('odysee_users_only', String(this.showOdyseeOnly));
     }
+    if (this.showOdyseeUsers) {
+      params = params.set('odysee_users', String(this.showOdyseeUsers));
+    }
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
     }
@@ -101,30 +104,5 @@ export class PendingComponent implements OnInit {
     }
 
     localStorage.setItem('showVerified', this.showVerified.toString());
-  }
-
-  toggleAutoApprovals() {
-    this.loadPending();
-  }
-
-  toggleTriggeredOnly() {
-    this.loadPending();
-  }
-  toggleOdyseeUsers() {
-    this.loadPending();
-  }
-  filterOdysee() {
-    if (this.showOdyseeUsers) {
-      this.DisplayedUsers = this.DisplayedUsers.filter((user)=> {
-        let haveOdyseeRecord = false;
-        user.Installs.forEach((install)=>{
-          if (install.Domain=="odysee.com") {
-            haveOdyseeRecord = true;
-          }
-        }
-      )
-      return haveOdyseeRecord;
-    })
-    } else this.setUsers()
   }
 }

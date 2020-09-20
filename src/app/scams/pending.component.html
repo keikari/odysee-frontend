@@ -7,10 +7,10 @@
     <div class="p-col-2"><p-radioButton name="group1" value="phone" label="Phone" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt4"></p-radioButton></div>
     <div class="p-col-5">
       <p-checkbox class="p-col-1" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
-      <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="toggleAutoApprovals()"></p-checkbox>
-      <p-checkbox class="p-col-3" label="Triggered Only"  binary="true" [(ngModel)]="showTriggeredOnly" (onChange)="toggleTriggeredOnly()"></p-checkbox>
-      <p-checkbox class="p-col-4" label="Odysee User"  binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="filterOdysee()"></p-checkbox>
-      <p-checkbox class="p-col-4" label="Odysee Only"  binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="toggleOdyseeUsers()"></p-checkbox>
+      <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="loadPending()"></p-checkbox>
+      <p-checkbox class="p-col-3" label="Triggered Only"  binary="true" [(ngModel)]="showTriggeredOnly" (onChange)="loadPending()"></p-checkbox>
+      <p-checkbox class="p-col-4" label="Odysee User"  binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="loadPending()"></p-checkbox>
+      <p-checkbox class="p-col-4" label="Odysee Only"  binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="loadPending()"></p-checkbox>
     </div>
       <span class="ui-float-label margin-15">
         <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>
