@@ -20,7 +20,7 @@ export class TagService {
       set('outpoint', outpoint).
       set('tag_name', selectedTag).
       set('claim_id', claim_id);
-    return this.rest.get('tag', 'list', params);
+    return this.rest.get('file', 'tag', params);
   }
 
   tagUser(tag: string,id: string,status: boolean): Observable<any> {
