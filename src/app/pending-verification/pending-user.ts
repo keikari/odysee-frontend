@@ -4,6 +4,7 @@ import {Github} from './model/github';
 import {Twitter} from './model/twitter';
 import {Linkedin} from './model/linkedin';
 import {Facebook} from './model/facebook';
+import {LbryInc} from './model/lbry-inc';
 
 export class PendingUser {
   form: User;
@@ -13,6 +14,7 @@ export class PendingUser {
   facebook: Facebook;
   linkedin: Linkedin;
   duplicates: PendingUser[];
+  lbryInc: LbryInc;
 
   constructor( u: any) {
     this.form = new User();
@@ -21,6 +23,7 @@ export class PendingUser {
     this.twitter = new Twitter();
     this.facebook = new Facebook();
     this.linkedin = new Linkedin();
+    this.lbryInc = new LbryInc();
     this.duplicates = [];
     if (u === null) {
       return this;
@@ -118,7 +121,12 @@ export class PendingUser {
     if (u.duplicates) {
       this.duplicates = u.duplicates.map((p) => new PendingUser(p) );
     }
-
+    if (u.lbry_inc_data) {
+      console.log(u.lbry_inc_data)
+      this.lbryInc.user_id = u.lbry_inc_data.user_id;
+      this.lbryInc.manually_blocked = u.lbry_inc_data.manually_blocked;
+      this.lbryInc.rewards_enabled = u.lbry_inc_data.rewards_enabled;
+    }
     return this;
   }
 }
