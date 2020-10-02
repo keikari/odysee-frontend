@@ -9,3 +9,7 @@ td:nth-of-type(3n) {
 .already-approved > td:nth-of-type(3n) {
     background-color: lightcoral !important;
 }
+.manualy-blocked > td:nth-of-type(3n) {
+    background-color: coral !important;
+    color:black !important
+}
