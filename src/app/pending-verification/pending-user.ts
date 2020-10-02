@@ -15,6 +15,7 @@ export class PendingUser {
   linkedin: Linkedin;
   duplicates: PendingUser[];
   lbryInc: LbryInc;
+  is_good_email: boolean;
 
   constructor( u: any) {
     this.form = new User();
@@ -25,6 +26,7 @@ export class PendingUser {
     this.linkedin = new Linkedin();
     this.lbryInc = new LbryInc();
     this.duplicates = [];
+    this.is_good_email = true;
     if (u === null) {
       return this;
     }
@@ -65,6 +67,7 @@ export class PendingUser {
       d.created_at = new Date(u.discord.created_at);
       d.updated_at = new Date(u.discord.updated_at);
       this.discord = d;
+      if (d.email!=u.user.email) this.is_good_email=false
     }
     if (u.github) {
       const gh = new Github();
@@ -81,40 +84,54 @@ export class PendingUser {
       gh.updated_at = new Date(u.github.updated_at);
       gh.emails = u.github.emails.join(' ');
       this.github = gh;
+      let is_match=false;
+      u.github.emails.forEach(email => {
+        if (email==u.user.email) is_match=is_match||true
+      });
+      if (!is_match) this.is_good_email = false
     }
 
     if (u.twitter) {
-      this.twitter.user_id = u.twitter.user_id;
-      this.twitter.name = u.twitter.name;
-      this.twitter.screen_name = u.twitter.screen_name;
-      this.twitter.email = u.twitter.email;
-      this.twitter.twitter_created_at = u.twitter.twitter_created_at;
-      this.twitter.followers_count = u.twitter.followers_count;
-      this.twitter.friends_count = u.twitter.friends_count;
-      this.twitter.statuses_count = u.twitter.statuses_count;
-      this.twitter.location = u.twitter.location;
-      this.twitter.profile_image_url = u.twitter.profile_image_url;
-      this.twitter.description = u.twitter.description;
-      this.twitter.created_at = u.twitter.created_at;
-      this.twitter.updated_at = u.twitter.updated_at;
+      const twitter = new Twitter();
+      twitter.user_id = u.twitter.user_id;
+      twitter.name = u.twitter.name;
+      twitter.screen_name = u.twitter.screen_name;
+      twitter.email = u.twitter.email;
+      twitter.twitter_created_at = u.twitter.twitter_created_at;
+      twitter.followers_count = u.twitter.followers_count;
+      twitter.friends_count = u.twitter.friends_count;
+      twitter.statuses_count = u.twitter.statuses_count;
+      twitter.location = u.twitter.location;
+      twitter.profile_image_url = u.twitter.profile_image_url;
+      twitter.description = u.twitter.description;
+      twitter.created_at = u.twitter.created_at;
+      twitter.updated_at = u.twitter.updated_at;
+      this.twitter = twitter;
+      if (twitter.email!=u.user.email) this.is_good_email=false
     }
 
     if (u.facebook) {
-      this.facebook.user_id = u.facebook.user_id;
-      this.facebook.name = u.facebook.name;
-      this.facebook.last_name = u.facebook.last_name;
-      this.facebook.email = u.facebook.email;
-      this.facebook.created_at = u.facebook.created_at;
-      this.facebook.updated_at = u.facebook.updated_at;
+      const fb = new Facebook()
+      fb.user_id = u.facebook.user_id;
+      fb.name = u.facebook.name;
+      fb.last_name = u.facebook.last_name;
+      fb.email = u.facebook.email;
+      fb.created_at = u.facebook.created_at;
+      fb.updated_at = u.facebook.updated_at;
+      this.facebook = fb;
+      if (fb.email!=u.user.email) this.is_good_email=false
     }
 
     if (u.linkedin) {
-      this.linkedin.user_id = u.linkedin.user_id;
-      this.linkedin.name = u.linkedin.name;
-      this.linkedin.last_name = u.linkedin.last_name;
-      this.linkedin.email = u.linkedin.email;
-      this.linkedin.created_at = u.linkedin.created_at;
-      this.linkedin.updated_at = u.linkedin.updated_at;
+      const lin = new Linkedin();
+      lin.user_id = u.linkedin.user_id;
+      lin.name = u.linkedin.name;
+      lin.last_name = u.linkedin.last_name;
+      lin.email = u.linkedin.email;
+      lin.created_at = u.linkedin.created_at;
+      lin.updated_at = u.linkedin.updated_at;
+      this.linkedin = lin;
+      if (lin.email!=u.user.email) this.is_good_email=false
     }
 
 

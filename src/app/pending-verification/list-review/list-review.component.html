@@ -22,7 +22,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" [ngClass]="{'good-email': rowData.is_good_email, 'already-approved' : rowData.lbryInc.rewards_enabled}">
       <td *ngFor="let col of columns; let i = index"  class="ui-resizable-column">
         <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
         <img *ngIf="i == 0 && rowData.github.user_id" alt="github" src="assets/github.png" width="24" style="vertical-align: middle" />
