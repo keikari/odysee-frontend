@@ -12,6 +12,7 @@ import {MenuItem, MessageService} from 'primeng/api';
 })
 export class UserReviewComponent implements OnInit {
   @Input() users: User[] = [];
+  @Input() filtering: boolean=true;
   approvedItems: MenuItem[];
   rejectItems: MenuItem[];
   display = false;

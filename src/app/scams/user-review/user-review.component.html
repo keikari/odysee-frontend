@@ -1,4 +1,4 @@
-<p-table [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true">
+<p-table #dt [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true" [filterDelay]="0" [globalFilterFields]="['Country']">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 4em"></th>
@@ -6,6 +6,22 @@
         {{col.header}}
       </th>
       <th>Approve</th><th>Dismiss</th><th>Delete</th>
+    </tr>
+    <tr *ngIf="filtering">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>
+        <input pInputText type="text" (input)="dt.filter($event.target.value, 'Country', 'contains')" placeholder="Search by Country" class="p-column-filter">
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
