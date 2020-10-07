@@ -1,0 +1,11 @@
+.action-buttons {
+    display: flex;
+}
+
+.action-buttons> {
+    display: block;
+}
+
+.action-column {
+    width: 360px;
+}

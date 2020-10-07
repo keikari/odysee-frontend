@@ -1,31 +1,39 @@
 <p-card>
-  <div class="p-grid p-justify-center">
-    <span class="p-col-1">Verification:</span>
-    <div class="p-col-1"><p-radioButton name="group1" value="all" label="Everything" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt1"></p-radioButton></div>
-    <div class="p-col-1"><p-radioButton name="group1" value="youtube" label="Youtuber" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt2"></p-radioButton></div>
-    <div class="p-col-1"><p-radioButton name="group1" value="stripe" label="CreditCard" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt3"></p-radioButton></div>
-    <div class="p-col-2"><p-radioButton name="group1" value="phone" label="Phone" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt4"></p-radioButton></div>
-    <div class="p-col-5">
-      <p-checkbox class="p-col-1" label="Verified"  binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
-      <p-checkbox class="p-col-2" label="Auto Approved"  binary="true" [(ngModel)]="showAutoApprovals" (onChange)="loadPending()"></p-checkbox>
-      <p-checkbox class="p-col-3" label="Triggered Only"  binary="true" [(ngModel)]="showTriggeredOnly" (onChange)="loadPending()"></p-checkbox>
-      <p-checkbox class="p-col-4" label="Odysee User"  binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="loadPending()"></p-checkbox>
-      <p-checkbox class="p-col-4" label="Odysee Only"  binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="loadPending()"></p-checkbox>
-    </div>
-      <span class="ui-float-label margin-15">
+    <div class="p-grid p-justify-center">
+        <span class="p-col-1">Verification:</span>
+        <div class="p-col-1">
+            <p-radioButton name="group1" value="all" label="Everything" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt1"></p-radioButton>
+        </div>
+        <div class="p-col-1">
+            <p-radioButton name="group1" value="youtube" label="Youtuber" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt2"></p-radioButton>
+        </div>
+        <div class="p-col-1">
+            <p-radioButton name="group1" value="stripe" label="CreditCard" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt3"></p-radioButton>
+        </div>
+        <div class="p-col-2">
+            <p-radioButton name="group1" value="phone" label="Phone" (onClick)="loadPending()" [(ngModel)]="verificationMethod" inputId="opt4"></p-radioButton>
+        </div>
+        <div class="p-col-5">
+            <p-checkbox class="p-col-1" label="Verified" binary="true" [(ngModel)]="showVerified" (onChange)="setUsers()"></p-checkbox>
+            <p-checkbox class="p-col-2" label="Auto Approved" binary="true" [(ngModel)]="showAutoApprovals" (onChange)="loadPending()"></p-checkbox>
+            <p-checkbox class="p-col-3" label="Triggered Only" binary="true" [(ngModel)]="showTriggeredOnly" (onChange)="loadPending()"></p-checkbox>
+            <p-checkbox class="p-col-4" label="Odysee User" binary="true" [(ngModel)]="showOdyseeUsers" (onChange)="loadPending()"></p-checkbox>
+            <p-checkbox class="p-col-4" label="Odysee Only" binary="true" [(ngModel)]="showOdyseeOnly" (onChange)="loadPending()"></p-checkbox>
+        </div>
+        <span class="ui-float-label margin-15">
         <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>
         <label for="float-input-lookback">look back 2 days</label>
       </span>
-      <span class="ui-float-label margin-15">
+        <span class="ui-float-label margin-15">
         <input id="float-input" [(ngModel)]="triggerFilter" type="text" size="30" pInputText>
         <label for="float-input">Filter Trigger To</label>
       </span>
-      <span class="ui-float-label margin-15">
+        <span class="ui-float-label margin-15">
         <input id="float-input-invitedby" [(ngModel)]="invitedByFilter" type="text" size="30" pInputText>
         <label for="float-input-invitedby">Invited By</label>
       </span>
-      <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
-  </div>
+        <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
+    </div>
 </p-card>
 
-<app-user-review [users]="DisplayedUsers"></app-user-review>
+<app-user-review [users]="DisplayedUsers" [crud]="true"></app-user-review>

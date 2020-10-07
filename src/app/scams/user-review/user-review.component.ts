@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {User} from '../user-detail/model/user/user';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../../services/api.service';
 import {ConfirmationService} from 'primeng/api';
 import {MenuItem, MessageService} from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-user-review',
@@ -12,13 +13,15 @@ import {MenuItem, MessageService} from 'primeng/api';
 })
 export class UserReviewComponent implements OnInit {
   @Input() users: User[] = [];
-  @Input() filtering: boolean=true;
+  @Input() crud: boolean=false;
+  selectedUsers: User[] =[];
+  @ViewChild('dt') table: Table;
   approvedItems: MenuItem[];
   rejectItems: MenuItem[];
   display = false;
   approved = false;
   message = '';
-  splitButtonUser: User;
+  splitButtonUser: User = null;
   userColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'Duplicates', header: 'Duplicates', width: '13px'},
@@ -56,6 +59,7 @@ export class UserReviewComponent implements OnInit {
       params = params.set('comment', this.message);
     }
     this.callUserApprove(user, params, 'Approved', 'User approved for rewards!');
+    this.splitButtonUser = null;
   }
 
   callUserApprove(user: User, params: HttpParams, summary: string, detail: string) {
@@ -93,6 +97,7 @@ export class UserReviewComponent implements OnInit {
       params = params.set('comment', this.message);
     }
     this.callUserApprove(user, params, 'Dismissed', 'User auto rejection confirmed!');
+    this.splitButtonUser = null;
   }
 
   reject(user: User) {
@@ -107,12 +112,18 @@ export class UserReviewComponent implements OnInit {
 
   done() {
     this.display = false;
-    if ( this.approved ) {
-      this.approve(this.splitButtonUser);
-    } else {
-      this.dismiss(this.splitButtonUser);
+    if(this.splitButtonUser!=null){
+      if ( this.approved ) {
+        this.approve(this.splitButtonUser);
+      } else {
+        this.dismiss(this.splitButtonUser);
+      }
+      this.message = '';
     }
-    this.message = '';
+    else {
+      this.updateSelectedUsersRewardsStatus(this.approved);
+      this.message='';
+    }
   }
 
   setSplitButtonUser(user: User) {
@@ -149,5 +160,30 @@ export class UserReviewComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
       }
     });
+  }
+  updateSelectedUsersRewardsStatus(isRewardsSatisfy) {
+    let rewardStatus = isRewardsSatisfy?'yes':'no';
+    let message = isRewardsSatisfy?'Approved!':'Rejected!';
+    let details = isRewardsSatisfy?'User approved for rewards!':'User auto rejection confirmed!';
+    let comment = isRewardsSatisfy?'Commander Approved!':'Commander Rejected';
+    let question = isRewardsSatisfy?'approve':'reject'
+    this.confirmationService.confirm({
+      message: `Are you sure you want to ${question} all selected users?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.selectedUsers.forEach((user)=>{
+            let params = new HttpParams().
+              set('id', user.UserID.toString()).
+              set('notify', true.toString()).
+              set('comment', comment).
+              set('is_reward_approved', rewardStatus);
+              if ( this.message !== '') {
+                params = params.set('comment', this.message);
+              }
+            this.callUserApprove(user, params, message, details);
+          })
+        }
+    })
   }
 }

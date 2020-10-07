@@ -1,63 +1,70 @@
-<p-table #dt [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true" [filterDelay]="0" [globalFilterFields]="['Country']">
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th style="width: 4em"></th>
-      <th *ngFor="let col of columns">
-        {{col.header}}
-      </th>
-      <th>Approve</th><th>Dismiss</th><th>Delete</th>
-    </tr>
-    <tr *ngIf="filtering">
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th>
-        <input pInputText type="text" (input)="dt.filter($event.target.value, 'Country', 'contains')" placeholder="Search by Country" class="p-column-filter">
-      </th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-    <tr title="{{rowData.LastNote}}">
-      <td>
-        <a href="#" [pRowToggler]="rowData">
-          <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-        </a>
-      </td>
-      <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)" [title]="rowData.getTitle(col.field)">
-        <span *ngSwitchCase="col.field === 'UserID'">{{ rowData[col.field] }} <em *ngIf="rowData.YoutubeChannels.length" class="pi pi-video"></em></span>
-        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-      </td>
-      <td>
-        <p-splitButton icon="fa fa-check" appendTo="body" [model]="approvedItems" (onClick)="approve(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Approve" styleClass="ui-button-success"></p-splitButton>
-      </td>
-      <td>
-        <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onClick)="dismiss(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss" styleClass="ui-button-warning"></p-splitButton>
-      </td>
-      <td>
-        <button type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button> 
-      </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-    <tr>
-      <td  [attr.colspan]="columns.length + 4">
-        <app-user-detail [DisplayedUser]="rowData" (userReject)="reject($event)"></app-user-detail>
-      </td>
-    </tr>
-  </ng-template>
+<p-toolbar *ngIf="crud">
+    <p-splitButton icon="fa fa-check" appendTo="body" [model]="approvedItems" (onDropdownClick)="setCustomMessage()" (onClick)="updateSelectedUsersRewardsStatus(true)" label="Approve" styleClass="ui-button-success" [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
+    <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onDropdownClick)="setCustomMessage()" (onClick)="updateSelectedUsersRewardsStatus(false)" label="Dismiss" styleClass="ui-button-warning" [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
+</p-toolbar>
+<p-table #dt [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true" [filterDelay]="0" [(selection)]="selectedUsers">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngIf="crud"></th>
+            <th style="width: 4em"></th>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+            <th class="action-column">Action</th>
+        </tr>
+        <tr *ngIf="crud">
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'Country', 'contains')" placeholder="Search by Country" class="p-column-filter">
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+        <tr title="{{rowData.LastNote}}">
+            <td *ngIf="crud">
+                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+            </td>
+            <td>
+                <a href="#" [pRowToggler]="rowData">
+                    <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                </a>
+            </td>
+            <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)" [title]="rowData.getTitle(col.field)">
+                <span *ngSwitchCase="col.field === 'UserID'">{{ rowData[col.field] }} <em *ngIf="rowData.YoutubeChannels.length" class="pi pi-video"></em></span>
+                <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <p-splitButton icon="fa fa-check" appendTo="body" [model]="approvedItems" (onClick)="approve(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Approve" styleClass="ui-button-success"></p-splitButton>
+                    <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onClick)="dismiss(rowData)" (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss" styleClass="ui-button-warning"></p-splitButton>
+                    <button type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+        <tr>
+            <td [attr.colspan]="columns.length + 4">
+                <app-user-detail [DisplayedUser]="rowData" (userReject)="reject($event)"></app-user-detail>
+            </td>
+        </tr>
+    </ng-template>
 </p-table>
 <p-dialog header="Enter Why" [(visible)]="display">
-  <textarea [(ngModel)]="message" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize"></textarea>
-  <p-footer>
-    <button type="button" pButton icon="pi pi-times" (click)="done()" label="Done" class="ui-button-secondary"></button>
-  </p-footer>
+    <textarea [(ngModel)]="message" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize"></textarea>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-times" (click)="done()" label="Done" class="ui-button-secondary"></button>
+    </p-footer>
 </p-dialog>
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
