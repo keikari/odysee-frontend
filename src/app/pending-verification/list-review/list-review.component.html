@@ -1,5 +1,5 @@
 
-<p-treeTable [columns]="userCols"
+<p-treeTable #dt [columns]="userCols"
          [value]="tree"
          [resizableColumns]="true"
          [scrollable]="true"
@@ -8,7 +8,16 @@
          dataKey="name"
          scrollHeight="500px"
          selectionMode="single"
-         dataKey="form.id">
+         dataKey="form.id"
+         [globalFilterFields]="['form.email','form.ticket_id']">
+<ng-template pTemplate="caption">
+<div class="table-header">
+  <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+  </span>
+</div>
+</ng-template>
   <ng-template pTemplate="colgroup" let-columns>
     <colgroup>
       <col *ngFor="let col of columns" [style.width]="col.width">

@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {PendingUser} from '../pending-user';
 import {TreeNode} from 'primeng';
-
+import {Table} from 'primeng'
 @Component({
   selector: 'app-list-review',
   templateUrl: './list-review.component.html',
@@ -14,7 +14,7 @@ export class ListReviewComponent implements OnInit {
   @Input() tree: TreeNode[];
   selectedNode: TreeNode;
   @Output() selectNode = new EventEmitter<TreeNode>();
-
+  @ViewChild('dt') table: Table;
   constructor() { }
 
   ngOnInit() {
@@ -22,7 +22,6 @@ export class ListReviewComponent implements OnInit {
   }
 
   onSelectNode(event) {
-    console.log('selected:', this.selectedNode);
     this.selectNode.emit(event.node);
   }
 }
