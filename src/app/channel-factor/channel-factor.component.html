@@ -1,0 +1,13 @@
+<div class="p-grid p-justify-center p-align-center" style="margin:50px;">
+    <span class="p-col-7 p-col-align-center ui-widget" style="font-size:300%;text-align: center">Set Channel Factor</span>
+
+    <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">ClaimID</span>
+    <input class="p-col-7 p-justify-center" type="text" pInputText placeholder="Enter claim_id" style="margin:10px" [(ngModel)]="claimId">
+
+    <span class="p-col-7 p-col-align-center ui-widget" style="font-size:150%">eg. 1.4 = 40% more than the base rate.</span>
+    <p-inputNumber mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" class="p-col-7 p-justify-center" placeholder="From 0.0 to 10.0" [(ngModel)]="factor"></p-inputNumber>
+
+    <div class="p-col-7">
+        <button pButton type="button" label="Submit" (click)="setFactor()"></button>
+    </div>
+</div>

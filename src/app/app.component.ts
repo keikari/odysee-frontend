@@ -82,6 +82,9 @@ export class AppComponent implements OnInit {
       {
         label: 'Notifications', routerLink: ['/notifications']
       },
+      {
+        label: 'Channel-Factor', routerLink: ['/channel-factor']
+      },
     ];
   }
 

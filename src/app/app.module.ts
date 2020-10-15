@@ -76,7 +76,7 @@ import { FormDataComponent } from './pending-verification/list-detail/form-data/
 import { LbryIncComponent } from './pending-verification/list-detail/lbry-inc/lbry-inc.component';
 import { TwitterComponent } from './pending-verification/list-detail/twitter/twitter.component';
 import { RetentionComponent } from './retention/retention.component';
-
+import { ChannelFactorComponent } from './channel-factor/channel-factor.component'
 
 const appRoutes: Routes = [
   { path: 'templates/send', component: TemplateComponent },
@@ -97,8 +97,8 @@ const appRoutes: Routes = [
   { path: 'notifications', component: DeviceNotificationComponent },
   { path: 'admin/verification', component: PendingVerificationComponent },
   { path: 'retention', component: RetentionComponent },
+  { path: 'channel-factor', component: ChannelFactorComponent},
   { path: '', component: StatusComponent}];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,7 +132,8 @@ const appRoutes: Routes = [
     FormDataComponent,
     LbryIncComponent,
     TwitterComponent,
-    RetentionComponent
+    RetentionComponent,
+    ChannelFactorComponent,
   ],
   imports: [
     BrowserAnimationsModule,
