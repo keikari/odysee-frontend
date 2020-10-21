@@ -161,6 +161,16 @@ export class UserReviewComponent implements OnInit {
       }
     });
   }
+  onDuplicatesChange(event) {
+    const value = event.target.value;
+    if (value && value.trim().length) {
+        const duplicates = parseInt(value);
+
+        if (!isNaN(duplicates)) {
+            this.table.filter(duplicates, 'Duplicates', 'lte');
+        }
+    }
+}
   updateSelectedUsersRewardsStatus(isRewardsSatisfy) {
     let rewardStatus = isRewardsSatisfy?'yes':'no';
     let message = isRewardsSatisfy?'Approved!':'Rejected!';
