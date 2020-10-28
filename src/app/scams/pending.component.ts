@@ -21,7 +21,7 @@ export class PendingComponent implements OnInit {
   showOdyseeUsers: boolean;
   showOdyseeOnly: boolean;
   verificationMethod: string;
-  invitedByFilter: bigint;
+  invitedByFilter: string[];
   lookback = 2;
 
   static getVerificationMethod(user: User): string {
@@ -71,7 +71,7 @@ export class PendingComponent implements OnInit {
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
     }
-    if ( this.invitedByFilter > 0 ) {
+    if ( this.invitedByFilter.length > 0 ) {
       params = params.set('invited_by_filter', this.invitedByFilter.toString());
       localStorage.setItem('invited_by_filter', this.invitedByFilter.toString());
     }
