@@ -21,7 +21,7 @@ export class PendingComponent implements OnInit {
   showOdyseeUsers: boolean;
   showOdyseeOnly: boolean;
   verificationMethod: string;
-  invitedByFilter: string[];
+  invitedByFilter: string[] = [];
   lookback = 2;
 
   static getVerificationMethod(user: User): string {
