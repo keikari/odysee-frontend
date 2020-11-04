@@ -87,6 +87,7 @@ export class UserDetailComponent implements OnInit {
   ownedChannelsColumns = [
     {field: 'URI', header: 'URI'},
     {field: 'SignedStreams', header: 'Signed Streams'},
+    {field: 'ViewRateFactor', header: 'View Rate Factor'}
   ];
   invitedUsersColumns = [
     {field: 'UserID', header: 'UserID'},

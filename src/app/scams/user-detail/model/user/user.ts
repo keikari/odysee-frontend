@@ -200,6 +200,7 @@ export class User {
       const ownedChannel = new OwnedChannel();
       ownedChannel.URI = o.uri;
       ownedChannel.SignedStreams = o.signed_streams;
+      ownedChannel.ViewRateFactor = o.view_rate_factor
       this.OwnedChannels.push(ownedChannel);
       });
     }
