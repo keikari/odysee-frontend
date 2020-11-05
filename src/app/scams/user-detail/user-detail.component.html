@@ -1,273 +1,400 @@
 <p-accordion>
-    <p-accordionTab header="Emails">
-        <p-table [columns]="emailColumns" [value]="DisplayedUser.Emails">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns">
-                        {{rowData[col.field]}}
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Phones">
-        <p-table [columns]="phoneColumns" [value]="DisplayedUser.Phones">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns">
-                        {{rowData[col.field]}}
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Youtube Channels">
-        <p-table [columns]="youtubeColumns" [value]="DisplayedUser.YoutubeChannels" [autoLayout]="true">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns; let i = index">
-                        <a *ngIf="col.field === 'ChannelName'" href="https://youtube.com/channel/{{rowData.ChannelID}}/videos" target="_blank">{{rowData[col.field]}}</a>
-                        <p-inputSwitch *ngIf="col.field === 'ShouldSync' || col.field === 'IsRedeemable' || col.field === 'Reviewed'" (onChange)="changeFieldStatus(rowData, col.api_field, $event)" [(ngModel)]="rowData[col.field]">
-                        </p-inputSwitch>
-                        <span *ngIf="col.field !== 'ChannelName' && col.field !== 'ShouldSync'&& col.field !== 'IsRedeemable' && col.field !== 'Reviewed'">{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Credit Cards">
-        <p-table [columns]="creditColumns" [value]="DisplayedUser.CreditCards">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }}
+  <p-accordionTab header="Emails">
+    <p-table [columns]="emailColumns" [value]="DisplayedUser.Emails">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Phones">
+    <p-table [columns]="phoneColumns" [value]="DisplayedUser.Phones">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Youtube Channels">
+    <p-table
+      [columns]="youtubeColumns"
+      [value]="DisplayedUser.YoutubeChannels"
+      [autoLayout]="true"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns; let i = index">
+            <a
+              *ngIf="col.field === 'ChannelName'"
+              href="https://youtube.com/channel/{{ rowData.ChannelID }}/videos"
+              target="_blank"
+              >{{ rowData[col.field] }}</a
+            >
+            <p-inputSwitch
+              *ngIf="
+                col.field === 'ShouldSync' ||
+                col.field === 'IsRedeemable' ||
+                col.field === 'Reviewed'
+              "
+              (onChange)="changeFieldStatus(rowData, col.api_field, $event)"
+              [(ngModel)]="rowData[col.field]"
+            >
+            </p-inputSwitch>
+            <span
+              *ngIf="
+                col.field !== 'ChannelName' &&
+                col.field !== 'ShouldSync' &&
+                col.field !== 'IsRedeemable' &&
+                col.field !== 'Reviewed'
+              "
+              >{{ rowData[col.field] }}</span
+            >
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Credit Cards">
+    <p-table [columns]="creditColumns" [value]="DisplayedUser.CreditCards">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span
+              *ngSwitchCase="
+                col.field === 'CreatedAt' || col.field === 'UpdatedAt'
+              "
+              >{{ rowData[col.field] | date: "short" }}
             </span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Accesses">
-        <p-table [columns]="accessColumns" [value]="DisplayedUser.Accesses">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'AccessTime'">{{ rowData[col.field] | date:'short' }} </span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Rewards">
-        <p-table [columns]="redeemedRewardColumns" [value]="DisplayedUser.RedeemedRewards">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns;" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'TransactionID'"><a
-                href="https://explorer.lbry.com/tx/{{rowData[col.field]}}"
-                target="_blank">{{rowData[col.field]}}</a></span>
-                        <span *ngSwitchCase="col.field === 'CreatedAt'">{{ rowData[col.field] | date:'short' }} </span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Duplicate Accounts">
-        <p-table [columns]="dupColumns" [value]="DisplayedUser.DuplicateAccounts">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th style="width: 4em"></th>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                    <th>
-                        Reject
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td>
-                        <a target="_blank" [routerLink]="['/admin/audit',rowData.UserID]"><i class="pi pi-info-circle"></i></a>
-                    </td>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'CreatedAt'">{{ rowData[col.field] | date:'short' }} </span>
-                        <span *ngSwitchCase="col.field === 'UserID'">{{rowData[col.field]}}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em></span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                    <td>
-                        <button type="button" pButton icon="fa fa-check" (click)="reject(rowData)" label="Reject" class="ui-button-warning"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Installs">
-        <p-table [columns]="installColumns" [value]="DisplayedUser.Installs">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }}
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Accesses">
+    <p-table [columns]="accessColumns" [value]="DisplayedUser.Accesses">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'AccessTime'"
+              >{{ rowData[col.field] | date: "short" }}
             </span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Notes">
-        <p-table [columns]="noteColumns" [value]="DisplayedUser.Notes">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)">
-                        <span *ngSwitchCase="col.field === 'CreatedAt' || col.field === 'UpdatedAt'">{{ rowData[col.field] | date:'short' }}
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Rewards">
+    <p-table
+      [columns]="redeemedRewardColumns"
+      [value]="DisplayedUser.RedeemedRewards"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'TransactionID'"
+              ><a
+                href="https://explorer.lbry.com/tx/{{ rowData[col.field] }}"
+                target="_blank"
+                >{{ rowData[col.field] }}</a
+              ></span
+            >
+            <span *ngSwitchCase="col.field === 'CreatedAt'"
+              >{{ rowData[col.field] | date: "short" }}
             </span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Inviter">
-        <p-table [columns]="inviterColumns" [value]="DisplayedUser.Inviter">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th style="width: 4em"></th>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td>
-                        <a target="_blank" [routerLink]="['/admin/audit',rowData.UserID]"><i class="pi pi-info-circle"></i></a>
-                    </td>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'UserID'">{{rowData[col.field]}}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em></span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Invited Users">
-        <p-table [columns]="invitedUsersColumns" [value]="DisplayedUser.InvitedUsers">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th style="width: 4em"></th>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                    <th>Action Buttons</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr *ngIf="rowData.PrimaryEmail !== ''">
-                    <td>
-                        <a target="_blank" [routerLink]="['/admin/audit',rowData.UserID]"><i class="pi pi-info-circle"></i></a>
-                    </td>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'UserID'">{{rowData[col.field]}}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em></span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                    <td>
-                        <button pButton type="button" label="Disable Rewards" class="ui-button-warning" (click)="reject(rowData)"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Owned Channels">
-        <p-table [columns]="ownedChannelsColumns" [value]="DisplayedUser.OwnedChannels">
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns" [ngSwitch]="true">
-                        <span *ngSwitchCase="col.field === 'URI'"><a href="https://lbry.tv/{{rowData[col.field]}}"
-                target="_blank">{{rowData[col.field]}}</a></span>
-                        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-accordionTab>
-    <p-accordionTab header="Tags">
-        <div class="tags-accordion">
-            <div>
-                <p-dropdown class="p-col-7 p-justify-center" [style]="{'width':'300px'}" [options]="tagOptions" [(ngModel)]="selectedTag" optionLabel="name" [showClear]="true" [filter]="true"></p-dropdown>
-                <p-button (click)="tagUser(selectedTag.name, DisplayedUser.UserID, false)" label="Tag User" filter="true"></p-button>
-            </div>
-            <ul class="tags">
-                <li *ngFor="let tag of DisplayedUser.Tags; last as last">
-                    <button (click)="changeTagStatus(DisplayedUser.UserID,tag)" class="tag" pButton type="button" [label]="tag.Name" [ngClass]="{'is-removed': tag.IsRemoved}"></button>
-                </li>
-            </ul>
-        </div>
-    </p-accordionTab>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Duplicate Accounts">
+    <p-table [columns]="dupColumns" [value]="DisplayedUser.DuplicateAccounts">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 4em"></th>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+          <th>Reject</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td>
+            <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
+              ><i class="pi pi-info-circle"></i
+            ></a>
+          </td>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'CreatedAt'"
+              >{{ rowData[col.field] | date: "short" }}
+            </span>
+            <span *ngSwitchCase="col.field === 'UserID'"
+              >{{ rowData[col.field]
+              }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
+            ></span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+          <td>
+            <button
+              type="button"
+              pButton
+              icon="fa fa-check"
+              (click)="reject(rowData)"
+              label="Reject"
+              class="ui-button-warning"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Installs">
+    <p-table [columns]="installColumns" [value]="DisplayedUser.Installs">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span
+              *ngSwitchCase="
+                col.field === 'CreatedAt' || col.field === 'UpdatedAt'
+              "
+              >{{ rowData[col.field] | date: "short" }}
+            </span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Notes">
+    <p-table [columns]="noteColumns" [value]="DisplayedUser.Notes">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td
+            *ngFor="let col of columns"
+            [ngSwitch]="true"
+            [ngStyle]="rowData.getCSSColor(col.field)"
+          >
+            <span
+              *ngSwitchCase="
+                col.field === 'CreatedAt' || col.field === 'UpdatedAt'
+              "
+              >{{ rowData[col.field] | date: "short" }}
+            </span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Inviter">
+    <p-table [columns]="inviterColumns" [value]="DisplayedUser.Inviter">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 4em"></th>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td>
+            <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
+              ><i class="pi pi-info-circle"></i
+            ></a>
+          </td>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'UserID'"
+              >{{ rowData[col.field]
+              }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
+            ></span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Invited Users">
+    <p-table
+      [columns]="invitedUsersColumns"
+      [value]="DisplayedUser.InvitedUsers"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 4em"></th>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+          <th>Action Buttons</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr *ngIf="rowData.PrimaryEmail !== ''">
+          <td>
+            <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
+              ><i class="pi pi-info-circle"></i
+            ></a>
+          </td>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'UserID'"
+              >{{ rowData[col.field]
+              }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
+            ></span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+          <td>
+            <button
+              pButton
+              type="button"
+              label="Disable Rewards"
+              class="ui-button-warning"
+              (click)="reject(rowData)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Owned Channels">
+    <p-table
+      [columns]="ownedChannelsColumns"
+      [value]="DisplayedUser.OwnedChannels"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'URI'"
+              ><a
+                href="https://lbry.tv/{{ rowData[col.field] }}"
+                target="_blank"
+                >{{ rowData[col.field] }}</a
+              ></span
+            >
+            <span *ngSwitchCase="col.field === 'ViewRateFactor'">
+              <p-inputNumber
+                mode="decimal"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                class="p-col-7 p-justify-center"
+                placeholder="From 0.0 to 10.0"
+                [(ngModel)]="rowData[col.field]"
+              ></p-inputNumber>
+
+              <button
+                pButton
+                type="button"
+                label="Submit"
+                (click)="setFactor(rowData.URI,rowData[col.field])"
+              ></button>
+            </span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Tags">
+    <div class="tags-accordion">
+      <div>
+        <p-dropdown
+          class="p-col-7 p-justify-center"
+          [style]="{ width: '300px' }"
+          [options]="tagOptions"
+          [(ngModel)]="selectedTag"
+          optionLabel="name"
+          [showClear]="true"
+          [filter]="true"
+        ></p-dropdown>
+        <p-button
+          (click)="tagUser(selectedTag.name, DisplayedUser.UserID, false)"
+          label="Tag User"
+          filter="true"
+        ></p-button>
+      </div>
+      <ul class="tags">
+        <li *ngFor="let tag of DisplayedUser.Tags; last as last">
+          <button
+            (click)="changeTagStatus(DisplayedUser.UserID, tag)"
+            class="tag"
+            pButton
+            type="button"
+            [label]="tag.Name"
+            [ngClass]="{ 'is-removed': tag.IsRemoved }"
+          ></button>
+        </li>
+      </ul>
+    </div>
+  </p-accordionTab>
 </p-accordion>
