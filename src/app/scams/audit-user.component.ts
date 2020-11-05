@@ -17,6 +17,7 @@ export class AuditUserComponent implements OnInit {
   userID = 0;
   userEmail = '';
   paramsSub: Subscription;
+  loading = false;
 
   constructor(public rest: ApiService, private messageService: MessageService, private activatedroute: ActivatedRoute) { }
 
@@ -38,8 +39,9 @@ export class AuditUserComponent implements OnInit {
     if (this.userEmail.length > 0) {
       params = params.set('email', this.userEmail);
     }
-
+    this.loading = true;
     this.rest.get('administrative', 'audit_user', params).subscribe((userResponse) => {
+      this.loading = false;
       userResponse.data.forEach((u) => {
         const user = new User(u);
         this.users.push(user);

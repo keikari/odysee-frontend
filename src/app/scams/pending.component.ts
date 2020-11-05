@@ -23,6 +23,7 @@ export class PendingComponent implements OnInit {
   verificationMethod: string;
   invitedByFilter: string[] = [];
   lookback = 2;
+  loading = false;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0 ) {
@@ -41,7 +42,6 @@ export class PendingComponent implements OnInit {
   ngOnInit() {
     this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
     this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
-    this.loadPending();
   }
 
   public loadPending() {
@@ -49,7 +49,7 @@ export class PendingComponent implements OnInit {
     this.verifiedUsers = [];
     this.DisplayedUsers = [];
     let params = new HttpParams();
-
+    this.loading = true;
     if ( this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
       localStorage.setItem('triggerFilter', this.triggerFilter);
@@ -77,14 +77,15 @@ export class PendingComponent implements OnInit {
     }
     params = params.set('look_back_days', this.lookback.toString());
     this.rest.get('administrative', 'list_pending', params).subscribe((userResponse) => {
+      this.loading = false;
       userResponse.data.forEach((u) => {
         const user = new User(u);
         user.Verification = PendingComponent.getVerificationMethod(user);
-        if (this.verificationMethod == "phone"|| this.verificationMethod == "stripe") {
-          if (!user.YoutubeChannels.length)
-            this.pendingUsers.push(user)
-        }
-        else this.pendingUsers.push(user);
+        if (this.verificationMethod === 'phone' || this.verificationMethod === 'stripe') {
+          if (!user.YoutubeChannels.length) {
+            this.pendingUsers.push(user);
+          }
+        } else { this.pendingUsers.push(user); }
         if ( user.Verification.length > 0 ) {
           this.verifiedUsers.push(user);
         }
@@ -93,6 +94,7 @@ export class PendingComponent implements OnInit {
       this.verifiedUsers = this.verifiedUsers.reverse();
     });
     this.setUsers();
+
   }
 
   setUsers() {
