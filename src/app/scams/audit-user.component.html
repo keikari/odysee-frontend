@@ -1,18 +1,15 @@
 <p-card>
-    <div class="p-grid p-justify-center margin-10">
-        <span class="p-col-2 ui-float-label">
-      <input id="user-id-input" [(ngModel)]="userID" type="number" size="30" pInputText>
-      <label for="user-id-input">User ID</label>
+  <div class="p-grid p-justify-center margin-10">
+    <span class="p-col-2 ui-float-label">
+      <input id="search-by-input" [(ngModel)]="searchValue" size="30" pInputText>
+      <label for="search-by-input">ID, Email, ClaimID, YTChannelID</label>
     </span>
-        <span class="p-col-2 ui-float-label">
-      <input id="user-email-input" [(ngModel)]="userEmail" type="text" size="30" pInputText (keydown)="clearUserID()">
-      <label for="user-email-input">User Email</label>
-    </span>
-        <span class="p-col-2">
+    <p-selectButton class="margin-10" [options]="searchOptions" [(ngModel)]="searchKey"></p-selectButton>
+    <span class="p-col-2 ">
       <button pButton type="button" label="Run Audit" (click)="loadAudit()"></button>
     </span>
 
-    </div>
+  </div>
 </p-card>
 <app-user-review [users]="users"></app-user-review>
 <p-progressSpinner *ngIf="loading"></p-progressSpinner>
