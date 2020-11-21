@@ -34,8 +34,12 @@
       <label for="float-input">Filter Trigger To</label>
     </span>
     <span class="ui-float-label margin-15">
-      <p-chips allowDuplicate="false" separator="," [(ngModel)]="invitedByFilter"></p-chips>
-      <label for="float-input-invitedby">Invited By</label>
+      <p-chips id="float-input-invited-by" placeholder="Invited By" allowDuplicate="false" separator=","
+               [(ngModel)]="invitedByFilter"></p-chips>
+      <!--      <label for="float-input-invited-by">Invited By</label>-->
+    </span>
+    <span class="margin-15">
+      <button pButton type="button" icon="pi pi-list" (click)="op.toggle($event)"></button>
     </span>
     <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
   </div>
@@ -43,3 +47,45 @@
 
 <app-user-review [users]="DisplayedUsers" [crud]="true"></app-user-review>
 <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+<p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
+  <ng-template pTemplate>
+    <p-toolbar styleClass="p-mb-4">
+      <input type="text" [(ngModel)]="newIDs" placeholder="312321, 32321, 3213">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+              (click)="createNew()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-danger"
+              (click)="setInvitedByLists()"></button>
+    </p-toolbar>
+    <p-table [value]="invitedByLists" selectionMode="single" [(selection)]="selectedList"
+             (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>UserIDs</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-list>
+        <tr [pSelectableRow]="rowData">
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="list.Name">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{list.Name}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            {{list.UserIDs}}
+          </td>
+          <td>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                    (click)="deleteList(list)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+</p-overlayPanel>

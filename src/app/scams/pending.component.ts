@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
 import {MessageService} from 'primeng/api';
 import {User} from './user-detail/model/user/user';
+import {InvitedByList} from "./model/invited-by-list.model";
 
 @Component({
   selector: 'app-pending',
   templateUrl: './pending.component.html',
   styleUrls: ['./pending.component.css']
 })
+
 export class PendingComponent implements OnInit {
   DisplayedUsers: User[] = [];
   pendingUsers: User[] = [];
@@ -21,25 +23,29 @@ export class PendingComponent implements OnInit {
   showOdyseeUsers: boolean;
   showOdyseeOnly: boolean;
   verificationMethod: string;
-  invitedByFilter: string[] = [];
+  invitedByFilter: number[] = [];
+  invitedByLists: InvitedByList[] = [];
+  selectedList: InvitedByList;
+  newIDs: string;
   lookback = 2;
   loading = false;
 
   static getVerificationMethod(user: User): string {
-    if (user.CreditCards.length > 0 ) {
+    if (user.CreditCards.length > 0) {
       return 'stripe';
-    } else if ( user.Phones.length > 0 ) {
+    } else if (user.Phones.length > 0) {
       return 'phone';
-    } else if ( user.YoutubeChannels.length > 0 ) {
+    } else if (user.YoutubeChannels.length > 0) {
       return 'youtube';
     }
     return '';
   }
 
-  constructor(public rest: ApiService, private messageService: MessageService) {
+  constructor(public rest: ApiService) {
   }
 
   ngOnInit() {
+    this.getInvitedByLists()
     this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
     this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
   }
@@ -50,7 +56,7 @@ export class PendingComponent implements OnInit {
     this.DisplayedUsers = [];
     let params = new HttpParams();
     this.loading = true;
-    if ( this.triggerFilter.length > 0) {
+    if (this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
       localStorage.setItem('triggerFilter', this.triggerFilter);
     } else {
@@ -71,7 +77,7 @@ export class PendingComponent implements OnInit {
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
     }
-    if ( this.invitedByFilter.length > 0 ) {
+    if (this.invitedByFilter.length > 0) {
       params = params.set('invited_by_filter', this.invitedByFilter.toString());
       localStorage.setItem('invited_by_filter', this.invitedByFilter.toString());
     }
@@ -85,8 +91,10 @@ export class PendingComponent implements OnInit {
           if (!user.YoutubeChannels.length) {
             this.pendingUsers.push(user);
           }
-        } else { this.pendingUsers.push(user); }
-        if ( user.Verification.length > 0 ) {
+        } else {
+          this.pendingUsers.push(user);
+        }
+        if (user.Verification.length > 0) {
           this.verifiedUsers.push(user);
         }
       });
@@ -99,12 +107,35 @@ export class PendingComponent implements OnInit {
 
   setUsers() {
     this.DisplayedUsers = [];
-    if ( this.showVerified ) {
+    if (this.showVerified) {
       this.DisplayedUsers = this.verifiedUsers;
     } else {
       this.DisplayedUsers = this.pendingUsers;
     }
 
     localStorage.setItem('showVerified', this.showVerified.toString());
+  }
+
+  onRowSelect(event) {
+    this.invitedByFilter = this.selectedList.UserIDs
+  }
+
+  getInvitedByLists() {
+    this.invitedByLists = JSON.parse(localStorage.getItem("invitedByLists"))
+  }
+
+  setInvitedByLists() {
+    localStorage.setItem("invitedByLists", JSON.stringify(this.invitedByLists))
+  }
+
+  createNew() {
+    const stringUserIDs = this.newIDs.split(',')
+    const intUserIDs = [];
+    stringUserIDs.forEach(value => intUserIDs.push(parseInt(value)))
+    this.invitedByLists.push({Name: 'Click To Edit Name', UserIDs: intUserIDs})
+  }
+
+  deleteList(list) {
+    this.invitedByLists = this.invitedByLists.filter(value => value.UserIDs !== list.UserIDs)
   }
 }
