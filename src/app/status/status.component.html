@@ -25,6 +25,17 @@
   <span class="p-col-4 p-col-align-start ui-widget"></span>
   <span class="p-col-2 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Avg Response Time:</span>
   <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{responseTime}}</span>
+  <span class="p-col-12 p-col-align-center ui-widget" style="font-size:200%;text-align: center">Dispendium Balance</span>
+  <div class="p-col-7 p-col-align-start">
+    <p-panel *ngFor="let bal of dispendiumBalances" header="Instance: {{bal.Instance}}" class="p-grid p-justify-center">
+
+      <span class="p-col-4 p-col-align-start ui-widget" style="font-size:125%;text-align: left">Balance:</span>
+      <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{bal.Balance | number:'1.3-3'}}</span>
+
+      <span class="p-col-4 p-col-align-end ui-widget" style="font-size:125%;text-align: left">Address:</span>
+      <span class="p-col-6 p-col-align-center ui-widget" style="text-align: left;vertical-align: middle">{{bal.Address}}</span>
+    </p-panel>
+  </div>
 
   <div class="p-col-7 p-col-align-center" style="margin-top:20px;text-align: center"><p-button label="Update Stats" icon="pi pi-check" iconPos="left" (onClick)="updateStats($event)"></p-button></div>
 </div>

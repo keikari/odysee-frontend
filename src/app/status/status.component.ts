@@ -15,6 +15,7 @@ export class StatusComponent implements OnInit {
   tipperBalance = '';
   upTime = '';
   responseTime = '';
+  dispendiumBalances: Balance[] = [];
 
   constructor(public rest: ApiService, private messageService: MessageService) { }
 
@@ -32,6 +33,14 @@ export class StatusComponent implements OnInit {
         this.tipperBalance = response.data.tipper_balance;
         this.upTime = response.data.request_stats.uptime;
         this.responseTime = response.data.request_stats.average_response_time;
+        this.dispendiumBalances = [];
+        response.data.dispendium_balance.forEach(x => {
+          const balance = new(Balance);
+          balance.Instance = x.name;
+          balance.Balance = x.lbc;
+          balance.Address = '(comming soon)'; // balance.Address = x.address;
+          this.dispendiumBalances.push(balance);
+        });
       }
     });
   }
@@ -39,4 +48,10 @@ export class StatusComponent implements OnInit {
   updateStats($event: any) {
     this.getStatus();
   }
+}
+
+class Balance {
+  Instance: string;
+  Balance: number;
+  Address: string;
 }
