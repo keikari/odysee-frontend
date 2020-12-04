@@ -29,10 +29,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.token = localStorage.getItem('token');
-    const apiUrl = localStorage.getItem('api_url');
-    if (apiUrl !== '') {
-      this.customAPIEnabled = true;
-      this.customAPI = apiUrl;
+    this.customAPI = localStorage.getItem('api_url');
+    this.customAPIEnabled = localStorage.getItem('api_enabled') === 'true';
+    console.log( this.token, ' ', this.customAPI, ' ', this.customAPIEnabled);
+    if (this.customAPIEnabled) {
+      this.rest.setEndpoint(this.customAPI);
     }
     if (this.token) {
       this.authenticate(this.token);
@@ -96,6 +97,7 @@ export class AppComponent implements OnInit {
 
   login() {
     localStorage.setItem('token', this.token);
+    this.setCustomAPIHost();
     this.authenticate(this.token);
   }
 
@@ -110,19 +112,24 @@ export class AppComponent implements OnInit {
 
   setCustomAPIHost() {
     if ( !this.customAPIEnabled ) {
+      console.log('removing api url');
       this.rest.setEndpoint(this.defaultAPI);
       localStorage.removeItem('api_url');
     } else {
       this.rest.setEndpoint(this.customAPI);
       localStorage.setItem('api_url', this.customAPI);
+      console.log('setting api url');
     }
   }
 
   toggleCustomAPI(checked: boolean) {
-    this.customAPIEnabled = checked;
-    if (!this.customAPIEnabled) {
+    console.log('checked:', checked);
+    if (!checked) {
       this.customAPI = '';
       this.rest.setEndpoint(this.defaultAPI);
+      localStorage.setItem('api_enabled', 'false');
+    } else {
+      localStorage.setItem('api_enabled', 'true');
     }
   }
 

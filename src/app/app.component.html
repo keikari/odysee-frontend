@@ -20,8 +20,7 @@
         <span class="ui-inputgroup-addon">
           <p-checkbox label="Custom API" (onChange)="toggleCustomAPI($event)" binary="true" [(ngModel)]="customAPIEnabled"></p-checkbox>
         </span>
-        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="!customAPIEnabled" [(ngModel)]="customAPI"
-               (keyup.enter)="setCustomAPIHost()" (blur)="setCustomAPIHost()">
+        <input #API type="text" pInputText placeholder="{{defaultAPI}}" [disabled]="!customAPIEnabled" [(ngModel)]="customAPI">
       </div>
       <p-card class="p-col-4">
         For more information, on how to find your Auth Token please visit this <a href="https://www.notion.so/lbry/Desktop-Access-Token-d427ccf268534f82a11adc94a94a377e" target="_blank">kb article</a>.
