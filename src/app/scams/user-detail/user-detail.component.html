@@ -126,7 +126,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Rewards">
+  <p-accordionTab header="Rewards" (click)="LoadUserData(DisplayedUser, 'rewards')">
     <p-table
       [columns]="redeemedRewardColumns"
       [value]="DisplayedUser.RedeemedRewards"
@@ -279,7 +279,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Invited Users">
+  <p-accordionTab header="Invited Users" (click)="LoadUserData(DisplayedUser, 'invited_users')">
     <p-table
       [columns]="invitedUsersColumns"
       [value]="DisplayedUser.InvitedUsers"
@@ -365,7 +365,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Tags">
+  <p-accordionTab header="Tags" (click)="LoadUserData(DisplayedUser, 'tags')">
     <div class="tags-accordion">
       <div>
         <p-dropdown
@@ -376,6 +376,7 @@
           optionLabel="name"
           [showClear]="true"
           [filter]="true"
+          (click)="loadTagsDescription()"
         ></p-dropdown>
         <p-button
           (click)="tagUser(selectedTag.name, DisplayedUser.UserID, false)"

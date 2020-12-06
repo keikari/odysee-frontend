@@ -25,15 +25,15 @@ export class AuditUserComponent implements OnInit {
 
   ngOnInit() {
     this.searchOptions = [
-      {label: "User ID", value: "user_id"},
-      {label: "Email", value: "email"},
-      {label: "ClaimID", value: "claim_id"},
-      {label: "YTChannelID", value: "yt_channel_id"}
+      {label: 'User ID', value: 'user_id'},
+      {label: 'Email', value: 'email'},
+      {label: 'ClaimID', value: 'claim_id'},
+      {label: 'YTChannelID', value: 'yt_channel_id'}
     ];
     this.paramsSub = this.activatedroute.paramMap.subscribe(params => {
       if (params.has('id')) {
         this.searchValue = params.get('id');
-        this.searchKey = 'user_id'
+        this.searchKey = 'user_id';
         this.loadAudit();
       }
     });

@@ -200,7 +200,7 @@ export class User {
       const ownedChannel = new OwnedChannel();
       ownedChannel.URI = o.uri;
       ownedChannel.SignedStreams = o.signed_streams;
-      ownedChannel.ViewRateFactor = o.view_rate_factor
+      ownedChannel.ViewRateFactor = o.view_rate_factor;
       this.OwnedChannels.push(ownedChannel);
       });
     }
@@ -224,8 +224,8 @@ export class User {
         const tag = new Tag();
         tag.Id = t.tag_id;
         tag.IsRemoved = t.is_removed;
-        this.Tags.push(tag)
-      })
+        this.Tags.push(tag);
+      });
     }
     return this;
   }

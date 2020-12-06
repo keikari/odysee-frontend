@@ -105,19 +105,95 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tagService.getTags().subscribe(response => {
-      if (response !== undefined) {
-        response.data.forEach((tag) => {
-          this.tagOptions = this.tagOptions.concat({ name: tag.name, value: tag.name });
-          this.DisplayedUser.Tags.forEach((userTag) => {
-            if (userTag.Id == tag.id) {
-              userTag.Name = tag.name;
+  }
+  LoadUserData(user: User, dataType: string) {
+    this.loadTagsDescription();
+    switch (dataType) {
+      case 'rewards':
+        if (this.DisplayedUser.RedeemedRewards.length === 0) {
+          const params = new HttpParams().
+          set('user_id', user.UserID.toString()).
+          set('rewards', 'true');
+          this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
+            if (response && response.error) {
+              this.messageService.clear();
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
+            } else if (response && response.data) {
+              this.DisplayedUser.RedeemedRewards = [];
+              response.data.forEach(reward => {
+                this.DisplayedUser.RedeemedRewards.push({
+                  'Type': reward.type,
+                  'Amount': reward.amount,
+                  'CreatedAt': reward.created_at,
+                  'Platform': reward.platform,
+                  'TransactionID': reward.transaction_id
+                });
+              });
             }
-          })
-        });
-        this.selectedTag = this.tagOptions[0];
-      }
-    });
+          });
+        }
+        break;
+      case 'tags':
+        if (this.DisplayedUser.Tags.length === 0) {
+          const params = new HttpParams().
+          set('user_id', user.UserID.toString()).
+          set('tags', 'true');
+          this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
+            if (response && response.error) {
+              this.messageService.clear();
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
+            } else if (response && response.data) {
+              response.data.forEach(tag => this.DisplayedUser.Tags.push({
+                'Name': tag.name,
+                'Id': tag.id,
+                'IsRemoved': tag.is_removed,
+              }));
+            }
+          });
+        }
+        break;
+      case 'invited_users':
+        if (this.DisplayedUser.InvitedUsers.length === 0) {
+          const params = new HttpParams().
+          set('user_id', user.UserID.toString()).
+          set('invited_users', 'true');
+          this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
+            if (response && response.error) {
+              this.messageService.clear();
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
+            } else if (response && response.data) {
+              response.data.forEach(user => this.DisplayedUser.InvitedUsers.push({
+                'UserID' : user.user_id,
+                'IsEmailVerified' : user.is_email_verified,
+                'PrimaryEmail' : user.primary_email,
+                'RewardEnabled' : user.reward_enabled,
+                'RewardStatusChangeTrigger' : user.reward_status_change_trigger,
+                'TotalRedeemedRewards' : user.total_redeemed_rewards,
+                'IsYouTuber' : user.is_youtuber
+              }));
+            }
+          });
+        }
+      break;
+    }
+  }
+
+  loadTagsDescription() {
+    if (this.tagOptions.length === 0 ) {
+      this.tagService.getTags().subscribe(response => {
+        if (response !== undefined) {
+          response.data.forEach((tag) => {
+            this.tagOptions = this.tagOptions.concat({ name: tag.name, value: tag.name });
+            this.DisplayedUser.Tags.forEach((userTag) => {
+              if (userTag.Id == tag.id) {
+                userTag.Name = tag.name;
+              }
+            })
+          });
+          this.selectedTag = this.tagOptions[0];
+        }
+      });
+    }
   }
 
   reject(user: User) {
@@ -178,6 +254,7 @@ export class UserDetailComponent implements OnInit {
       }
     });
   }
+
   setFactor(url: string, factor: number) {
     const claimId = url.slice(-40);
     const params = new HttpParams().

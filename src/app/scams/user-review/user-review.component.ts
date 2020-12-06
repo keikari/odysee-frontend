@@ -124,8 +124,7 @@ export class UserReviewComponent implements OnInit {
       } else {
         this.dismiss(this.splitButtonUser);
       }
-    }
-    else {
+    } else {
       this.updateSelectedUsersRewardsStatus(this.approved);
     }
   }
@@ -140,7 +139,7 @@ export class UserReviewComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.deleteUser(user)
+        this.deleteUser(user);
       },
       reject: () => {
         this.messageService.clear();
@@ -149,8 +148,8 @@ export class UserReviewComponent implements OnInit {
     });
   }
   deleteUser(user: User) {
-    let params = new HttpParams().
-      set('user_id', user.UserID.toString())
+    const params = new HttpParams().
+      set('user_id', user.UserID.toString());
     this.rest.get('administrative', 'delete_user', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
@@ -168,7 +167,7 @@ export class UserReviewComponent implements OnInit {
   onDuplicatesChange(event) {
     const value = event.target.value;
     if (value && value.trim().length) {
-      const duplicates = parseInt(value);
+      const duplicates = parseInt(value, 10);
 
       if (!isNaN(duplicates)) {
         this.table.filter(duplicates, 'Duplicates', 'lte');
@@ -176,12 +175,12 @@ export class UserReviewComponent implements OnInit {
     }
   }
   updateSelectedUsersRewardsStatus(isRewardsSatisfy) {
-    let rewardStatus = isRewardsSatisfy ? 'yes' : 'no';
-    let message = isRewardsSatisfy ? 'Approved!' : 'Rejected!';
-    let details = isRewardsSatisfy ? 'User approved for rewards!' : 'User auto rejection confirmed!';
-    let comment = isRewardsSatisfy ? 'Commander Approved!' : 'Commander Rejected';
-    let question = isRewardsSatisfy ? 'approve' : 'reject';
-    let customMessage = this.message;
+    const rewardStatus = isRewardsSatisfy ? 'yes' : 'no';
+    const message = isRewardsSatisfy ? 'Approved!' : 'Rejected!';
+    const details = isRewardsSatisfy ? 'User approved for rewards!' : 'User auto rejection confirmed!';
+    const comment = isRewardsSatisfy ? 'Commander Approved!' : 'Commander Rejected';
+    const question = isRewardsSatisfy ? 'approve' : 'reject';
+    const customMessage = this.message;
     this.confirmationService.confirm({
       message: `Are you sure you want to ${question} all selected users?`,
       header: 'Confirm',
@@ -197,9 +196,9 @@ export class UserReviewComponent implements OnInit {
             params = params.set('comment', customMessage);
           }
           this.callUserApprove(user, params, message, details);
-        })
+        });
         this.message = '';
       }
-    })
+    });
   }
 }
