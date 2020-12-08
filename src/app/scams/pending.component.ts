@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
-import {MessageService} from 'primeng/api';
 import {User} from './user-detail/model/user/user';
-import {InvitedByList} from "./model/invited-by-list.model";
+import {InvitedByList} from './model/invited-by-list.model';
 
 @Component({
   selector: 'app-pending',
@@ -117,22 +116,25 @@ export class PendingComponent implements OnInit {
   }
 
   onRowSelect(event) {
-    this.invitedByFilter = this.selectedList.UserIDs
+    this.invitedByFilter = this.selectedList.UserIDs;
   }
 
   getInvitedByLists() {
-    this.invitedByLists = JSON.parse(localStorage.getItem("invitedByLists"))
+    this.invitedByLists = JSON.parse(localStorage.getItem('invitedByLists'));
+    if (this.invitedByLists == null) {
+      this.invitedByLists = []
+    }
   }
 
   setInvitedByLists() {
-    localStorage.setItem("invitedByLists", JSON.stringify(this.invitedByLists))
+    localStorage.setItem('invitedByLists', JSON.stringify(this.invitedByLists));
   }
 
   createNew() {
-    const stringUserIDs = this.newIDs.split(',')
+    const stringUserIDs = this.newIDs.split(',');
     const intUserIDs = [];
-    stringUserIDs.forEach(value => intUserIDs.push(parseInt(value)))
-    this.invitedByLists.push({Name: 'Click To Edit Name', UserIDs: intUserIDs})
+    stringUserIDs.forEach(value => intUserIDs.push(parseInt(value, 10)));
+    this.invitedByLists.push({Name: 'Click To Edit Name', UserIDs: intUserIDs});
   }
 
   deleteList(list) {
