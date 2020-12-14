@@ -5,6 +5,7 @@ export class YoutubeChannel {
   Subscribers: number;
   Videos: number;
   Views: number;
+  Ratio: number;
   RewardAmount: number;
   IsRedeemed: boolean;
   IsRedeemable: boolean;

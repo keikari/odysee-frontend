@@ -83,9 +83,12 @@ export class User {
         ytChannel.IsRedeemable = y.redeemable;
         ytChannel.Reviewed = y.reviewed;
         ytChannel.ShouldSync = y.should_sync;
-        ytChannel.Suggestion = (ytChannel.Views/ytChannel.Views>1000)? 'likely good':'likely bad';
+        ytChannel.Ratio = ytChannel.Views/ytChannel.Videos;
+        console.log(ytChannel.Ratio);
+        ytChannel.Suggestion = (ytChannel.Ratio>1000)? 'likely good':'likely bad';
         this.YoutubeChannels.push(ytChannel);
       });
+      this.YoutubeChannels = this.YoutubeChannels.sort((a,b) => a.Ratio>=b.Ratio ? -1: 1)
     }
     // Credit Cards
     if (u.credit_cards) {

@@ -20,6 +20,7 @@ export class UserReviewComponent implements OnInit {
   rejectItems: MenuItem[];
   display = false;
   approved = false;
+  isOrdered = false;
   message = '';
   splitButtonUser: User = null;
   userColumns = [
@@ -200,5 +201,11 @@ export class UserReviewComponent implements OnInit {
         this.message = '';
       }
     });
+  }
+
+  OrderByChannels(trigger: boolean) {
+    if (trigger) {
+      this.users = this.users.sort((a,b)=> a.YoutubeChannels[0].Ratio>=b.YoutubeChannels[0].Ratio ? -1: 1)
+    }
   }
 }
