@@ -75,8 +75,8 @@ export class User {
         ytChannel.ChannelID = y.channel_id;
         ytChannel.LBRYChannelName = y.lbry_channel_name;
         ytChannel.Subscribers = y.subscribers;
-        ytChannel.Videos = y.videos;
-        ytChannel.Views = y.views
+        ytChannel.Videos = y.videos==0 ? 1: y.videos;
+        ytChannel.Views = y.views;
         ytChannel.RewardAmount = y.redeemable_reward;
         ytChannel.IsRedeemed = y.redeemed;
         ytChannel.Status = y.status;
@@ -84,7 +84,6 @@ export class User {
         ytChannel.Reviewed = y.reviewed;
         ytChannel.ShouldSync = y.should_sync;
         ytChannel.Ratio = ytChannel.Views/ytChannel.Videos;
-        console.log(ytChannel.Ratio);
         ytChannel.Suggestion = (ytChannel.Ratio>1000)? 'likely good':'likely bad';
         this.YoutubeChannels.push(ytChannel);
       });

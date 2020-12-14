@@ -203,8 +203,8 @@ export class UserReviewComponent implements OnInit {
     });
   }
 
-  OrderByChannels(trigger: boolean) {
-    if (trigger) {
+  OrderByChannels() {
+    if (this.isOrdered) {
       this.users = this.users.sort((a,b)=> a.YoutubeChannels[0].Ratio>=b.YoutubeChannels[0].Ratio ? -1: 1)
     }
   }
