@@ -36,6 +36,8 @@ export class UserDetailComponent implements OnInit {
     { field: 'LBRYChannelName', header: 'LBRY Channel' },
     { field: 'Subscribers', header: 'Subscribers' },
     { field: 'Videos', header: 'Videos' },
+    { field: 'Views', header: 'Views' },
+    { field: 'Suggestion', header: 'Suggestion'},
     { field: 'Status', header: 'Status' },
     { field: 'RewardAmount', header: 'Reward Amount' },
     { field: 'IsRedeemed', header: 'Redeemed' },

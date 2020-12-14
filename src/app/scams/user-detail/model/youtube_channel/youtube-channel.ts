@@ -4,6 +4,7 @@ export class YoutubeChannel {
   LBRYChannelName: string;
   Subscribers: number;
   Videos: number;
+  Views: number;
   RewardAmount: number;
   IsRedeemed: boolean;
   IsRedeemable: boolean;
@@ -12,4 +13,5 @@ export class YoutubeChannel {
   Status: string;
   ShouldEmail: boolean;
   ApplyDisabled: boolean;
+  Suggestion: string;
 }

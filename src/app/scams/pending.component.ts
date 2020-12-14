@@ -122,7 +122,7 @@ export class PendingComponent implements OnInit {
   getInvitedByLists() {
     this.invitedByLists = JSON.parse(localStorage.getItem('invitedByLists'));
     if (this.invitedByLists == null) {
-      this.invitedByLists = []
+      this.invitedByLists = [];
     }
   }
 

@@ -76,12 +76,14 @@ export class User {
         ytChannel.LBRYChannelName = y.lbry_channel_name;
         ytChannel.Subscribers = y.subscribers;
         ytChannel.Videos = y.videos;
+        ytChannel.Views = y.views
         ytChannel.RewardAmount = y.redeemable_reward;
         ytChannel.IsRedeemed = y.redeemed;
         ytChannel.Status = y.status;
         ytChannel.IsRedeemable = y.redeemable;
         ytChannel.Reviewed = y.reviewed;
         ytChannel.ShouldSync = y.should_sync;
+        ytChannel.Suggestion = (ytChannel.Views/ytChannel.Views>1000)? 'likely good':'likely bad';
         this.YoutubeChannels.push(ytChannel);
       });
     }
