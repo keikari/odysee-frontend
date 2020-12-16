@@ -69,13 +69,13 @@ export class User {
     }
     // Youtube Channels
     if (u.youtube_channels) {
-      u.youtube_channels.forEach((y)  => {
+      u.youtube_channels.forEach((y) => {
         const ytChannel = new YoutubeChannel();
         ytChannel.ChannelName = y.channel_name;
         ytChannel.ChannelID = y.channel_id;
         ytChannel.LBRYChannelName = y.lbry_channel_name;
         ytChannel.Subscribers = y.subscribers;
-        ytChannel.Videos = y.videos==0 ? 1: y.videos;
+        ytChannel.Videos = y.videos == 0 ? 1 : y.videos;
         ytChannel.Views = y.views;
         ytChannel.RewardAmount = y.redeemable_reward;
         ytChannel.IsRedeemed = y.redeemed;
@@ -83,11 +83,12 @@ export class User {
         ytChannel.IsRedeemable = y.redeemable;
         ytChannel.Reviewed = y.reviewed;
         ytChannel.ShouldSync = y.should_sync;
-        ytChannel.Ratio = ytChannel.Views/ytChannel.Videos;
-        ytChannel.Suggestion = (ytChannel.Ratio>1000)? 'likely good':'likely bad';
+        ytChannel.Ratio = ytChannel.Views / ytChannel.Videos;
+        ytChannel.Suggestion = (ytChannel.Ratio > 1000) ? 'likely good' : 'likely bad';
         this.YoutubeChannels.push(ytChannel);
       });
-      this.YoutubeChannels = this.YoutubeChannels.sort((a,b) => a.Ratio>=b.Ratio ? -1: 1)
+      this.YoutubeChannels.sort((a, b) => a.Subscribers > b.Subscribers ? -1 : 1);
+      this.YoutubeChannels.sort((a, b) => Number(a.Reviewed) - Number(b.Reviewed));
     }
     // Credit Cards
     if (u.credit_cards) {
@@ -186,26 +187,26 @@ export class User {
     }
     // Inviter
     if (u.inviter) {
-        const inviter = new Inviter();
-        inviter.InvitedUsers = u.inviter.invited_users;
-        inviter.InviteRewards = u.inviter.invite_rewards;
-        inviter.IsEmailVerified = u.inviter.is_email_verified;
-        inviter.PrimaryEmail = u.inviter.primary_email;
-        inviter.RewardEnabled = u.inviter.reward_enabled;
-        inviter.RewardStatusChangeTrigger = u.inviter.reward_status_change_trigger;
-        inviter.TotalRedeemedRewards = u.inviter.total_redeemed_rewards;
-        inviter.UserID = u.inviter.user_id;
-        inviter.IsYouTuber = u.inviter.is_youtuber;
-        this.Inviter.push(inviter);
+      const inviter = new Inviter();
+      inviter.InvitedUsers = u.inviter.invited_users;
+      inviter.InviteRewards = u.inviter.invite_rewards;
+      inviter.IsEmailVerified = u.inviter.is_email_verified;
+      inviter.PrimaryEmail = u.inviter.primary_email;
+      inviter.RewardEnabled = u.inviter.reward_enabled;
+      inviter.RewardStatusChangeTrigger = u.inviter.reward_status_change_trigger;
+      inviter.TotalRedeemedRewards = u.inviter.total_redeemed_rewards;
+      inviter.UserID = u.inviter.user_id;
+      inviter.IsYouTuber = u.inviter.is_youtuber;
+      this.Inviter.push(inviter);
     }
     // OwnedChannels
     if (u.owned_channels) {
       u.owned_channels.forEach((o) => {
-      const ownedChannel = new OwnedChannel();
-      ownedChannel.URI = o.uri;
-      ownedChannel.SignedStreams = o.signed_streams;
-      ownedChannel.ViewRateFactor = o.view_rate_factor;
-      this.OwnedChannels.push(ownedChannel);
+        const ownedChannel = new OwnedChannel();
+        ownedChannel.URI = o.uri;
+        ownedChannel.SignedStreams = o.signed_streams;
+        ownedChannel.ViewRateFactor = o.view_rate_factor;
+        this.OwnedChannels.push(ownedChannel);
       });
     }
     // InvitedUsers

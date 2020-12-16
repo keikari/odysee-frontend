@@ -18,6 +18,7 @@ export class UserReviewComponent implements OnInit {
   @ViewChild('dt') table: Table;
   approvedItems: MenuItem[];
   rejectItems: MenuItem[];
+  sortItems: MenuItem[];
   display = false;
   approved = false;
   isOrdered = false;
@@ -49,6 +50,18 @@ export class UserReviewComponent implements OnInit {
         label: 'Custom Message', icon: 'pi pi-refresh', command: () => {
           this.display = true;
           this.approved = false;
+        }
+      },
+    ];
+    this.sortItems = [
+      {
+        label: 'Order By YT Subs', icon: 'pi pi-sort', command: () => {
+          this.OrderByChannelsSubs();
+        }
+      },
+      {
+        label: 'Order By YT Ratio', icon: 'pi pi-times', command: () => {
+          this.OrderByChannelsRatio();
         }
       },
     ];
@@ -203,9 +216,20 @@ export class UserReviewComponent implements OnInit {
     });
   }
 
-  OrderByChannels() {
-    if (this.isOrdered) {
-      this.users = this.users.sort((a,b)=> a.YoutubeChannels[0].Ratio>=b.YoutubeChannels[0].Ratio ? -1: 1)
-    }
+
+  OrderByChannelsRatio() {
+    this.users.forEach(function (part, index) {
+      this[index].YoutubeChannels = part.YoutubeChannels.sort((a, b) => a.Ratio >= b.Ratio ? -1 : 1);
+      this[index].YoutubeChannels = part.YoutubeChannels.sort((a, b) => Number(a.Reviewed) - Number(b.Reviewed));
+    }, this.users);
+    this.users = this.users.sort((a, b) => a.YoutubeChannels[0].Ratio >= b.YoutubeChannels[0].Ratio ? -1 : 1);
+  }
+
+  OrderByChannelsSubs() {
+    this.users.forEach(function (part, index) {
+      this[index].YoutubeChannels = part.YoutubeChannels.sort((a, b) => a.Subscribers > b.Subscribers ? -1 : 1);
+      this[index].YoutubeChannels = part.YoutubeChannels.sort((a, b) => Number(a.Reviewed) - Number(b.Reviewed));
+    }, this.users);
+    this.users = this.users.sort((a, b) => a.YoutubeChannels[0].Subscribers >= b.YoutubeChannels[0].Subscribers ? -1 : 1);
   }
 }

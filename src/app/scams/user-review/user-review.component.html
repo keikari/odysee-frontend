@@ -1,6 +1,7 @@
 <p-toolbar *ngIf="crud">
     <p-splitButton icon="fa fa-check" appendTo="body" [model]="approvedItems" (onDropdownClick)="setCustomMessage()" (onClick)="updateSelectedUsersRewardsStatus(true)" label="Approve" styleClass="ui-button-success" [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
     <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onDropdownClick)="setCustomMessage()" (onClick)="updateSelectedUsersRewardsStatus(false)" label="Dismiss" styleClass="ui-button-warning" [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
+    <p-splitButton icon="pi pi-sort" label="Sort" (onClick)="OrderByChannelsRatio()" [model]="sortItems"></p-splitButton>
 </p-toolbar>
 <p-table #dt [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true" [filterDelay]="0" [(selection)]="selectedUsers">
     <ng-template pTemplate="header" let-columns>
@@ -16,7 +17,7 @@
             <th style="width: 3rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th><input type="checkbox" (click)="OrderByChannels(isOrdered)" [(ngModel)]="isOrdered"> sortByYT </th>
+            <th></th>
             <th></th>
             <th><input pInputText type="text" (input)="onDuplicatesChange($event)" placeholder="Less or equel" class="p-column-filter"></th>
             <th></th>
