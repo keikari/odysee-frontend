@@ -1,10 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { User } from '../user-detail/model/user/user';
-import { HttpParams } from '@angular/common/http';
-import { ApiService } from '../../services/api.service';
-import { ConfirmationService } from 'primeng/api';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {User} from '../user-detail/model/user/user';
+import {HttpParams} from '@angular/common/http';
+import {ApiService} from '../../services/api.service';
+import {ConfirmationService} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
+import {Table} from 'primeng/table';
 
 @Component({
   selector: 'app-user-review',
@@ -13,7 +13,7 @@ import { Table } from 'primeng/table';
 })
 export class UserReviewComponent implements OnInit {
   @Input() users: User[] = [];
-  @Input() crud: boolean = false;
+  @Input() crud = false;
   selectedUsers: User[] = [];
   @ViewChild('dt') table: Table;
   approvedItems: MenuItem[];
@@ -25,16 +25,17 @@ export class UserReviewComponent implements OnInit {
   message = '';
   splitButtonUser: User = null;
   userColumns = [
-    { field: 'UserID', header: 'UserID' },
-    { field: 'Duplicates', header: 'Duplicates', width: '13px' },
-    { field: 'Verification', header: 'Verification' },
-    { field: 'RewardStatusChangeTrigger', header: 'Trigger' },
-    { field: 'LastAccessTime', header: 'Last Access' },
-    { field: 'IsCountryMatch', header: 'Country Match' },
-    { field: 'Country', header: 'Country' },
-    { field: 'PrimaryEmail', header: 'Email' }];
+    {field: 'UserID', header: 'UserID'},
+    {field: 'Duplicates', header: 'Duplicates', width: '13px'},
+    {field: 'Verification', header: 'Verification'},
+    {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
+    {field: 'LastAccessTime', header: 'Last Access'},
+    {field: 'IsCountryMatch', header: 'Country Match'},
+    {field: 'Country', header: 'Country'},
+    {field: 'PrimaryEmail', header: 'Email'}];
 
-  constructor(public rest: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(public rest: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  }
 
   ngOnInit() {
     this.approvedItems = [
@@ -60,19 +61,21 @@ export class UserReviewComponent implements OnInit {
         }
       },
       {
-        label: 'Order By YT Ratio', icon: 'pi pi-times', command: () => {
+        label: 'Order By YT Ratio', icon: 'pi pi-sort', command: () => {
           this.OrderByChannelsRatio();
+        }
+      },
+      {
+        label: 'Oldest First', icon: 'pi pi-sort', command: () => {
+          this.OrderByUserID();
         }
       },
     ];
   }
 
   approve(user: User) {
-    let params = new HttpParams().
-      set('id', user.UserID.toString()).
-      set('notify', true.toString()).
-      set('comment', 'Commander Approved!').
-      set('is_reward_approved', 'yes');
+    let params = new HttpParams().set('id', user.UserID.toString()).set('notify', true.toString()).set('comment', 'Commander Approved!')
+      .set('is_reward_approved', 'yes');
     if (this.message !== '') {
       params = params.set('comment', this.message);
     }
@@ -85,14 +88,14 @@ export class UserReviewComponent implements OnInit {
     this.rest.get('user', 'approve', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
+        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
-        this.messageService.add({ severity: 'success', summary: summary, detail: detail });
+        this.messageService.add({severity: 'success', summary: summary, detail: detail});
         this.removeUser(user);
       } else {
         this.messageService.clear();
-        this.messageService.add({ severity: 'error', summary: 'No Response Data?', detail: '' });
+        this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
       }
     });
   }
@@ -108,10 +111,8 @@ export class UserReviewComponent implements OnInit {
   }
 
   dismiss(user: User) {
-    let params = new HttpParams().
-      set('id', user.UserID.toString()).
-      set('comment', 'Commander - Auto ban confirmed!').
-      set('is_reward_approved', 'no');
+    let params = new HttpParams().set('id', user.UserID.toString()).set('comment', 'Commander - Auto ban confirmed!')
+      .set('is_reward_approved', 'no');
     if (this.message !== '') {
       params = params.set('comment', this.message);
     }
@@ -157,27 +158,28 @@ export class UserReviewComponent implements OnInit {
       },
       reject: () => {
         this.messageService.clear();
-        this.messageService.add({ severity: 'success', summary: 'Rejected', detail: 'You just saived the life' });
+        this.messageService.add({severity: 'success', summary: 'Rejected', detail: 'You just saived the life'});
       }
     });
   }
+
   deleteUser(user: User) {
-    const params = new HttpParams().
-      set('user_id', user.UserID.toString());
+    const params = new HttpParams().set('user_id', user.UserID.toString());
     this.rest.get('administrative', 'delete_user', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
+        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
-        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'User have been deleted' });
+        this.messageService.add({severity: 'success', summary: 'Confirmed', detail: 'User have been deleted'});
         this.removeUser(user);
       } else {
         this.messageService.clear();
-        this.messageService.add({ severity: 'error', summary: 'No Response Data?', detail: '' });
+        this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
       }
     });
   }
+
   onDuplicatesChange(event) {
     const value = event.target.value;
     if (value && value.trim().length) {
@@ -188,6 +190,7 @@ export class UserReviewComponent implements OnInit {
       }
     }
   }
+
   updateSelectedUsersRewardsStatus(isRewardsSatisfy) {
     const rewardStatus = isRewardsSatisfy ? 'yes' : 'no';
     const message = isRewardsSatisfy ? 'Approved!' : 'Rejected!';
@@ -201,11 +204,8 @@ export class UserReviewComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.selectedUsers.forEach((user) => {
-          let params = new HttpParams().
-            set('id', user.UserID.toString()).
-            set('notify', true.toString()).
-            set('comment', comment).
-            set('is_reward_approved', rewardStatus);
+          let params = new HttpParams().set('id', user.UserID.toString()).set('notify', true.toString()).set('comment', comment)
+            .set('is_reward_approved', rewardStatus);
           if (customMessage !== '') {
             params = params.set('comment', customMessage);
           }
@@ -216,6 +216,9 @@ export class UserReviewComponent implements OnInit {
     });
   }
 
+  OrderByUserID() {
+    this.users = this.users.sort((a, b) => a.UserID <= b.UserID ? -1 : 1);
+  }
 
   OrderByChannelsRatio() {
     this.users.forEach(function (part, index) {
