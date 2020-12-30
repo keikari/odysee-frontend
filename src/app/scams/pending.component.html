@@ -24,6 +24,7 @@
       <p-checkbox class="p-col-3" label="Triggered Only" binary="true" [(ngModel)]="showTriggeredOnly"></p-checkbox>
       <p-checkbox class="p-col-4" label="Odysee User" binary="true" [(ngModel)]="showOdyseeUsers"></p-checkbox>
       <p-checkbox class="p-col-4" label="Odysee Only" binary="true" [(ngModel)]="showOdyseeOnly"></p-checkbox>
+      <p-triStateCheckbox class="p-col-4" (click)="setUsers()" [(ngModel)]="showCountryMatch" label="Country Match"></p-triStateCheckbox>
     </div>
     <span class="ui-float-label margin-15">
       <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>

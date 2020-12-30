@@ -75,7 +75,7 @@ export class User {
         ytChannel.ChannelID = y.channel_id;
         ytChannel.LBRYChannelName = y.lbry_channel_name;
         ytChannel.Subscribers = y.subscribers;
-        ytChannel.Videos = y.videos == 0 ? 1 : y.videos;
+        ytChannel.Videos = y.videos === 0 ? 1 : y.videos;
         ytChannel.Views = y.views;
         ytChannel.RewardAmount = y.redeemable_reward;
         ytChannel.IsRedeemed = y.redeemed;
