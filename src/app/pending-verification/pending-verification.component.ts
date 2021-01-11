@@ -26,7 +26,7 @@ export class PendingVerificationComponent implements OnInit {
     this.tree = [];
     let params = new HttpParams();
     const d = new Date(Date.now());
-    d.setHours(d.getHours() - 24);
+    d.setHours(d.getHours() - 96);
     params = params.set( 'since', (Math.ceil(d.getTime() / 1000)).toString());
     this.rest.getAction( 'pending', params).subscribe((userResponse) => {
       userResponse.forEach((u) => {
