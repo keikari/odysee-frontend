@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
 import {RetentionOptions} from './model/retention-options';
-import {Retention} from './model/rentention';
+import {Retention} from './model/retention';
 import {RetentionParams} from './model/retention-params';
 import {MessageService, MultiSelectItem} from 'primeng';
 import {Router, ActivatedRoute} from '@angular/router';

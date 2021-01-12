@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PendingUser} from '../pending-user';
 import {TreeNode} from 'primeng';
-import {Table} from 'primeng'
+import {Table} from 'primeng';
 @Component({
   selector: 'app-list-review',
   templateUrl: './list-review.component.html',
