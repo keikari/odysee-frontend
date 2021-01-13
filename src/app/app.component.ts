@@ -6,8 +6,6 @@ import {Router} from '@angular/router';
 import {environment} from '../environments/environment';
 
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +15,7 @@ import {environment} from '../environments/environment';
 
 export class AppComponent implements OnInit {
 
-  constructor(public rest: ApiService, private messageService: MessageService, private router: Router,) {
+  constructor(public rest: ApiService, private messageService: MessageService, private router: Router) {
   }
 
   title = 'app';
@@ -64,7 +62,7 @@ export class AppComponent implements OnInit {
         ]
       },
       {
-        label: 'Codes', routerLink: ['/rewardcode']
+        label: 'Codes', routerLink: ['/reward-code']
       },
       {
         label: 'Homepage', routerLink: ['/homepage']
@@ -79,6 +77,7 @@ export class AppComponent implements OnInit {
           {label: 'Audit', routerLink: ['/admin/audit']},
           {label: 'Country Codes', routerLink: ['/admin/country-codes']},
           {label: 'Verifications', routerLink: ['/admin/verification']},
+          {label: 'YouTube Queue', routerLink: ['/admin/yt-queue']},
         ]
       },
       {
@@ -91,6 +90,7 @@ export class AppComponent implements OnInit {
   }
 
   authenticate(token: string) {
+    this.token = token;
     this.rest.authenticate(this.token).subscribe((response: any) => {
       this.isAuthenticated = response !== undefined;
     });

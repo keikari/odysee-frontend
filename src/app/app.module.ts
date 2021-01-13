@@ -78,6 +78,7 @@ import {LbryIncComponent} from './pending-verification/list-detail/lbry-inc/lbry
 import {TwitterComponent} from './pending-verification/list-detail/twitter/twitter.component';
 import {RetentionComponent} from './retention/retention.component';
 import {ChannelFactorComponent} from './channel-factor/channel-factor.component';
+import {YtQueueComponent} from './yt-queue/yt-queue.component';
 
 const appRoutes: Routes = [
   {path: 'templates/send', component: TemplateComponent},
@@ -99,6 +100,7 @@ const appRoutes: Routes = [
   {path: 'admin/verification', component: PendingVerificationComponent},
   {path: 'retention', component: RetentionComponent},
   {path: 'channel-factor', component: ChannelFactorComponent},
+  {path: 'admin/yt-queue', component: YtQueueComponent},
   {path: '', component: StatusComponent}];
 
 @NgModule({
@@ -136,6 +138,7 @@ const appRoutes: Routes = [
     TwitterComponent,
     RetentionComponent,
     ChannelFactorComponent,
+    YtQueueComponent,
   ],
   imports: [
     BrowserAnimationsModule,

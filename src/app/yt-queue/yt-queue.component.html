@@ -1,0 +1,55 @@
+<p-table
+  [columns]="youtubeColumns"
+  [value]="ytChannels"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns; let i = index">
+        <a target="_blank"
+           *ngIf="col.field === 'UserID'"
+           [routerLink]="['/admin/audit', rowData.UserID]"
+        ><i class="pi pi-info-circle"></i
+        ></a>
+        <p-inputSwitch
+          *ngIf="col.field === 'UserRewardEnabled'"
+          (onChange)="ApproveRewards(rowData, $event)"
+          [(ngModel)]="rowData[col.field]">
+        </p-inputSwitch>
+        <a
+          *ngIf="col.field === 'YoutubeChannelID'"
+          href="https://youtube.com/channel/{{ rowData.YoutubeChannelID }}/videos"
+          target="_blank"
+        >{{ rowData[col.field] }}</a>
+
+        <p-inputSwitch
+          *ngIf="
+                col.field === 'ShouldSync' ||
+                col.field === 'Redeemable' ||
+                col.field === 'Reviewed'
+              "
+          (onChange)="changeFieldStatus(rowData, col.api_field, $event)"
+          [(ngModel)]="rowData[col.field]"
+        >
+        </p-inputSwitch>
+        <span
+          *ngIf="
+                col.field !== 'YoutubeChannelID' &&
+                col.field !== 'ShouldSync' &&
+                col.field !== 'Redeemable' &&
+                col.field !== 'UserRewardEnabled' &&
+                col.field !== 'Reviewed'
+              "
+        >{{ rowData[col.field] }}</span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
