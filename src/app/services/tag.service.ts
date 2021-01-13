@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,11 @@ export class TagService {
   }
 
   tagFile(comment: string, outpoint: string, selectedTag: string, claim_id: string): Observable<any> {
-    const params = new HttpParams().set('comment', comment).set('outpoint', outpoint).set('tag_name', selectedTag).set('claim_id', claim_id);
+    const params = new HttpParams()
+      .set('comment', comment)
+      .set('outpoint', outpoint)
+      .set('tag_name', selectedTag)
+      .set('claim_id', claim_id);
     return this.rest.get('file', 'tag', params);
   }
 

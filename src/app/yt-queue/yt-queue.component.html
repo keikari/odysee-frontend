@@ -1,3 +1,19 @@
+<p-card>
+  <div class="p-grid p-justify-center">
+    <div>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="ignoreNonSyncable" label="Ignore Non Syncable"></p-triStateCheckbox>
+    </div>
+    <div>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="ignoreNonRedeemable" label="Ignore Non Redeemable"></p-triStateCheckbox>
+    </div>
+    <div>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeReviewed" label="Include Reviewed"></p-triStateCheckbox>
+    </div>
+    <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadChannels()"></button>
+  </div>
+</p-card>
+
+
 <p-table
   [columns]="youtubeColumns"
   [value]="ytChannels"
@@ -53,3 +69,4 @@
     </tr>
   </ng-template>
 </p-table>
+<p-progressSpinner *ngIf="loading"></p-progressSpinner>

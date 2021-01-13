@@ -10,7 +10,7 @@ export class AdministrativeService {
 
   constructor(public rest: ApiService) {
   }
-  getPendingYTChannels(): Observable<any> {
-    return this.rest.get('administrative', 'youtube_pending', new HttpParams());
+  getPendingYTChannels(params: HttpParams): Observable<any> {
+    return this.rest.get('administrative', 'youtube_pending', params);
   }
 }

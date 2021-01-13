@@ -4,7 +4,7 @@ import {ApiService} from '../services/api.service';
 import {AdministrativeService} from '../services/administrative.service';
 import {YtChannel} from './model/yt-channel.model';
 import {YoutubeChannel} from '../scams/user-detail/model/youtube_channel/youtube-channel';
-import {MessageService} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-yt-queue',
@@ -27,19 +27,34 @@ export class YtQueueComponent implements OnInit {
   ];
   ytChannels = [];
   loading = false;
+  ignoreNonRedeemable: any;
+  ignoreNonSyncable: any;
+  includeReviewed: any;
 
   constructor(public rest: ApiService, private admService: AdministrativeService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
-    this.loadChannels();
   }
 
   loadChannels() {
     this.ytChannels = [];
-    const params = new HttpParams();
+    let params = new HttpParams();
+    console.log(this.includeReviewed);
+    if (this.includeReviewed != null) {
+      params = params.set('include_reviewed', this.includeReviewed);
+    }
+    console.log(this.ignoreNonRedeemable);
+    if (this.ignoreNonRedeemable != null) {
+      params = params.set('ignore_non_redeemable', this.ignoreNonRedeemable);
+    }
+    console.log(this.ignoreNonSyncable);
+    if (this.ignoreNonSyncable != null) {
+      params = params.set('ignore_non_syncable', this.ignoreNonSyncable);
+    }
+
     this.loading = true;
-    this.admService.getPendingYTChannels().subscribe(userResponse => {
+    this.admService.getPendingYTChannels(params).subscribe(userResponse => {
       this.loading = false;
       userResponse.data.forEach((yt) => {
         const channel = new YtChannel(yt);
@@ -51,7 +66,7 @@ export class YtQueueComponent implements OnInit {
   // param came from column.api_field
   changeFieldStatus(channel: YtChannel, param: string, event) {
     const params = new HttpParams().set('channel_id', channel.YoutubeChannelID.toString()).set(param, event.checked.toString());
-    this.rest.get('yt', 'disapprove', params).subscribe((response) => {
+    this.rest.get('yt', 'disapprove', params).subscribe(response => {
       if (response && response.error) {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
@@ -75,7 +90,7 @@ export class YtQueueComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Changed', detail: 'Channel updated!'});
+        this.messageService.add({severity: 'success', summary: 'Changed', detail: 'Rewards Status updated!'});
       } else {
         this.messageService.clear();
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
