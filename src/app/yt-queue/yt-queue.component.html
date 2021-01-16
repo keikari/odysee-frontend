@@ -1,14 +1,17 @@
 <p-card>
   <div class="p-grid p-justify-center">
     <div>
-      <p-triStateCheckbox class="p-col-4" [(ngModel)]="ignoreNonSyncable" label="Ignore Non Syncable"></p-triStateCheckbox>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeSyncable" label="Include Syncable"></p-triStateCheckbox>
     </div>
     <div>
-      <p-triStateCheckbox class="p-col-4" [(ngModel)]="ignoreNonRedeemable" label="Ignore Non Redeemable"></p-triStateCheckbox>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeRedeemable"
+                          label="Include Redeemable"></p-triStateCheckbox>
     </div>
     <div>
       <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeReviewed" label="Include Reviewed"></p-triStateCheckbox>
     </div>
+    <p-selectButton class="margin-10" [options]="searchOptions" [(ngModel)]="statusToSearch"></p-selectButton>
+    <p-inputNumber [(ngModel)]="itemsToReturn" placeholder="N items to return"></p-inputNumber>
     <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadChannels()"></button>
   </div>
 </p-card>
@@ -41,11 +44,10 @@
           [(ngModel)]="rowData[col.field]">
         </p-inputSwitch>
         <a
-          *ngIf="col.field === 'YoutubeChannelID'"
+          *ngIf="col.field === 'YoutubeChannelName'"
           href="https://youtube.com/channel/{{ rowData.YoutubeChannelID }}/videos"
           target="_blank"
-        >{{ rowData[col.field] }}</a>
-
+        >{{ rowData[col.field]}}</a>
         <p-inputSwitch
           *ngIf="
                 col.field === 'ShouldSync' ||
@@ -58,7 +60,7 @@
         </p-inputSwitch>
         <span
           *ngIf="
-                col.field !== 'YoutubeChannelID' &&
+                col.field !== 'YoutubeChannelName' &&
                 col.field !== 'ShouldSync' &&
                 col.field !== 'Redeemable' &&
                 col.field !== 'UserRewardEnabled' &&

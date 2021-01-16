@@ -2,7 +2,9 @@ export class YtChannel {
   UserID: number;
   UserRewardEnabled: boolean;
   YoutubeChannelID: string;
+  YoutubeChannelName: string;
   DesiredChannelName: string;
+  Status: string;
   Subscribers: number;
   Videos: number;
   Views: number;
@@ -17,7 +19,9 @@ export class YtChannel {
     this.UserID = yt.user_id;
     this.UserRewardEnabled = yt.user_reward_enabled;
     this.YoutubeChannelID = yt.youtube_channel_id;
+    this.YoutubeChannelName = yt.youtube_channel_name;
     this.DesiredChannelName = yt.desired_channel_name;
+    this.Status = yt.status;
     this.Subscribers = yt.subscribers;
     this.Videos = yt.videos;
     this.Views = yt.views;

@@ -16,8 +16,9 @@ export class YtQueueComponent implements OnInit {
   youtubeColumns = [
     {field: 'UserID', header: 'User ID'},
     {field: 'UserRewardEnabled', header: 'Rewards'},
-    {field: 'YoutubeChannelID', header: 'YoutubeChannel'},
+    {field: 'YoutubeChannelName', header: 'YoutubeChannel'},
     {field: 'DesiredChannelName', header: 'Desired Channel Name'},
+    {field: 'Status', header: 'Status'},
     {field: 'Subscribers', header: 'Subscribers'},
     {field: 'Videos', header: 'Videos'},
     {field: 'Views', header: 'Views'},
@@ -25,34 +26,44 @@ export class YtQueueComponent implements OnInit {
     {field: 'ShouldSync', header: 'ShouldSync', api_field: 'should_sync'},
     {field: 'Reviewed', header: 'Reviewed', api_field: 'reviewed'},
   ];
+  statusToSearch: string;
   ytChannels = [];
   loading = false;
-  ignoreNonRedeemable: any;
-  ignoreNonSyncable: any;
+  searchOptions: any[];
+  includeRedeemable: any;
+  includeSyncable: any;
   includeReviewed: any;
+  itemsToReturn: number;
 
   constructor(public rest: ApiService, private admService: AdministrativeService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
+    this.searchOptions = [
+      {label: 'Pending', value: 'pending'},
+      {label: 'Abandoned', value: 'abandoned'},
+      {label: 'Queued', value: 'queued'},
+    ];
   }
 
   loadChannels() {
     this.ytChannels = [];
     let params = new HttpParams();
-    console.log(this.includeReviewed);
+    if (this.statusToSearch) {
+      params = params.set('status', this.statusToSearch);
+    }
+    if (this.itemsToReturn > 0) {
+      params = params.set('items_to_return', this.itemsToReturn.toString());
+    }
     if (this.includeReviewed != null) {
       params = params.set('include_reviewed', this.includeReviewed);
     }
-    console.log(this.ignoreNonRedeemable);
-    if (this.ignoreNonRedeemable != null) {
-      params = params.set('ignore_non_redeemable', this.ignoreNonRedeemable);
+    if (this.includeRedeemable != null) {
+      params = params.set('ignore_non_redeemable', this.includeRedeemable);
     }
-    console.log(this.ignoreNonSyncable);
-    if (this.ignoreNonSyncable != null) {
-      params = params.set('ignore_non_syncable', this.ignoreNonSyncable);
+    if (this.includeSyncable != null) {
+      params = params.set('ignore_non_syncable', this.includeSyncable);
     }
-
     this.loading = true;
     this.admService.getPendingYTChannels(params).subscribe(userResponse => {
       this.loading = false;
