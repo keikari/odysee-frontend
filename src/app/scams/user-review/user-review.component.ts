@@ -235,4 +235,8 @@ export class UserReviewComponent implements OnInit {
     }, this.users);
     this.users = this.users.sort((a, b) => a.YoutubeChannels[0].Subscribers >= b.YoutubeChannels[0].Subscribers ? -1 : 1);
   }
+
+  hideYouTubers() {
+    this.users = this.users.filter(user => user.YoutubeChannels.length === 0);
+  }
 }
