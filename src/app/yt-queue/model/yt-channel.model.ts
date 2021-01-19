@@ -5,6 +5,7 @@ export class YtChannel {
   YoutubeChannelName: string;
   DesiredChannelName: string;
   Status: string;
+  Countries: string;
   Subscribers: number;
   Videos: number;
   Views: number;
@@ -21,6 +22,11 @@ export class YtChannel {
     this.YoutubeChannelID = yt.youtube_channel_id;
     this.YoutubeChannelName = yt.youtube_channel_name;
     this.DesiredChannelName = yt.desired_channel_name;
+    if (yt.countries != null) {
+      this.Countries = yt.countries.join(',');
+    } else {
+      this.Countries = '';
+    }
     this.Status = yt.status;
     this.Subscribers = yt.subscribers;
     this.Videos = yt.videos;

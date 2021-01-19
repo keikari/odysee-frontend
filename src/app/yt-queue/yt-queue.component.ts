@@ -18,6 +18,7 @@ export class YtQueueComponent implements OnInit {
     {field: 'UserRewardEnabled', header: 'Rewards'},
     {field: 'YoutubeChannelName', header: 'YoutubeChannel'},
     {field: 'DesiredChannelName', header: 'Desired Channel Name'},
+    {field: 'Countries', header: 'Countries'},
     {field: 'Status', header: 'Status'},
     {field: 'Subscribers', header: 'Subscribers'},
     {field: 'Videos', header: 'Videos'},
@@ -31,7 +32,7 @@ export class YtQueueComponent implements OnInit {
   selectedChannels: YtChannel[];
   loading = false;
   searchOptions: any[];
-  includeRedeemable: any;
+  includeApproved: any;
   includeSyncable: any;
   includeReviewed: any;
   itemsToReturn: number;
@@ -59,8 +60,8 @@ export class YtQueueComponent implements OnInit {
     if (this.includeReviewed != null) {
       params = params.set('include_reviewed', this.includeReviewed);
     }
-    if (this.includeRedeemable != null) {
-      params = params.set('ignore_non_redeemable', this.includeRedeemable);
+    if (this.includeApproved != null) {
+      params = params.set('include_approved', this.includeApproved);
     }
     if (this.includeSyncable != null) {
       params = params.set('ignore_non_syncable', this.includeSyncable);

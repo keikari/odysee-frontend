@@ -1,11 +1,11 @@
 <p-card>
   <div class="p-grid p-justify-center">
     <div>
-      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeSyncable" label="Include Syncable"></p-triStateCheckbox>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeApproved"
+                          label="Include Approved"></p-triStateCheckbox>
     </div>
     <div>
-      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeRedeemable"
-                          label="Include Redeemable"></p-triStateCheckbox>
+      <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeSyncable" label="Include Syncable"></p-triStateCheckbox>
     </div>
     <div>
       <p-triStateCheckbox class="p-col-4" [(ngModel)]="includeReviewed" label="Include Reviewed"></p-triStateCheckbox>
