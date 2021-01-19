@@ -4,7 +4,7 @@ import {ApiService} from '../services/api.service';
 import {AdministrativeService} from '../services/administrative.service';
 import {YtChannel} from './model/yt-channel.model';
 import {YoutubeChannel} from '../scams/user-detail/model/youtube_channel/youtube-channel';
-import {MenuItem, MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-yt-queue',
@@ -27,7 +27,8 @@ export class YtQueueComponent implements OnInit {
     {field: 'Reviewed', header: 'Reviewed', api_field: 'reviewed'},
   ];
   statusToSearch: string;
-  ytChannels = [];
+  ytChannels: YtChannel[];
+  selectedChannels: YtChannel[];
   loading = false;
   searchOptions: any[];
   includeRedeemable: any;

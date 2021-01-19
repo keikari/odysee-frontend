@@ -21,9 +21,14 @@
   [columns]="youtubeColumns"
   [value]="ytChannels"
   [autoLayout]="true"
+  [(selection)]="selectedChannels"
+  [rowHover]="true"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
       <th [pSortableColumn]="col.field" *ngFor="let col of columns">
         {{ col.header }}
         <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -32,6 +37,9 @@
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
+      <td>
+        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+      </td>
       <td *ngFor="let col of columns; let i = index">
         <a target="_blank"
            *ngIf="col.field === 'UserID'"
