@@ -17,7 +17,14 @@
 </p-card>
 
 
+<p-toolbar>
+  <p-button label="Approve selected" styleClass="ui-button-success" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="updateChannelStatus(true)"></p-button>
+  <p-button label="Reject selected" styleClass="ui-button-warning" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="updateChannelStatus(false)"></p-button>
+</p-toolbar>
+
+
 <p-table
+  #dt
   [columns]="youtubeColumns"
   [value]="ytChannels"
   [autoLayout]="true"
@@ -26,13 +33,32 @@
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-      </th>
+      <th></th>
       <th [pSortableColumn]="col.field" *ngFor="let col of columns">
         {{ col.header }}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>
+        <input pInputText type="text" (input)="dt.filter($event.target.value, 'Countries', 'contains')"
+               placeholder="Search by Country" class="p-column-filter">
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -73,6 +99,10 @@
                 col.field !== 'Reviewed'
               "
         >{{ rowData[col.field] }}</span>
+      </td>
+      <td>
+        <p-button label="Good" styleClass="ui-button-success" (onClick)="approveChannel(rowData)"></p-button>
+        <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData)"></p-button>
       </td>
     </tr>
   </ng-template>

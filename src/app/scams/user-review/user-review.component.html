@@ -6,7 +6,7 @@
                  (onClick)="updateSelectedUsersRewardsStatus(false)" label="Dismiss" styleClass="ui-button-warning"
                  [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
   <p-splitButton icon="pi pi-sort" label="Sort" (onClick)="OrderByChannelsRatio()" [model]="sortItems"></p-splitButton>
-  <p-button label="Hide YTs" (onClick)="hideYouTubers()"></p-button>
+  <p-button label="Hide YTs" styleClass="ui-button-warning" (onClick)="hideYouTubers()"></p-button>
 </p-toolbar>
 <p-table #dt [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true"
          [filterDelay]="0" [(selection)]="selectedUsers">

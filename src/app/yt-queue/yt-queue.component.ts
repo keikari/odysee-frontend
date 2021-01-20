@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
 import {AdministrativeService} from '../services/administrative.service';
 import {YtChannel} from './model/yt-channel.model';
 import {YoutubeChannel} from '../scams/user-detail/model/youtube_channel/youtube-channel';
 import {MessageService} from 'primeng/api';
+import {Table} from 'primeng/table';
 
 @Component({
   selector: 'app-yt-queue',
@@ -12,7 +13,7 @@ import {MessageService} from 'primeng/api';
   styleUrls: ['./yt-queue.component.css']
 })
 export class YtQueueComponent implements OnInit {
-
+  @ViewChild('dt') table: Table;
   youtubeColumns = [
     {field: 'UserID', header: 'User ID'},
     {field: 'UserRewardEnabled', header: 'Rewards'},
@@ -108,5 +109,46 @@ export class YtQueueComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
       }
     });
+  }
+
+  updateChannelStatus(shouldSync: boolean) {
+    console.log(this.selectedChannels);
+    if (shouldSync) {
+      this.selectedChannels.forEach(channel => {
+        this.approveChannel(channel);
+      });
+    } else {
+      this.selectedChannels.forEach(channel => {
+        this.rejectChannel(channel);
+      });
+    }
+  }
+  approveChannel(channel: YtChannel) {
+    channel.ShouldSync = false;
+    this.changeFieldStatus(channel, 'should_sync', {checked: false});
+    channel.Reviewed = false;
+    this.changeFieldStatus(channel, 'reviewed', {checked: false});
+    setTimeout(() => {
+      channel.ShouldSync = true;
+      this.changeFieldStatus(channel, 'should_sync', {checked: true});
+    }, 1000);
+    setTimeout(() => {
+      channel.Reviewed = true;
+      this.changeFieldStatus(channel, 'reviewed', {checked: false});
+    }, 2000);
+  }
+  rejectChannel(channel: YtChannel) {
+    channel.ShouldSync = true;
+    this.changeFieldStatus(channel, 'should_sync', {checked: true});
+    channel.Reviewed = false;
+    this.changeFieldStatus(channel, 'reviewed', {checked: false});
+    setTimeout(() => {
+      channel.ShouldSync = false;
+      this.changeFieldStatus(channel, 'should_sync', {checked: false});
+    }, 1000);
+    setTimeout(() => {
+      channel.Reviewed = true;
+      this.changeFieldStatus(channel, 'reviewed', {checked: true});
+    }, 2000);
   }
 }
