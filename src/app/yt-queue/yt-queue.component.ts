@@ -17,9 +17,9 @@ export class YtQueueComponent implements OnInit {
   youtubeColumns = [
     {field: 'UserID', header: 'User ID'},
     {field: 'UserRewardEnabled', header: 'Rewards'},
+    {field: 'Countries', header: 'Countries'},
     {field: 'YoutubeChannelName', header: 'YoutubeChannel'},
     {field: 'DesiredChannelName', header: 'Desired Channel Name'},
-    {field: 'Countries', header: 'Countries'},
     {field: 'Status', header: 'Status'},
     {field: 'Subscribers', header: 'Subscribers'},
     {field: 'Videos', header: 'Videos'},
@@ -134,7 +134,7 @@ export class YtQueueComponent implements OnInit {
     }, 1000);
     setTimeout(() => {
       channel.Reviewed = true;
-      this.changeFieldStatus(channel, 'reviewed', {checked: false});
+      this.changeFieldStatus(channel, 'reviewed', {checked: true});
     }, 2000);
   }
   rejectChannel(channel: YtChannel) {
@@ -150,5 +150,16 @@ export class YtQueueComponent implements OnInit {
       channel.Reviewed = true;
       this.changeFieldStatus(channel, 'reviewed', {checked: true});
     }, 2000);
+  }
+  onVideosChange(event) {
+    const value = event.target.value;
+    if (value && value.trim().length) {
+      const videos = parseInt(value, 10);
+      if (!isNaN(videos)) {
+        this.table.filter(videos, 'Videos', 'lte');
+      }
+    } else {
+      this.table.filter(1000000, 'Videos', 'lte');
+    }
   }
 }

@@ -46,8 +46,6 @@
       </th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
       <th>
         <input pInputText type="text" (input)="dt.filter($event.target.value, 'Countries', 'contains')"
                placeholder="Search by Country" class="p-column-filter">
@@ -55,6 +53,9 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
+      <th><input pInputText type="text" (input)="onVideosChange($event)" placeholder="Less or equal"
+                 class="p-column-filter"></th>
       <th></th>
       <th></th>
       <th></th>
