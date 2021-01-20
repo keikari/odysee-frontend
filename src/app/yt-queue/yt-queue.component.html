@@ -59,7 +59,6 @@
         <p-inputSwitch
           *ngIf="
                 col.field === 'ShouldSync' ||
-                col.field === 'Redeemable' ||
                 col.field === 'Reviewed'
               "
           (onChange)="changeFieldStatus(rowData, col.api_field, $event)"
@@ -70,7 +69,6 @@
           *ngIf="
                 col.field !== 'YoutubeChannelName' &&
                 col.field !== 'ShouldSync' &&
-                col.field !== 'Redeemable' &&
                 col.field !== 'UserRewardEnabled' &&
                 col.field !== 'Reviewed'
               "

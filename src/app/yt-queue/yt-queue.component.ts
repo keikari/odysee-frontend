@@ -23,7 +23,6 @@ export class YtQueueComponent implements OnInit {
     {field: 'Subscribers', header: 'Subscribers'},
     {field: 'Videos', header: 'Videos'},
     {field: 'Views', header: 'Views'},
-    {field: 'Redeemable', header: 'Redeemable', api_field: 'redeemable'},
     {field: 'ShouldSync', header: 'ShouldSync', api_field: 'should_sync'},
     {field: 'Reviewed', header: 'Reviewed', api_field: 'reviewed'},
   ];
