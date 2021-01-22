@@ -18,8 +18,9 @@
 
 
 <p-toolbar>
-  <p-button label="Approve selected" styleClass="ui-button-success" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="updateChannelStatus(true)"></p-button>
-  <p-button label="Reject selected" styleClass="ui-button-warning" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="updateChannelStatus(false)"></p-button>
+  <p-button label="Approve rewards" styleClass="ui-button-success" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="approveSelectedRewards()"></p-button>
+  <p-button label="Approve selected" styleClass="ui-button-success" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="updateSelected(true)"></p-button>
+  <p-button label="Reject selected" styleClass="ui-button-warning" [disabled]="!selectedChannels || !selectedChannels.length" (onClick)="updateSelected(false)"></p-button>
 </p-toolbar>
 
 
@@ -75,7 +76,7 @@
         ></a>
         <p-inputSwitch
           *ngIf="col.field === 'UserRewardEnabled'"
-          (onChange)="ApproveRewards(rowData, $event)"
+          (onChange)="approveRewards(rowData, $event)"
           [(ngModel)]="rowData[col.field]">
         </p-inputSwitch>
         <a

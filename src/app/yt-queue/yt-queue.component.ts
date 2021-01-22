@@ -93,7 +93,7 @@ export class YtQueueComponent implements OnInit {
     });
   }
 
-  ApproveRewards(channel: YtChannel, event) {
+  approveRewards(channel: YtChannel, event) {
     const params = new HttpParams().set('id', channel.UserID.toString())
       .set('is_reward_approved', event.checked ? 'yes' : 'no')
       .set('comment', 'YoutubeChannel Review');
@@ -111,8 +111,13 @@ export class YtQueueComponent implements OnInit {
     });
   }
 
-  updateChannelStatus(shouldSync: boolean) {
-    console.log(this.selectedChannels);
+  approveSelectedRewards() {
+    this.selectedChannels.forEach(channel => {
+      this.approveRewards(channel, {checked: true});
+    });
+  }
+
+  updateSelected(shouldSync: boolean) {
     if (shouldSync) {
       this.selectedChannels.forEach(channel => {
         this.approveChannel(channel);
@@ -123,6 +128,7 @@ export class YtQueueComponent implements OnInit {
       });
     }
   }
+
   approveChannel(channel: YtChannel) {
     channel.ShouldSync = false;
     this.changeFieldStatus(channel, 'should_sync', {checked: false});
@@ -137,6 +143,7 @@ export class YtQueueComponent implements OnInit {
       this.changeFieldStatus(channel, 'reviewed', {checked: true});
     }, 2000);
   }
+
   rejectChannel(channel: YtChannel) {
     channel.ShouldSync = true;
     this.changeFieldStatus(channel, 'should_sync', {checked: true});
@@ -151,6 +158,7 @@ export class YtQueueComponent implements OnInit {
       this.changeFieldStatus(channel, 'reviewed', {checked: true});
     }, 2000);
   }
+
   onVideosChange(event) {
     const value = event.target.value;
     if (value && value.trim().length) {
