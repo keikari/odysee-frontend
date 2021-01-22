@@ -113,6 +113,7 @@ export class YtQueueComponent implements OnInit {
 
   approveSelectedRewards() {
     this.selectedChannels.forEach(channel => {
+      channel.UserRewardEnabled = true;
       this.approveRewards(channel, {checked: true});
     });
   }
