@@ -96,7 +96,8 @@ export class YtQueueComponent implements OnInit {
   approveRewards(channel: YtChannel, event) {
     const params = new HttpParams().set('id', channel.UserID.toString())
       .set('is_reward_approved', event.checked ? 'yes' : 'no')
-      .set('comment', 'YoutubeChannel Review');
+      .set('comment', 'YoutubeChannel Review')
+      .set('notify', 'true');
     this.rest.get('user', 'approve', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
