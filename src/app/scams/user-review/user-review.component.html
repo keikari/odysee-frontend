@@ -14,8 +14,9 @@
     <tr>
       <th *ngIf="crud"></th>
       <th style="width: 4em"></th>
-      <th *ngFor="let col of columns">
-        {{col.header}}
+      <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
       <th class="action-column">Action</th>
     </tr>
