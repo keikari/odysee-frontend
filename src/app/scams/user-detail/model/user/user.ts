@@ -105,6 +105,7 @@ export class User {
     if (u.accesses) {
       let match = this.IsCountryMatch;
       const lastCountry = u.accesses[0].country;
+      this.Country = lastCountry;
       const countries = [];
       const isps = [];
       u.accesses.forEach((a) => {
