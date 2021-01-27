@@ -22,7 +22,6 @@ export class PendingComponent implements OnInit {
   showOdyseeUsers: boolean;
   showOdyseeOnly: boolean;
   verificationMethod: string;
-  showCountryMatch: any;
   invitedByFilter: number[] = [];
   invitedByLists: InvitedByList[] = [];
   selectedList: InvitedByList;
@@ -111,9 +110,6 @@ export class PendingComponent implements OnInit {
       this.DisplayedUsers = this.verifiedUsers;
     } else {
       this.DisplayedUsers = this.pendingUsers;
-    }
-    if (this.showCountryMatch != null) {
-      this.DisplayedUsers = this.DisplayedUsers.filter(user => user.IsCountryMatch === Boolean(this.showCountryMatch));
     }
     localStorage.setItem('showVerified', this.showVerified.toString());
   }

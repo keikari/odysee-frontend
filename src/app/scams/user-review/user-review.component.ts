@@ -24,15 +24,18 @@ export class UserReviewComponent implements OnInit {
   isOrdered = false;
   message = '';
   splitButtonUser: User = null;
+
+  _selectedColumns: any[];
   userColumns = [
-    {field: 'UserID', header: 'UserID'},
-    {field: 'Duplicates', header: 'Duplicates', width: '13px'},
-    {field: 'Verification', header: 'Verification'},
-    {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
-    {field: 'LastAccessTime', header: 'Last Access'},
-    {field: 'IsCountryMatch', header: 'Country Match'},
-    {field: 'Country', header: 'Country'},
-    {field: 'PrimaryEmail', header: 'Email'}];
+    {field: 'UserID', header: 'UserID', width: '30px'},
+    {field: 'Duplicates', header: 'Duplicates', width: '15px'},
+    {field: 'Verification', header: 'Verification', width: '15px'},
+    {field: 'RewardStatusChangeTrigger', header: 'Trigger', width: '30px'},
+    {field: 'LastAccessTime', header: 'Last Access', width: '15px'},
+    {field: 'IsCountryMatch', header: 'Country Match', width: '15px'},
+    {field: 'Countries', header: 'Countries', width: '15px'},
+    {field: 'ISPs', header: 'ISPs', width: '15px'},
+    {field: 'PrimaryEmail', header: 'Email', width: '15px'}];
 
   constructor(public rest: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) {
   }

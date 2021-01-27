@@ -14,7 +14,7 @@
     <tr>
       <th *ngIf="crud"></th>
       <th style="width: 4em"></th>
-      <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+      <th [pSortableColumn]="col.field" *ngFor="let col of columns" [style.width]="col.width">
         {{ col.header }}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
@@ -27,16 +27,27 @@
       <th></th>
       <th></th>
       <th><input pInputText type="text" (input)="onDuplicatesChange($event)" placeholder="Less or equal"
-                 class="p-column-filter"></th>
+                 class="p-column-filter p-inputtext-sm"></th>
       <th></th>
-      <th></th>
-      <th></th>
+      <th><input pInputText type="text" (input)="dt.filter($event.target.value, 'RewardStatusChangeTrigger', 'contains')"
+                 placeholder="trigger" class="p-column-filter p-inputtext-sm"></th>
       <th></th>
       <th>
-        <input pInputText type="text" (input)="dt.filter($event.target.value, 'Country', 'contains')"
-               placeholder="Search by Country" class="p-column-filter">
+        <input pInputText type="text" (input)="dt.filter($event.target.value, 'IsCountryMatch', 'contains')"
+               placeholder="t or f" class="p-column-filter p-inputtext-sm">
       </th>
-      <th></th>
+      <th>
+        <input pInputText type="text" (input)="dt.filter($event.target.value, 'Countries', 'contains')"
+               placeholder="filter" class="p-column-filter p-inputtext-sm">
+      </th>
+      <th>
+        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ISPs', 'contains')"
+               placeholder="isp" class="p-column-filter p-inputtext-sm">
+      </th>
+      <th>
+        <input pInputText type="text" (input)="dt.filter($event.target.value, 'PrimaryEmail', 'contains')"
+               placeholder="@gmail.com" class="p-column-filter p-inputtext-sm">
+      </th>
       <th></th>
     </tr>
   </ng-template>

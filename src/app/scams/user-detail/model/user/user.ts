@@ -41,6 +41,8 @@ export class User {
   Duplicates: number;
   IsCountryMatch: boolean;
   Country: string;
+  Countries: string;
+  ISPs: string;
   LastNote: string;
   Verification: string;
 
@@ -103,7 +105,8 @@ export class User {
     if (u.accesses) {
       let match = this.IsCountryMatch;
       const lastCountry = u.accesses[0].country;
-      this.Country = lastCountry;
+      const countries = [];
+      const isps = [];
       u.accesses.forEach((a) => {
         const access = new Access();
         access.IP = a.ip;
@@ -115,7 +118,11 @@ export class User {
         if (lastCountry !== access.Country) {
           match = false;
         }
+        countries.push(a.country);
+        isps.push(a.isp);
       });
+      this.Countries = [...new Set(countries)].join(',');
+      this.ISPs = [...new Set(isps)].join(',');
       this.LastAccessTime = new Date(u.last_access).toISOString();
       this.IsCountryMatch = match;
     }
