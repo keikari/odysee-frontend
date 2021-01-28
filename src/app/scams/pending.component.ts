@@ -33,7 +33,11 @@ export class PendingComponent implements OnInit {
     if (user.CreditCards.length > 0) {
       return 'stripe';
     } else if (user.Phones.length > 0) {
-      return 'phone';
+      const phones = [];
+      user.Phones.forEach(p => {
+        phones.push(p.Country);
+      });
+      return [...new Set(phones)].join(',');
     } else if (user.YoutubeChannels.length > 0) {
       return 'youtube';
     }
