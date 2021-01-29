@@ -28,8 +28,11 @@
       <th></th>
       <th><input pInputText type="text" (input)="onDuplicatesChange($event)" placeholder="Less or equal"
                  class="p-column-filter p-inputtext-sm"></th>
-      <th></th>
-      <th><input pInputText type="text" (input)="dt.filter($event.target.value, 'RewardStatusChangeTrigger', 'contains')"
+      <th><input pInputText type="text"
+                 (input)="dt.filter($event.target.value, 'Verification', 'contains')"
+                 placeholder="filter" class="p-column-filter p-inputtext-sm"></th>
+      <th><input pInputText type="text"
+                 (input)="dt.filter($event.target.value, 'RewardStatusChangeTrigger', 'contains')"
                  placeholder="trigger" class="p-column-filter p-inputtext-sm"></th>
       <th></th>
       <th>
