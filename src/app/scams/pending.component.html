@@ -40,7 +40,7 @@
     <span class="margin-15">
       <button pButton type="button" icon="pi pi-list" (click)="op.toggle($event)"></button>
     </span>
-    <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadPending()"></button>
+    <button class="p-col-1 margin-15" pButton type="button" [disabled]="!verificationMethod" label="Apply Filter" (click)="loadPending()"></button>
   </div>
 </p-card>
 
