@@ -36,6 +36,7 @@ export class YtQueueComponent implements OnInit {
   includeSyncable: any;
   includeReviewed: any;
   itemsToReturn: number;
+  look_back_days: number;
 
   constructor(public rest: ApiService, private admService: AdministrativeService, private messageService: MessageService) {
   }
@@ -56,6 +57,9 @@ export class YtQueueComponent implements OnInit {
     }
     if (this.itemsToReturn > 0) {
       params = params.set('items_to_return', this.itemsToReturn.toString());
+    }
+    if (this.look_back_days > 0) {
+      params = params.set('look_back_days', this.look_back_days.toString());
     }
     if (this.includeReviewed != null) {
       params = params.set('include_reviewed', this.includeReviewed);

@@ -12,6 +12,7 @@
     </div>
     <p-selectButton class="margin-10" [options]="searchOptions" [(ngModel)]="statusToSearch"></p-selectButton>
     <p-inputNumber [(ngModel)]="itemsToReturn" placeholder="N items to return"></p-inputNumber>
+    <p-inputNumber [(ngModel)]="look_back_days" placeholder="look back days"></p-inputNumber>
     <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadChannels()"></button>
   </div>
 </p-card>
