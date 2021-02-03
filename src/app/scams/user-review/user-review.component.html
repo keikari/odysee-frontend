@@ -13,7 +13,7 @@
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngIf="crud"></th>
-      <th style="width: 4em"></th>
+      <th style="width: 3em"></th>
       <th [pSortableColumn]="col.field" *ngFor="let col of columns" [style.width]="col.width">
         {{ col.header }}
         <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -25,32 +25,23 @@
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
       <th></th>
-      <th></th>
-      <th><input pInputText type="text" (input)="onDuplicatesChange($event)" placeholder="Less or equal"
-                 class="p-column-filter p-inputtext-sm"></th>
-      <th><input pInputText type="text"
-                 (input)="dt.filter($event.target.value, 'Verification', 'contains')"
-                 placeholder="filter" class="p-column-filter p-inputtext-sm"></th>
-      <th><input pInputText type="text"
-                 (input)="dt.filter($event.target.value, 'RewardStatusChangeTrigger', 'contains')"
-                 placeholder="trigger" class="p-column-filter p-inputtext-sm"></th>
-      <th></th>
-      <th>
-        <input pInputText type="text" (input)="dt.filter($event.target.value, 'IsCountryMatch', 'contains')"
-               placeholder="t or f" class="p-column-filter p-inputtext-sm">
-      </th>
-      <th>
-        <input pInputText type="text" (input)="dt.filter($event.target.value, 'Countries', 'contains')"
-               placeholder="filter" class="p-column-filter p-inputtext-sm">
-      </th>
-      <th>
-        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ISPs', 'contains')"
-               placeholder="isp" class="p-column-filter p-inputtext-sm">
-      </th>
-      <th>
-        <input pInputText type="text" (input)="dt.filter($event.target.value, 'PrimaryEmail', 'contains')"
-               placeholder="@gmail.com" class="p-column-filter p-inputtext-sm">
-      </th>
+      <th *ngFor="let col of columns" [style.width]="col.width">
+        <input *ngIf="col.header=='Duplicates'" pInputText type="text" (input)="onDuplicatesChange($event)"
+               placeholder="Less or equal"
+               class="p-column-filter p-inputtext-sm">
+
+        <input
+          *ngIf="col.field=='RewardStatusChangeTrigger'
+          ||col.field=='IsCountryMatch'
+          ||col.field=='Countries'
+          ||col.field=='ISPs'
+          ||col.field=='PrimaryEmail'
+          ||col.field=='Trigger'
+          ||col.field=='Status'
+          ||col.field=='YTChannelsAmount'"
+          pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, 'contains')"
+          placeholder="filter" class="p-column-filter p-inputtext-sm">
       <th></th>
     </tr>
   </ng-template>
@@ -66,9 +57,18 @@
       </td>
       <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)"
           [title]="rowData.getTitle(col.field)">
-        <span *ngSwitchCase="col.field === 'UserID'">{{ rowData[col.field] }} <em *ngIf="rowData.YoutubeChannels.length"
-                                                                                  class="pi pi-video"></em></span>
-        <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+        <span *ngIf="col.field == 'UserID'"> {{rowData[col.field]}} <em *ngIf="rowData.YoutubeChannels.length"
+                                                                        class="pi pi-video"></em></span>
+        <span *ngIf="col.header == 'YTAction'">
+          <p-button label="Good" styleClass="ui-button-success" (onClick)="approveChannel(rowData.YoutubeChannelID)"></p-button>
+          <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData.YoutubeChannelID)"></p-button>
+        </span>
+        <span *ngIf="col.field !== 'UserID'&&col.header !== 'YTAction'&&col.field !== 'YoutubeChannelName'">{{rowData[col.field]}}</span>
+        <a
+          *ngIf="col.field === 'YoutubeChannelName'"
+          href="https://youtube.com/channel/{{ rowData.YoutubeChannelID }}/videos"
+          target="_blank"
+        >{{ rowData[col.field]}}</a>
       </td>
       <td>
         <div class="action-buttons">
@@ -79,6 +79,7 @@
                          (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss"
                          styleClass="ui-button-warning"></p-splitButton>
           <button type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button>
+
         </div>
       </td>
     </tr>

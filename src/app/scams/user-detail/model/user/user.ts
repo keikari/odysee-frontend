@@ -45,6 +45,18 @@ export class User {
   ISPs: string;
   LastNote: string;
   Verification: string;
+  // For YT-verification
+  YTChannelsAmount: number;
+  YoutubeChannelID: string;
+  YoutubeChannelName: string;
+  DesiredChannelName: string;
+  Status: string;
+  Subscribers: number;
+  Videos: number;
+  Views: number;
+  ShouldSync: boolean;
+  Redeemable: boolean;
+  Reviewed: boolean;
 
   constructor(u: any) {
     this.Duplicates = 0;
@@ -91,6 +103,17 @@ export class User {
       });
       this.YoutubeChannels.sort((a, b) => a.Subscribers > b.Subscribers ? -1 : 1);
       this.YoutubeChannels.sort((a, b) => Number(a.Reviewed) - Number(b.Reviewed));
+      this.YTChannelsAmount = this.YoutubeChannels.length;
+      this.YoutubeChannelID = this.YoutubeChannels[0].ChannelID;
+      this.YoutubeChannelName = this.YoutubeChannels[0].ChannelName;
+      this.DesiredChannelName = this.YoutubeChannels[0].LBRYChannelName;
+      this.Status = this.YoutubeChannels[0].Status;
+      this.Subscribers = this.YoutubeChannels[0].Subscribers;
+      this.Videos = this.YoutubeChannels[0].Videos;
+      this.Views = this.YoutubeChannels[0].Views;
+      this.ShouldSync = this.YoutubeChannels[0].ShouldSync;
+      this.Redeemable = this.YoutubeChannels[0].IsRedeemable;
+      this.Reviewed = this.YoutubeChannels[0].Reviewed;
     }
     // Credit Cards
     if (u.credit_cards) {

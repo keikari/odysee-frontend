@@ -14,7 +14,7 @@ export class PendingComponent implements OnInit {
   DisplayedUsers: User[] = [];
   pendingUsers: User[] = [];
   verifiedUsers: User[] = [];
-
+  UserColumns = [];
   triggerFilter: string;
   showVerified: boolean;
   showAutoApprovals: boolean;
@@ -142,5 +142,38 @@ export class PendingComponent implements OnInit {
 
   deleteList(list) {
     this.invitedByLists = this.invitedByLists.filter(value => value.UserIDs !== list.UserIDs);
+  }
+
+  setUserColumns(method: string) {
+    console.log(method)
+    if (method=='youtube') {
+      this.UserColumns=[
+        {field: 'UserID', header: 'UserID', width: '30px'},
+        {field: 'RewardApproved', header: 'Rewards', width: '15px'},
+        {field: 'Duplicates', header: 'Duplicates', width: '15px'},
+        {field: 'RewardStatusChangeTrigger', header: 'Trigger', width: '15px'},
+        {field: 'Countries', header: 'Countries', width: '15px'},
+        {field: 'PrimaryEmail', header: 'Email', width: '15px'},
+        {field: 'YTChannelsAmount', header: 'YT Channels Amount', width: '15px'},
+        {field: 'YoutubeChannelName', header: 'Channel', width: '15px'},
+        {field: 'Status', header: 'Status', width: '15px'},
+        {field: 'Subscribers', header: 'Subs', width: '15px'},
+        {field: 'Videos', header: 'Videos', width: '15px'},
+        {field: 'Views', header: 'Views', width: '15px'},
+        {header: 'YTAction', width: '15px'}
+      ]
+    } else {
+      this.UserColumns=[
+        {field: 'UserID', header: 'UserID', width: '30px'},
+        {field: 'Duplicates', header: 'Duplicates', width: '15px'},
+        {field: 'Verification', header: 'Verification', width: '15px'},
+        {field: 'RewardStatusChangeTrigger', header: 'Trigger', width: '30px'},
+        {field: 'LastAccessTime', header: 'Last Access', width: '15px'},
+        {field: 'IsCountryMatch', header: 'Country Match', width: '15px'},
+        {field: 'Countries', header: 'Countries', width: '15px'},
+        {field: 'ISPs', header: 'ISPs', width: '15px'},
+        {field: 'PrimaryEmail', header: 'Email', width: '15px'}]
+    }
+
   }
 }

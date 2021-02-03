@@ -5,6 +5,7 @@ import {ApiService} from '../../services/api.service';
 import {ConfirmationService} from 'primeng/api';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
+import {YtChannel} from "../../yt-queue/model/yt-channel.model";
 
 @Component({
   selector: 'app-user-review',
@@ -14,6 +15,16 @@ import {Table} from 'primeng/table';
 export class UserReviewComponent implements OnInit {
   @Input() users: User[] = [];
   @Input() crud = false;
+  @Input() userColumns = [
+    {field: 'UserID', header: 'UserID', width: '30px'},
+    {field: 'Duplicates', header: 'Duplicates', width: '15px'},
+    {field: 'Verification', header: 'Verification', width: '15px'},
+    {field: 'RewardStatusChangeTrigger', header: 'Trigger', width: '30px'},
+    {field: 'LastAccessTime', header: 'Last Access', width: '15px'},
+    {field: 'IsCountryMatch', header: 'Country Match', width: '15px'},
+    {field: 'Countries', header: 'Countries', width: '15px'},
+    {field: 'ISPs', header: 'ISPs', width: '15px'},
+    {field: 'PrimaryEmail', header: 'Email', width: '15px'}];
   selectedUsers: User[] = [];
   @ViewChild('dt') table: Table;
   approvedItems: MenuItem[];
@@ -26,16 +37,6 @@ export class UserReviewComponent implements OnInit {
   splitButtonUser: User = null;
 
   _selectedColumns: any[];
-  userColumns = [
-    {field: 'UserID', header: 'UserID', width: '30px'},
-    {field: 'Duplicates', header: 'Duplicates', width: '15px'},
-    {field: 'Verification', header: 'Verification', width: '15px'},
-    {field: 'RewardStatusChangeTrigger', header: 'Trigger', width: '30px'},
-    {field: 'LastAccessTime', header: 'Last Access', width: '15px'},
-    {field: 'IsCountryMatch', header: 'Country Match', width: '15px'},
-    {field: 'Countries', header: 'Countries', width: '15px'},
-    {field: 'ISPs', header: 'ISPs', width: '15px'},
-    {field: 'PrimaryEmail', header: 'Email', width: '15px'}];
 
   constructor(public rest: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) {
   }
@@ -241,5 +242,44 @@ export class UserReviewComponent implements OnInit {
 
   hideYouTubers() {
     this.users = this.users.filter(user => user.YoutubeChannels.length === 0);
+  }
+
+  // param came from column.api_field
+  changeFieldStatus(YtChannelID: string, param: string, event) {
+    const params = new HttpParams().set('channel_id', YtChannelID).set(param, event.checked.toString());
+    this.rest.get('yt', 'disapprove', params).subscribe(response => {
+      if (response && response.error) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+      } else if (response && response.data) {
+        this.messageService.clear();
+        this.messageService.add({severity: 'success', summary: 'Changed', detail: 'Channel updated!'});
+      } else {
+        this.messageService.clear();
+        this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
+      }
+    });
+  }
+
+  approveChannel(YtChannelID: string) {
+    this.changeFieldStatus(YtChannelID, 'should_sync', {checked: false});
+    this.changeFieldStatus(YtChannelID, 'reviewed', {checked: false});
+    setTimeout(() => {
+      this.changeFieldStatus(YtChannelID, 'should_sync', {checked: true});
+    }, 1000);
+    setTimeout(() => {
+      this.changeFieldStatus(YtChannelID, 'reviewed', {checked: true});
+    }, 2000);
+  }
+
+  rejectChannel(YtChannelID: string) {
+    this.changeFieldStatus(YtChannelID, 'should_sync', {checked: true});
+    this.changeFieldStatus(YtChannelID, 'reviewed', {checked: false});
+    setTimeout(() => {
+      this.changeFieldStatus(YtChannelID, 'should_sync', {checked: false});
+    }, 1000);
+    setTimeout(() => {
+      this.changeFieldStatus(YtChannelID, 'reviewed', {checked: true});
+    }, 2000);
   }
 }

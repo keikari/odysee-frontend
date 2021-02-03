@@ -2,19 +2,19 @@
   <div class="p-grid p-justify-center">
     <span class="p-col-1">Verification:</span>
     <div class="p-col-1">
-      <p-radioButton name="group1" value="all" label="Everything" [(ngModel)]="verificationMethod" inputId="opt1">
+      <p-radioButton name="group1" value="all" (click)="setUserColumns('all')" label="Everything" [(ngModel)]="verificationMethod" inputId="opt1">
       </p-radioButton>
     </div>
     <div class="p-col-1">
-      <p-radioButton name="group1" value="youtube" label="Youtuber" [(ngModel)]="verificationMethod" inputId="opt2">
+      <p-radioButton (click)="setUserColumns('youtube')" name="group1" value="youtube" label="Youtuber" [(ngModel)]="verificationMethod" inputId="opt2">
       </p-radioButton>
     </div>
     <div class="p-col-1">
-      <p-radioButton name="group1" value="stripe" label="CreditCard" [(ngModel)]="verificationMethod" inputId="opt3">
+      <p-radioButton (click)="setUserColumns('stripe')" name="group1" value="stripe" label="CreditCard" [(ngModel)]="verificationMethod" inputId="opt3">
       </p-radioButton>
     </div>
     <div class="p-col-2">
-      <p-radioButton name="group1" value="phone" label="Phone" [(ngModel)]="verificationMethod" inputId="opt4">
+      <p-radioButton (click)="setUserColumns('phone')" name="group1" value="phone" label="Phone" [(ngModel)]="verificationMethod" inputId="opt4">
       </p-radioButton>
     </div>
     <div class="p-col-5">
@@ -44,7 +44,7 @@
   </div>
 </p-card>
 
-<app-user-review [users]="DisplayedUsers" [crud]="true"></app-user-review>
+<app-user-review [users]="DisplayedUsers" [crud]="true" [userColumns]="UserColumns"></app-user-review>
 <p-progressSpinner *ngIf="loading"></p-progressSpinner>
 <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
   <ng-template pTemplate>
