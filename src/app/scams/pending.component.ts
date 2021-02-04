@@ -145,7 +145,6 @@ export class PendingComponent implements OnInit {
   }
 
   setUserColumns(method: string) {
-    console.log(method)
     if (method=='youtube') {
       this.UserColumns=[
         {field: 'UserID', header: 'UserID', width: '30px'},

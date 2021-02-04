@@ -282,4 +282,17 @@ export class UserReviewComponent implements OnInit {
       this.changeFieldStatus(YtChannelID, 'reviewed', {checked: true});
     }, 2000);
   }
+
+  updateSelectedSync(shouldSync: boolean) {
+    if (shouldSync) {
+      this.selectedUsers.forEach(user => {
+        if (user.YoutubeChannelID) this.approveChannel(user.YoutubeChannelID);
+      });
+    } else {
+
+      this.selectedUsers.forEach(user => {
+        if (user.YoutubeChannelID) this.rejectChannel(user.YoutubeChannelID);
+      });
+    }
+  }
 }
