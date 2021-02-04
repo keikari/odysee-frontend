@@ -5,7 +5,6 @@ import {ApiService} from '../../services/api.service';
 import {ConfirmationService} from 'primeng/api';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
-import {YtChannel} from "../../yt-queue/model/yt-channel.model";
 
 @Component({
   selector: 'app-user-review',
@@ -35,8 +34,6 @@ export class UserReviewComponent implements OnInit {
   isOrdered = false;
   message = '';
   splitButtonUser: User = null;
-
-  _selectedColumns: any[];
 
   constructor(public rest: ApiService, private messageService: MessageService, private confirmationService: ConfirmationService) {
   }
@@ -245,8 +242,8 @@ export class UserReviewComponent implements OnInit {
   }
 
   // param came from column.api_field
-  changeFieldStatus(YtChannelID: string, param: string, event) {
-    const params = new HttpParams().set('channel_id', YtChannelID).set(param, event.checked.toString());
+  changeFieldStatus(user: User, param: string, event) {
+    const params = new HttpParams().set('channel_id', user.YoutubeChannelID).set(param, event.checked.toString());
     this.rest.get('yt', 'disapprove', params).subscribe(response => {
       if (response && response.error) {
         this.messageService.clear();
@@ -261,37 +258,39 @@ export class UserReviewComponent implements OnInit {
     });
   }
 
-  approveChannel(YtChannelID: string) {
-    this.changeFieldStatus(YtChannelID, 'should_sync', {checked: false});
-    this.changeFieldStatus(YtChannelID, 'reviewed', {checked: false});
+  approveChannel(user: User) {
+    this.changeFieldStatus(user, 'should_sync', {checked: false});
+    this.changeFieldStatus(user, 'reviewed', {checked: false});
     setTimeout(() => {
-      this.changeFieldStatus(YtChannelID, 'should_sync', {checked: true});
+      this.changeFieldStatus(user, 'should_sync', {checked: true});
     }, 1000);
     setTimeout(() => {
-      this.changeFieldStatus(YtChannelID, 'reviewed', {checked: true});
+      this.changeFieldStatus(user, 'reviewed', {checked: true});
     }, 2000);
+    user.Status = 'synced'
   }
 
-  rejectChannel(YtChannelID: string) {
-    this.changeFieldStatus(YtChannelID, 'should_sync', {checked: true});
-    this.changeFieldStatus(YtChannelID, 'reviewed', {checked: false});
+  rejectChannel(user: User) {
+    this.changeFieldStatus(user, 'should_sync', {checked: true});
+    this.changeFieldStatus(user, 'reviewed', {checked: false});
     setTimeout(() => {
-      this.changeFieldStatus(YtChannelID, 'should_sync', {checked: false});
+      this.changeFieldStatus(user, 'should_sync', {checked: false});
     }, 1000);
     setTimeout(() => {
-      this.changeFieldStatus(YtChannelID, 'reviewed', {checked: true});
+      this.changeFieldStatus(user, 'reviewed', {checked: true});
     }, 2000);
+    user.Status = 'abandoned'
   }
 
   updateSelectedSync(shouldSync: boolean) {
     if (shouldSync) {
       this.selectedUsers.forEach(user => {
-        if (user.YoutubeChannelID) this.approveChannel(user.YoutubeChannelID);
+        if (user.YoutubeChannelID) this.approveChannel(user);
       });
     } else {
 
       this.selectedUsers.forEach(user => {
-        if (user.YoutubeChannelID) this.rejectChannel(user.YoutubeChannelID);
+        if (user.YoutubeChannelID) this.rejectChannel(user);
       });
     }
   }

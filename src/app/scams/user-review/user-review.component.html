@@ -62,15 +62,19 @@
         <span *ngIf="col.field == 'UserID'"> {{rowData[col.field]}} <em *ngIf="rowData.YoutubeChannels.length"
                                                                         class="pi pi-video"></em></span>
         <span *ngIf="col.header == 'YTAction'">
-          <p-button label="Good" styleClass="ui-button-success" (onClick)="approveChannel(rowData.YoutubeChannelID)"></p-button>
-          <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData.YoutubeChannelID)"></p-button>
+          <p-button label="Good" styleClass="ui-button-success" (onClick)="approveChannel(rowData)"></p-button>
+          <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData)"></p-button>
         </span>
-        <span *ngIf="col.field !== 'UserID'&&col.header !== 'YTAction'&&col.field !== 'YoutubeChannelName'">{{rowData[col.field]}}</span>
+
+        <span *ngIf="col.field !== 'UserID'&&col.header !== 'YTAction'&&col.field !== 'YoutubeChannelName'&&col.header !== 'Status'">{{rowData[col.field]}}</span>
         <a
           *ngIf="col.field === 'YoutubeChannelName'"
           href="https://youtube.com/channel/{{ rowData.YoutubeChannelID }}/videos"
           target="_blank"
         >{{ rowData[col.field]}}</a>
+        <span *ngIf="col.header == 'Status'" class="{{rowData.Status}}">
+          {{rowData.Status}}
+        </span>
       </td>
       <td>
         <div class="action-buttons">
