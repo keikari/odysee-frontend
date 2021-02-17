@@ -79,6 +79,7 @@ import {TwitterComponent} from './pending-verification/list-detail/twitter/twitt
 import {RetentionComponent} from './retention/retention.component';
 import {ChannelFactorComponent} from './channel-factor/channel-factor.component';
 import {YtQueueComponent} from './yt-queue/yt-queue.component';
+import {ReportsComponent} from './reports/reports.component';
 
 const appRoutes: Routes = [
   {path: 'templates/send', component: TemplateComponent},
@@ -101,6 +102,7 @@ const appRoutes: Routes = [
   {path: 'retention', component: RetentionComponent},
   {path: 'channel-factor', component: ChannelFactorComponent},
   {path: 'admin/yt-queue', component: YtQueueComponent},
+  {path: 'reports', component: ReportsComponent},
   {path: '', component: StatusComponent}];
 
 @NgModule({
@@ -139,6 +141,7 @@ const appRoutes: Routes = [
     RetentionComponent,
     ChannelFactorComponent,
     YtQueueComponent,
+    ReportsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

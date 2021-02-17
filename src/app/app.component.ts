@@ -86,6 +86,9 @@ export class AppComponent implements OnInit {
       {
         label: 'Channel-Factor', routerLink: ['/channel-factor']
       },
+      {
+        label: 'Reports', routerLink: ['/reports']
+      },
     ];
   }
 

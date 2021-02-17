@@ -1,0 +1,85 @@
+<p-card>
+  <div class="p-grid p-justify-center">
+    <div>
+        <p-triStateCheckbox class="p-col-4" [(ngModel)]="isActionTakenFilter"
+                          label="Is Action Taken" (onChange)="changeColumns(isActionTakenFilter)"></p-triStateCheckbox>
+    </div>
+    <input placeholder="Find By UserID" [(ngModel)]="reportedByFilter" size="30" pInputText>
+    <p-inputNumber [(ngModel)]="itemsToReturnFilter" placeholder="N items to return"></p-inputNumber>
+    <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadReports()"></button>
+  </div>
+</p-card>
+
+<p-table
+  #dt
+  [columns]="reportColumns"
+  [value]="reports"
+  [autoLayout]="true"
+  [rowHover]="true"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th class="action-column">Action</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns; let i = index">
+        <a target="_blank"
+           *ngIf="col.field === 'ReportedByID'"
+           [routerLink]="['/admin/audit', rowData.ReportedByID]"
+        ><i class="pi pi-info-circle"></i
+        ></a>
+        <a target="_blank"
+           *ngIf="col.field === 'ReviewedById'"
+           [routerLink]="['/admin/audit', rowData.ReviewedById]"
+        ><i class="pi pi-info-circle"></i
+        ></a>
+        <a
+          *ngIf="col.field === 'URI'"
+          href="https://odysee.com/{{ rowData.URI }}"
+          target="_blank"
+        >{{ rowData[col.field]}}</a>
+        <p-triStateCheckbox *ngIf="col.field === 'IsActionTaken'"
+          class="p-col-4" [(ngModel)]="rowData.IsActionTaken" disabled="true">
+        </p-triStateCheckbox>
+        <span
+          *ngIf="
+                col.field !== '' &&
+                col.field !== 'ShouldSync' &&
+                col.field !== 'UserRewardEnabled' &&
+                col.field !== 'Reviewed'
+              "
+        >{{ rowData[col.field] }}</span>
+      </td>
+      <td>
+        <p-button label="Review"(onClick)="reviewReport(rowData)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [header]="'Report#'+review.ID" [(visible)]="isReviewing" modal="true" *ngIf="review">
+  <div>
+    <a
+      href="https://odysee.com/{{ review.URI }}"
+      target="_blank"
+    >{{review.URI}}</a>
+    <div>
+      <span>Tag: {{review.TagName}}</span>
+    </div>
+    <div>
+      <input type="text" [(ngModel)]="review.ReviewerComment" placeholder="Leave a comment">
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-check" (click)="confirmReview(true)" label="Approve"></button>
+      <button type="button" pButton icon="fa fa-close" (click)="confirmReview(false)" label="Reject"></button>
+    </div>
+  </p-footer>
+</p-dialog>

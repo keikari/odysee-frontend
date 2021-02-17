@@ -7,8 +7,10 @@
                  [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
   <p-splitButton icon="pi pi-sort" label="Sort" (onClick)="OrderByChannelsRatio()" [model]="sortItems"></p-splitButton>
   <p-button label="Hide YTs" styleClass="ui-button-warning" (onClick)="hideYouTubers()"></p-button>
-  <p-button label="Approve sync" styleClass="ui-button-success" [disabled]="!selectedUsers || !selectedUsers.length" (onClick)="updateSelectedSync(true)"></p-button>
-  <p-button label="Reject sync" styleClass="ui-button-warning" [disabled]="!selectedUsers || !selectedUsers.length" (onClick)="updateSelectedSync(false)"></p-button>
+  <p-button label="Approve sync" styleClass="ui-button-success" [disabled]="!selectedUsers || !selectedUsers.length"
+            (onClick)="updateSelectedSync(true)"></p-button>
+  <p-button label="Reject sync" styleClass="ui-button-warning" [disabled]="!selectedUsers || !selectedUsers.length"
+            (onClick)="updateSelectedSync(false)"></p-button>
 </p-toolbar>
 <p-table #dt [columns]="userColumns" [value]="users" [resizableColumns]="true" dataKey="UserID" [autoLayout]="true"
          [filterDelay]="0" [(selection)]="selectedUsers">
@@ -66,7 +68,8 @@
           <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData)"></p-button>
         </span>
 
-        <span *ngIf="col.field !== 'UserID'&&col.header !== 'YTAction'&&col.field !== 'YoutubeChannelName'&&col.header !== 'Status'">{{rowData[col.field]}}</span>
+        <span
+          *ngIf="col.field !== 'UserID'&&col.header !== 'YTAction'&&col.field !== 'YoutubeChannelName'&&col.header !== 'Status'">{{rowData[col.field]}}</span>
         <a
           *ngIf="col.field === 'YoutubeChannelName'"
           href="https://youtube.com/channel/{{ rowData.YoutubeChannelID }}/videos"
