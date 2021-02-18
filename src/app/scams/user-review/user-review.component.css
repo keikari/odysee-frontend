@@ -1,23 +1,15 @@
 .action-buttons {
-    display: flex;
+  display: flex;
 }
 
-.action-buttons> {
-    display: block;
+.action-buttons > {
+  display: block;
 }
 
 .action-column {
-    width: 360px;
+  width: 360px;
 }
+
 .p-inputtext-sm {
   width: 80px;
-}
-.queued {
-  background-color: lightgoldenrodyellow;
-}
-.abandoned {
-  background-color: lightcoral;
-}
-.synced {
-  background-color: lightgreen;
 }

@@ -265,11 +265,24 @@ export class User {
     }
     return this;
   }
+
   getCSSColor(fieldName: string): any {
     const defaultColor = {
       'background-color': '#FFFFFF'
     };
-
+    if (fieldName === 'Duplicates') {
+      let hasApprovedDups = false
+      this.DuplicateAccounts.forEach(element => {
+        if (element.IsRewardsApproved) {
+          hasApprovedDups = true
+        }
+      });
+      if (hasApprovedDups) {
+        return {
+          'background-color': '#8bff86'
+        };
+      }
+    }
     if (fieldName === 'RewardStatusChangeTrigger' || fieldName === 'Note') {
       if (this.RewardApproved) {
         return {
@@ -279,6 +292,20 @@ export class User {
       return {
         'background-color': '#ffab99'
       };
+    }
+    if (fieldName === 'Status') {
+      if (this.Status == 'queued')
+        return {
+          'background-color': 'lightgoldenrodyellow'
+        };
+      if (this.Status == 'abandoned')
+        return {
+          'background-color': 'lightcoral'
+        };
+      if (this.Status == 'synced')
+        return {
+          'background-color': 'lightgreen'
+        };
     }
     if (fieldName !== 'UserID') {
       return defaultColor;
@@ -299,7 +326,6 @@ export class User {
         'background-color': '#ffb7e0'
       };
     }
-
     return defaultColor;
   }
 

@@ -145,8 +145,8 @@ export class PendingComponent implements OnInit {
   }
 
   setUserColumns(method: string) {
-    if (method=='youtube') {
-      this.UserColumns=[
+    if (method == 'youtube') {
+      this.UserColumns = [
         {field: 'UserID', header: 'UserID', width: '30px'},
         {field: 'RewardApproved', header: 'Rewards', width: '15px'},
         {field: 'Duplicates', header: 'Duplicates', width: '15px'},
@@ -162,7 +162,7 @@ export class PendingComponent implements OnInit {
         {header: 'YTAction', width: '15px'}
       ]
     } else {
-      this.UserColumns=[
+      this.UserColumns = [
         {field: 'UserID', header: 'UserID', width: '30px'},
         {field: 'Duplicates', header: 'Duplicates', width: '15px'},
         {field: 'Verification', header: 'Verification', width: '15px'},
