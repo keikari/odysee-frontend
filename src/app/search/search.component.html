@@ -7,7 +7,7 @@
   </div>
 </div>
 <div *ngIf="result && result.hits" class="p-grid">
-  <div *ngFor="let hit of result.hits.hits" class="p-col-3">
+  <div *ngFor="let hit of result.hits.hits" class="p-col-4">
     <div class="p-grid">
       <a class= "p-col-5 p-justify-center" href="https://odysee.com/{{hit._source.channel}}/{{hit._source.name}}">
         <img src="{{hit._source.thumbnail_url}}"style="max-width:200px;max-height: 100px;">
