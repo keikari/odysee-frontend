@@ -16,7 +16,11 @@ export class PieModel {
       '#7888ef',
       '#fcb200',
       '#ee0a36',
-      '#70faef'
+      '#70faef',
+      '#7240fa',
+      '#83f6b1',
+      '#e806f8',
+      '#e36b02'
     ],
     ds.hoverBackgroundColor = [
         '#f8859d',
@@ -27,7 +31,11 @@ export class PieModel {
         '#949fea',
         '#f6bb2c',
         '#e83154',
-        '#92f6ee'
+        '#92f6ee',
+        '#8960f8',
+        '#a8fac9',
+        '#e931f6',
+        '#e2812d'
     ];
     this.datasets.push(ds);
     ds.data.push(explanation.details[0].details[0].details[1].value);
