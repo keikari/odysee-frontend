@@ -51,7 +51,7 @@ import {UserDetailComponent} from './scams/user-detail/user-detail.component';
 import {UserReviewComponent} from './scams/user-review/user-review.component';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import {
-  BlockUIModule, InputNumberModule,
+  BlockUIModule, ChartModule, InputNumberModule,
   InputSwitchModule, MultiSelectModule, OverlayPanelModule, PanelModule,
   ProgressSpinnerModule, SelectButtonModule,
   SplitButtonModule,
@@ -80,6 +80,8 @@ import {RetentionComponent} from './retention/retention.component';
 import {ChannelFactorComponent} from './channel-factor/channel-factor.component';
 import {YtQueueComponent} from './yt-queue/yt-queue.component';
 import {ReportsComponent} from './reports/reports.component';
+import { SearchComponent } from './search/search.component';
+import {LighthouseService} from './services/lighthouse.service';
 
 const appRoutes: Routes = [
   {path: 'templates/send', component: TemplateComponent},
@@ -103,6 +105,7 @@ const appRoutes: Routes = [
   {path: 'channel-factor', component: ChannelFactorComponent},
   {path: 'admin/yt-queue', component: YtQueueComponent},
   {path: 'reports', component: ReportsComponent},
+  {path: 'search', component: SearchComponent},
   {path: '', component: StatusComponent}];
 
 @NgModule({
@@ -142,6 +145,7 @@ const appRoutes: Routes = [
     ChannelFactorComponent,
     YtQueueComponent,
     ReportsComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -189,10 +193,12 @@ const appRoutes: Routes = [
     SelectButtonModule,
     OverlayPanelModule,
     TriStateCheckboxModule,
+    ChartModule,
   ],
   providers: [
     ApiService,
     MessageService,
+    LighthouseService,
     ConfirmationService,
     [{provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true}],
     [{provide: DEFAULT_TIMEOUT, useValue: 900000}],

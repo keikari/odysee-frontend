@@ -1,0 +1,20 @@
+<div class="p-grid p-fluid p-justify-center" style="margin-top: 20px">
+  <div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+      <button type="button" pButton label="Search" (click)="runQuery()"></button>
+      <input type="text" pInputText placeholder="Search Phrase" [(ngModel)]="query" (keyup.enter)="runQuery()">
+    </div>
+  </div>
+</div>
+<div *ngIf="result && result.hits" class="p-grid">
+  <div *ngFor="let hit of result.hits.hits" class="p-col-3">
+    <div class="p-grid">
+      <a class= "p-col-5 p-justify-center" href="https://odysee.com/{{hit._source.channel}}/{{hit._source.name}}">
+        <img src="{{hit._source.thumbnail_url}}"style="max-width:200px;max-height: 100px;">
+      </a>
+      <span class="p-col-7 ui-widget p-justify-center">{{hit._source.title}}</span>
+      <p-chart class= "p-col-12"  type="pie" [data]="hit.pieModel"></p-chart>
+    </div>
+
+  </div>
+</div>

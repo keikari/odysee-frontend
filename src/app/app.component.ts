@@ -89,6 +89,9 @@ export class AppComponent implements OnInit {
       {
         label: 'Reports', routerLink: ['/reports']
       },
+      {
+        label: 'Search', routerLink: ['/search']
+      },
     ];
   }
 
