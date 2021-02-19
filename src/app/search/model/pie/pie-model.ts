@@ -42,18 +42,6 @@ export class PieModel {
     this.labels.push('EffectiveAmount');
     ds.data.push(explanation.details[0].details[0].details[2].value);
     this.labels.push('CertificateAmount');
-    // explanation.details[0].details[0].details[0].details.forEach(e => {
-    //   ds.data.push(e.value);
-    //   if ( e.description.includes('weight(title')) {
-    //     this.labels.push('Title');
-    //   } else if ( e.description.includes('weight(name')) {
-    //     this.labels.push('Name');
-    //   } else if ( e.description.includes('weight(description')) {
-    //     this.labels.push('Description');
-    //   } else {
-    //     this.labels.push(e.description);
-    //   }
-    // });
     explanation.details[0].details[0].applyToPieDS(this);
   }
 }
