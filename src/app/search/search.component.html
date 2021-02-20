@@ -1,8 +1,31 @@
 <div class="p-grid p-fluid p-justify-center" style="margin-top: 20px">
-  <div class="p-col-12 p-md-4">
+  <div class="p-col-3">
     <div class="p-inputgroup">
       <button type="button" pButton label="Search" (click)="runQuery()"></button>
       <input type="text" pInputText placeholder="Search Phrase" [(ngModel)]="query" (keyup.enter)="runQuery()">
+    </div>
+  </div>
+  <div class="p-col-3">
+    <div class="p-inputgroup">
+      <button type="button" pButton label="Target" (click)="runQuery()"></button>
+      <input type="text" pInputText placeholder="Claim ID" [(ngModel)]="target" (keyup.enter)="runTargetQuery()">
+    </div>
+  </div>
+  <div class="p-col-2">
+    <span *ngIf="targetResult && targetResult.hits.hits.length === 0" class="ui-widget" style="margin-top: 10px">Target Not Found!</span>
+  </div>
+  <div class="p-col-5">
+    <div *ngIf="targetResult && targetResult.hits" class="p-grid">
+      <div *ngFor="let hit of targetResult.hits.hits" class="p-col-12" style="border-bottom-width: 2px;border-bottom-style: dotted">
+        <div class="p-grid">
+          <a class= "p-col-5 p-justify-center" href="https://odysee.com/{{hit._source.channel}}/{{hit._source.name}}">
+            <img src="{{hit._source.thumbnail_url}}"style="max-width:200px;max-height: 100px;">
+          </a>
+          <span class="p-col-7 ui-widget p-justify-center">{{hit._source.title}}</span>
+          <span class="p-col-12 ui-widget p-justify-center" style="text-align: center"><b>Score:</b>&ensp;{{hit._score}}</span>
+          <p-chart class= "p-col-12"  type="pie" [data]="hit.pieModel"></p-chart>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -16,6 +39,5 @@
       <span class="p-col-12 ui-widget p-justify-center" style="text-align: center"><b>Score:</b>&ensp;{{hit._score}}</span>
       <p-chart class= "p-col-12"  type="pie" [data]="hit.pieModel"></p-chart>
     </div>
-
   </div>
 </div>

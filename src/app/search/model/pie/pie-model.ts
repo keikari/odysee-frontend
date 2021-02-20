@@ -5,7 +5,7 @@ export class PieModel {
   labels: string[] = [];
   datasets: PieDataset[] = [];
 
-  constructor(explanation: Explanation) {
+  constructor(explanation: Explanation, score: number) {
     const ds = new PieDataset();
     ds.backgroundColor = [
       '#FF6384',
@@ -42,6 +42,9 @@ export class PieModel {
     this.labels.push('EffectiveAmount');
     ds.data.push(explanation.details[0].details[0].details[2].value);
     this.labels.push('CertificateAmount');
+    const recencyFactor = ( explanation.details[0].details[1].value - 1.0 );
+    ds.data.push(score * recencyFactor);
+    this.labels.push('recency boost');
     explanation.details[0].details[0].applyToPieDS(this);
   }
 }

@@ -9,7 +9,9 @@ import {SearchResult} from './model/search-result';
 })
 export class SearchComponent implements OnInit {
   query: string;
+  target: string;
   result: SearchResult;
+  targetResult: SearchResult;
 
   constructor(private lighthouse: LighthouseService) { }
 
@@ -21,6 +23,14 @@ export class SearchComponent implements OnInit {
       console.log(response);
       this.result = new SearchResult(response);
       console.log(this.result);
+    });
+  }
+
+  runTargetQuery(): void {
+    this.lighthouse.searchTarget(this.query, this.target).subscribe(response => {
+      console.log(response);
+      this.targetResult = new SearchResult(response);
+      console.log(this.targetResult);
     });
   }
 

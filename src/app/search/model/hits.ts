@@ -12,9 +12,11 @@ export class Hits {
     console.log(json);
     this.total = json.total;
     this.max_score = json.max_score;
-    json.hits.forEach(h => {
-      this.hits.push(this.parseHit(h));
-    });
+    if (json.hits) {
+      json.hits.forEach(h => {
+        this.hits.push(this.parseHit(h));
+      });
+    }
   }
 
   private parseHit(h: any): Hit {
@@ -23,7 +25,7 @@ export class Hits {
     hit._score = h._score;
     hit._source = new Source(h._source);
     hit._explanation = new Explanation(h._explanation);
-    hit.pieModel = new PieModel(hit._explanation);
+    hit.pieModel = new PieModel(hit._explanation, hit._score);
     return hit;
   }
 }

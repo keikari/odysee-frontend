@@ -17,4 +17,14 @@ export class LighthouseService {
     return this.http.get('https://lighthouse.lbry.com/search', { params: params}).
       pipe( map((r: Response) => r));
   }
+
+  searchTarget(query: string, claimID: string) {
+    const params = new HttpParams().
+    set('s', query).
+    set('debug', 'true').
+    set('claim_id', claimID).
+    set('source', 'true');
+    return this.http.get('https://lighthouse.lbry.com/search', { params: params}).
+    pipe( map((r: Response) => r));
+  }
 }
