@@ -398,4 +398,45 @@
       </ul>
     </div>
   </p-accordionTab>
+  <p-accordionTab header="Follow 4 Follow" (click)="LoadUserData(DisplayedUser, 'follow4_follow')">
+    <p-table
+      [columns]="invitedUsersColumns"
+      [value]="DisplayedUser.FollowedUsers"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 4em"></th>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+          <th>Action Buttons</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr *ngIf="rowData.PrimaryEmail !== ''">
+          <td>
+            <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
+            ><i class="pi pi-info-circle"></i
+            ></a>
+          </td>
+          <td *ngFor="let col of columns" [ngSwitch]="true">
+            <span *ngSwitchCase="col.field === 'UserID'"
+            >{{ rowData[col.field]
+              }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
+              ></span>
+            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+          <td>
+            <button
+              pButton
+              type="button"
+              label="Disable Rewards"
+              class="ui-button-warning"
+              (click)="reject(rowData)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
 </p-accordion>

@@ -176,7 +176,29 @@ export class UserDetailComponent implements OnInit {
             }
           });
         }
-      break;
+        break;
+      case 'follow4_follow':
+        if (this.DisplayedUser.FollowedUsers.length === 0) {
+          const params = new HttpParams().
+          set('user_id', user.UserID.toString()).
+          set('follow4_follow', 'true');
+          this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
+            if (response && response.error) {
+              this.messageService.clear();
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
+            } else if (response && response.data) {
+              response.data.forEach(user => this.DisplayedUser.FollowedUsers.push({
+                'UserID' : user.user_id,
+                'IsEmailVerified' : user.is_email_verified,
+                'PrimaryEmail' : user.primary_email,
+                'RewardEnabled' : user.reward_enabled,
+                'RewardStatusChangeTrigger' : user.reward_status_change_trigger,
+                'TotalRedeemedRewards' : user.total_redeemed_rewards,
+                'IsYouTuber' : user.is_youtuber
+              }));
+            }
+          });
+        }
     }
   }
 

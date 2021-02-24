@@ -11,6 +11,7 @@ import {Inviter} from '../inviter/inviter';
 import {OwnedChannel} from '../owned-channel/owned-channel';
 import {InvitedUser} from '../invited-user/invited-user';
 import {Tag} from '../tag/tag';
+import {FollowedUser} from '../followed_user/followed-user'
 
 
 export class User {
@@ -32,6 +33,7 @@ export class User {
   OwnedChannels: OwnedChannel[] = [];
   InvitedUsers: InvitedUser[] = [];
   Tags: Tag[] = [];
+  FollowedUsers: FollowedUser[] = [];
   PrimaryEmail: string;
   LastAccessTime: string;
   ReferredUsers: number;
