@@ -6,4 +6,5 @@ export class FollowedUser {
   IsEmailVerified = false;
   TotalRedeemedRewards = 0;
   IsYouTuber = false;
+  SharedFollowers = 0;
 }

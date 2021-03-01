@@ -400,7 +400,7 @@
   </p-accordionTab>
   <p-accordionTab header="Follow 4 Follow" (click)="LoadUserData(DisplayedUser, 'follow4_follow')">
     <p-table
-      [columns]="invitedUsersColumns"
+      [columns]="FollowersColumns"
       [value]="DisplayedUser.FollowedUsers"
     >
       <ng-template pTemplate="header" let-columns>

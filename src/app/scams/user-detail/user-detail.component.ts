@@ -99,6 +99,15 @@ export class UserDetailComponent implements OnInit {
     { field: 'IsEmailVerified', header: 'Verified' },
     { field: 'TotalRedeemedRewards', header: 'Redeemed Rewards' },
   ];
+  FollowersColumns = [
+    { field: 'UserID', header: 'UserID' },
+    { field: 'PrimaryEmail', header: 'Email' },
+    { field: 'RewardStatusChangeTrigger', header: 'Trigger' },
+    { field: 'RewardEnabled', header: 'Rewards Enabled' },
+    { field: 'IsEmailVerified', header: 'Verified' },
+    { field: 'TotalRedeemedRewards', header: 'Redeemed Rewards' },
+    { field: 'SharedFollowers', header: 'Total Shared Followers' },
+  ];
   selectedTag: any;
   tagOptions: any[] = [];
   comment = '';
@@ -121,6 +130,8 @@ export class UserDetailComponent implements OnInit {
               this.messageService.clear();
               this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
             } else if (response && response.data) {
+              this.messageService.clear();
+              this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Rewards loaded!'});
               this.DisplayedUser.RedeemedRewards = [];
               response.data.forEach(reward => {
                 this.DisplayedUser.RedeemedRewards.push({
@@ -145,6 +156,8 @@ export class UserDetailComponent implements OnInit {
               this.messageService.clear();
               this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
             } else if (response && response.data) {
+              this.messageService.clear();
+              this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Tags loaded!'});
               response.data.forEach(tag => this.DisplayedUser.Tags.push({
                 'Name': tag.name,
                 'Id': tag.id,
@@ -164,6 +177,8 @@ export class UserDetailComponent implements OnInit {
               this.messageService.clear();
               this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
             } else if (response && response.data) {
+              this.messageService.clear();
+              this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Invited users Loaded!'});
               response.data.forEach(user => this.DisplayedUser.InvitedUsers.push({
                 'UserID' : user.user_id,
                 'IsEmailVerified' : user.is_email_verified,
@@ -187,6 +202,8 @@ export class UserDetailComponent implements OnInit {
               this.messageService.clear();
               this.messageService.add({ severity: 'error', summary: 'Error', detail: response.error });
             } else if (response && response.data) {
+              this.messageService.clear();
+              this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Followers loaded!'});
               response.data.forEach(user => this.DisplayedUser.FollowedUsers.push({
                 'UserID' : user.user_id,
                 'IsEmailVerified' : user.is_email_verified,
@@ -194,7 +211,8 @@ export class UserDetailComponent implements OnInit {
                 'RewardEnabled' : user.reward_enabled,
                 'RewardStatusChangeTrigger' : user.reward_status_change_trigger,
                 'TotalRedeemedRewards' : user.total_redeemed_rewards,
-                'IsYouTuber' : user.is_youtuber
+                'IsYouTuber' : user.is_youtuber,
+                'SharedFollowers' : user.shared_followers
               }));
             }
           });
