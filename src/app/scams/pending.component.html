@@ -38,6 +38,10 @@
       <label for="float-input">Filter Trigger To</label>
     </span>
     <span class="ui-float-label margin-15">
+      <input [disabled]="verificationMethod!='phone'" id="float-input-country" [(ngModel)]="countryCode" type="text" size="4" pInputText>
+      <label for="float-input-country">Country</label>
+    </span>
+    <span class="ui-float-label margin-15">
       <p-chips id="float-input-invited-by" placeholder="Invited By" allowDuplicate="false" separator=","
                [(ngModel)]="invitedByFilter"></p-chips>
     </span>

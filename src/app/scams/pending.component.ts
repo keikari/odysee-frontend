@@ -3,7 +3,7 @@ import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../services/api.service';
 import {User} from './user-detail/model/user/user';
 import {InvitedByList} from './model/invited-by-list.model';
-
+import {PhoneCodesService} from '../services/phone-codes.service';
 @Component({
   selector: 'app-pending',
   templateUrl: './pending.component.html',
@@ -25,9 +25,12 @@ export class PendingComponent implements OnInit {
   invitedByFilter: number[] = [];
   invitedByLists: InvitedByList[] = [];
   selectedList: InvitedByList;
+  countryCode: string = "";
   newIDs: string;
   lookback = 2;
   loading = false;
+  codes: object;
+
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0) {
@@ -44,13 +47,15 @@ export class PendingComponent implements OnInit {
     return '';
   }
 
-  constructor(public rest: ApiService) {
+  constructor(public rest: ApiService, private phoneCodesService: PhoneCodesService) {
   }
 
   ngOnInit() {
     this.getInvitedByLists();
     this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
     this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
+
+    this.codes = JSON.parse(this.phoneCodesService.getCodes())
   }
 
   public loadPending() {
@@ -79,6 +84,10 @@ export class PendingComponent implements OnInit {
     }
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
+    }
+    if (this.countryCode.length > 0 && this.verificationMethod == 'phone' && this.codes[this.countryCode]) {
+      params = params.set('country_code', this.codes[this.countryCode]);
+      console.log( this.codes[this.countryCode]);
     }
     if (this.invitedByFilter.length > 0) {
       params = params.set('invited_by_filter', this.invitedByFilter.toString());
