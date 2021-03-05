@@ -30,7 +30,7 @@
       </th>
       <th></th>
       <th *ngFor="let col of columns" [style.width]="col.width">
-        <input *ngIf="col.header=='Duplicates'" pInputText type="text" (input)="onDuplicatesChange($event)"
+        <input *ngIf="col.field=='Duplicates'" pInputText type="text" (input)="onDuplicatesChange($event)"
                placeholder="Less or equal"
                class="p-column-filter p-inputtext-sm">
 
@@ -84,7 +84,7 @@
           <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onClick)="dismiss(rowData)"
                          (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss"
                          styleClass="ui-button-warning"></p-splitButton>
-          <button type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button>
+          <button *ngIf="deleteButton" type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button>
 
         </div>
       </td>

@@ -14,6 +14,7 @@ import {Table} from 'primeng/table';
 export class UserReviewComponent implements OnInit {
   @Input() users: User[] = [];
   @Input() crud = false;
+  @Input() deleteButton = true;
   @Input() userColumns = [
     {field: 'UserID', header: 'UserID', width: '30px'},
     {field: 'Duplicates', header: 'Duplicates', width: '15px'},

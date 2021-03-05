@@ -53,7 +53,7 @@
   </div>
 </p-card>
 
-<app-user-review [users]="DisplayedUsers" [crud]="true" [userColumns]="UserColumns"></app-user-review>
+<app-user-review [users]="DisplayedUsers" [crud]="true" [userColumns]="UserColumns" [deleteButton]="false"></app-user-review>
 <p-progressSpinner *ngIf="loading"></p-progressSpinner>
 <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
   <ng-template pTemplate>

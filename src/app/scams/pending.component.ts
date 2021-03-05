@@ -158,16 +158,17 @@ export class PendingComponent implements OnInit {
       this.UserColumns = [
         {field: 'UserID', header: 'UserID', width: '30px'},
         {field: 'RewardApproved', header: 'Rewards', width: '15px'},
-        {field: 'Duplicates', header: 'Duplicates', width: '15px'},
+        {field: 'Duplicates', header: 'Dups', width: '15px'},
         {field: 'RewardStatusChangeTrigger', header: 'Trigger', width: '15px'},
-        {field: 'Countries', header: 'Countries', width: '15px'},
+        {field: 'Countries', header: 'Country', width: '15px'},
         {field: 'PrimaryEmail', header: 'Email', width: '15px'},
-        {field: 'YTChannelsAmount', header: 'YT Channels Amount', width: '15px'},
+        {field: 'YTChannelsAmount', header: 'YT Channels Amount', width: '5px'},
         {field: 'YoutubeChannelName', header: 'Channel', width: '15px'},
-        {field: 'Status', header: 'Status', width: '15px'},
-        {field: 'Subscribers', header: 'Subs', width: '15px'},
-        {field: 'Videos', header: 'Videos', width: '15px'},
-        {field: 'Views', header: 'Views', width: '15px'},
+        {field: 'Status', header: 'Status', width: '5px'},
+        {field: 'Subscribers', header: 'Subs', width: '10px'},
+        {field: 'Videos', header: 'Videos', width: '10px'},
+        {field: 'Views', header: 'Views', width: '10px'},
+        {field: 'ISPs', header: 'ISPs', width: '10px'},
         {header: 'YTAction', width: '15px'}
       ]
     } else {
