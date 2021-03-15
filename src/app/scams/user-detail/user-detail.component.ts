@@ -309,4 +309,12 @@ export class UserDetailComponent implements OnInit {
       }
     });
   }
+  getRewardColor(user: any) {
+    if (user.RewardEnabled) return {
+      'background-color': '#8bff86'
+    };
+    if (!user.RewardEnabled) return {
+      'background-color': '#ffab99'
+    };
+  }
 }

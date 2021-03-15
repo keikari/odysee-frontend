@@ -268,7 +268,7 @@
               ><i class="pi pi-info-circle"></i
             ></a>
           </td>
-          <td *ngFor="let col of columns" [ngSwitch]="true">
+          <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="getRewardColor(rowData)">
             <span *ngSwitchCase="col.field === 'UserID'"
               >{{ rowData[col.field]
               }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
@@ -300,7 +300,7 @@
               ><i class="pi pi-info-circle"></i
             ></a>
           </td>
-          <td *ngFor="let col of columns" [ngSwitch]="true">
+          <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="getRewardColor(rowData)">
             <span *ngSwitchCase="col.field === 'UserID'"
               >{{ rowData[col.field]
               }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
@@ -419,7 +419,7 @@
             ><i class="pi pi-info-circle"></i
             ></a>
           </td>
-          <td *ngFor="let col of columns" [ngSwitch]="true">
+          <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="getRewardColor(rowData)">
             <span *ngSwitchCase="col.field === 'UserID'"
             >{{ rowData[col.field]
               }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
