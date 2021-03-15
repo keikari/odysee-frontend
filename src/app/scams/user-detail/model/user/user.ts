@@ -272,6 +272,11 @@ export class User {
     const defaultColor = {
       'background-color': '#FFFFFF'
     };
+    if(this.Inviter.length>0) {
+      if (fieldName === 'UserID'&&!this.Inviter[0].RewardEnabled) return {
+        'background-color': '#ffab99'
+      };
+    }
     if (fieldName === 'Duplicates') {
       let hasApprovedDups = false
       this.DuplicateAccounts.forEach(element => {
