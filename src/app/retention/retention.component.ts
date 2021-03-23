@@ -27,7 +27,9 @@ export class RetentionComponent implements OnInit {
 
   ngOnInit(): void {
     this.selected = new RetentionParams();
-    this.selected.since = new Date(2020, 0, 1);
+    let sinceDate = new Date();
+    sinceDate.setMonth(sinceDate.getMonth() - 3);
+    this.selected.since = sinceDate;
     this.active = new RetentionParams();
     this.loading = false;
     this.loadOptions();
