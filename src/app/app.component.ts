@@ -4,6 +4,7 @@ import {ApiService} from './services/api.service';
 import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {environment} from '../environments/environment';
+import {Message} from '@angular/compiler/src/i18n/i18n_ast';
 
 
 @Component({
@@ -98,7 +99,15 @@ export class AppComponent implements OnInit {
   authenticate(token: string) {
     this.token = token;
     this.rest.authenticate(this.token).subscribe((response: any) => {
-      this.isAuthenticated = response !== undefined;
+      this.isAuthenticated = response && response.data && response.data.groups &&
+          response.data.groups.length > 0 &&
+          ( response.data.groups.includes('admin') || response.data.groups.includes('mod') );
+      if ( !this.isAuthenticated ) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'User is not in authorized group to access commander',
+          detail: response.error});
+      }
     });
   }
 
