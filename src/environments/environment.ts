@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiurl: 'http://localhost:8080',
   verifyurl: 'https://verify.lbry.com',
+  reportsurl: 'https://reports.lbry.com'
 };
 
 /*

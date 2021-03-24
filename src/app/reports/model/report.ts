@@ -1,26 +1,34 @@
+import {User} from './user'
+
 export class Report {
-  ID: number;
-  ReportedByID: number;
-  Email: string;
-  URI: string;
-  TagName: string;
-  ReporterComment: string;
-  IsActionTaken: any; //boolean or null
-  ReviewedById: boolean;
-  ReviewerComment: string;
-  CreatedAt: string;
+  ReportID: number
+  Email: string
+  Type: string
+  Category: string
+  ClaimID: string
+  TXID: string
+  Vout: number
+  Status: string
+  ReviewerComment: string
+  Details: string
+  CreatedAt: string
+  UpdatedAt: string
+  User: User
 
   constructor(r: any) {
-    this.ID = r.id;
-    this.ReportedByID = r.reported_by_id;
-    this.Email = r.email;
-    this.URI = r.uri;
-    this.TagName = r.tag_name;
-    this.ReporterComment = r.reporter_comment;
-    this.IsActionTaken = r.is_action_taken;
-    this.ReviewedById = r.reviewed_by_id;
-    this.ReviewerComment = r.reviewer_comment;
+    this.ReportID = r.id;
+    this.Type = r.type;
+    this.Category = r.category;
+    this.ClaimID = r.claim_id;
+    this.TXID = r.tx_id;
+    this.Vout = r.vout;
+    this.Status = r.status;
+    if (r.reviewer_comment != null)
+      this.ReviewerComment = r.reviewer_comment;
+    this.Details = JSON.stringify(r.details);
     this.CreatedAt = r.created_at;
+    this.UpdatedAt = r.updated_at;
+    this.Email = r.user.primary_email;
+    this.User = new User(r.user);
   }
-
 }

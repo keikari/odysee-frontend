@@ -1,11 +1,19 @@
 <p-card>
   <div class="p-grid p-justify-center">
-    <div>
-        <p-triStateCheckbox class="p-col-4" [(ngModel)]="isActionTakenFilter"
-                          label="Is Action Taken" (onChange)="changeColumns(isActionTakenFilter)"></p-triStateCheckbox>
+    <div class="p-col-1">
+      <p-radioButton label="Pending" name="pending" value="pending" [(ngModel)]="status"></p-radioButton>
     </div>
-    <input placeholder="Find By UserID" [(ngModel)]="reportedByFilter" size="30" pInputText>
-    <p-inputNumber [(ngModel)]="itemsToReturnFilter" placeholder="N items to return"></p-inputNumber>
+      <div class="p-col-1">
+      <p-radioButton label="Reviewing" name="reviewing" value="reviewing" [(ngModel)]="status"></p-radioButton>
+      </div>
+        <div class="p-col-1">
+      <p-radioButton label="Reviewed" name="reviewed" value="reviewed" [(ngModel)]="status"></p-radioButton>
+        </div>
+          <div class="p-col-1">
+      <p-radioButton label="Rejected" name="rejected" value="rejected" [(ngModel)]="status"></p-radioButton>
+    </div>
+    <input disabled placeholder="Find By Email" [(ngModel)]="reportedByFilter" size="30" pInputText>
+    <p-inputNumber [disabled]="true" [(ngModel)]="itemsToReturnFilter" placeholder="N items to return"></p-inputNumber>
     <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadReports()"></button>
   </div>
 </p-card>
@@ -63,23 +71,30 @@
   </ng-template>
 </p-table>
 
-<p-dialog [header]="'Report#'+review.ID" [(visible)]="isReviewing" modal="true" *ngIf="review">
+<p-dialog [header]="'Report#'+review.ReportID" [(visible)]="isReviewing" modal="true" *ngIf="review">
   <div>
     <a
-      href="https://odysee.com/{{ review.URI }}"
+      href="https://odysee.com/$/search?q={{ review.ClaimID }}"
       target="_blank"
-    >{{review.URI}}</a>
-    <div>
-      <span>Tag: {{review.TagName}}</span>
+    >{{review.ClaimID}}</a>
+    <h3>User Info</h3>
+    <div *ngFor="let item of User | keyvalue">
+      <b>{{item.key}}</b>: {{item.value}}
     </div>
+    <h3>Details</h3>
+    <div *ngFor="let item of Details | keyvalue">
+      <b>{{item.key}}</b>: {{item.value}}
+    </div>
+    <h3>Leave a comment here:</h3>
     <div>
       <input type="text" [(ngModel)]="review.ReviewerComment" placeholder="Leave a comment">
     </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-check" (click)="confirmReview(true)" label="Approve"></button>
-      <button type="button" pButton icon="fa fa-close" (click)="confirmReview(false)" label="Reject"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="confirmReview('reviewed')" label="Approve"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="confirmReview('reviewing')" label="Need more information"></button>
+      <button type="button" pButton icon="fa fa-close" (click)="confirmReview('rejected')" label="Reject"></button>
     </div>
   </p-footer>
 </p-dialog>
