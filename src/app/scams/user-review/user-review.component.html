@@ -61,8 +61,12 @@
       </td>
       <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="rowData.getCSSColor(col.field)"
           [title]="rowData.getTitle(col.field)">
-        <span *ngIf="col.field == 'UserID'"> {{rowData[col.field]}} <em *ngIf="rowData.YoutubeChannels.length"
-                                                                        class="pi pi-video"></em></span>
+        <span *ngIf="col.field == 'UserID'">
+          {{rowData[col.field]}}
+          <em *ngIf="rowData.YoutubeChannels.length"
+              class="pi pi-video"></em><em
+          *ngIf="rowData.IsInviterInDups"
+          class="pi pi-user-minus"></em></span>
         <span *ngIf="col.header == 'YTAction'">
           <p-button label="Good" styleClass="ui-button-success" (onClick)="approveChannel(rowData)"></p-button>
           <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData)"></p-button>
@@ -84,7 +88,8 @@
           <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems" (onClick)="dismiss(rowData)"
                          (onDropdownClick)="setSplitButtonUser(rowData)" label="Dismiss"
                          styleClass="ui-button-warning"></p-splitButton>
-          <button *ngIf="deleteButton" type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times" label="Delete"></button>
+          <button *ngIf="deleteButton" type="button" (click)="confirmDeletion(rowData)" pButton icon="pi pi-times"
+                  label="Delete"></button>
 
         </div>
       </td>

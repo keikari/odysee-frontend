@@ -47,6 +47,7 @@ export class User {
   ISPs: string;
   LastNote: string;
   Verification: string;
+  IsInviterInDups: boolean;
   // For YT-verification
   YTChannelsAmount: number;
   YoutubeChannelID: string;
@@ -231,6 +232,11 @@ export class User {
       inviter.UserID = u.inviter.user_id;
       inviter.IsYouTuber = u.inviter.is_youtuber;
       this.Inviter.push(inviter);
+      this.DuplicateAccounts.forEach(user => {
+        if (this.Inviter[0].UserID==user.UserID) {
+          this.IsInviterInDups=true;
+        }
+      })
     }
     // OwnedChannels
     if (u.owned_channels) {

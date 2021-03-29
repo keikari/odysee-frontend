@@ -1,5 +1,5 @@
 export class Inviter {
-  UserID: string;
+  UserID: bigint;
   PrimaryEmail: string;
   RewardStatusChangeTrigger: string;
   RewardEnabled: boolean;
