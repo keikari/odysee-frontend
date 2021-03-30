@@ -39,6 +39,7 @@ export class User {
   ReferredUsers: number;
   AcceptedInvites: number;
   RewardApproved: boolean;
+  FilesViewedCount: number;
   // Calculated Columns
   Duplicates: number;
   IsCountryMatch: boolean;
@@ -48,6 +49,7 @@ export class User {
   LastNote: string;
   Verification: string;
   IsInviterInDups: boolean;
+  IsIOSUser : boolean;
   // For YT-verification
   YTChannelsAmount: number;
   YoutubeChannelID: string;
@@ -71,6 +73,11 @@ export class User {
     this.AcceptedInvites = u.accepted_invites;
     this.RewardApproved = u.reward_approved;
     this.IsCountryMatch = true;
+    this.IsIOSUser = false;
+    this.IsInviterInDups = false;
+    if (u.files_viewed_count) {
+      this.FilesViewedCount=u.files_viewed_count;
+    }
     // Emails
     if (u.emails) {
       u.emails.forEach((e) => {
@@ -199,6 +206,9 @@ export class User {
       u.installs.forEach((i) => {
         const install = new Install();
         install.Platform = i.platform;
+        if (install.Platform=='ios') {
+          this.IsIOSUser=true;
+        }
         install.DeviceType = i.type;
         install.CreatedAt = new Date(i.created_at);
         install.UpdatedAt = new Date(i.updated_at);

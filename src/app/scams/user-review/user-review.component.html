@@ -64,9 +64,14 @@
         <span *ngIf="col.field == 'UserID'">
           {{rowData[col.field]}}
           <em *ngIf="rowData.YoutubeChannels.length"
-              class="pi pi-video"></em><em
-          *ngIf="rowData.IsInviterInDups"
-          class="pi pi-user-minus"></em></span>
+              class="pi pi-video"></em>
+          <em *ngIf="rowData.IsInviterInDups"
+              class="pi pi-user-minus"></em>
+          <em *ngIf="rowData.IsIOSUser"
+              class="pi pi-apple"></em>
+          <em *ngIf="rowData.FilesViewedCount==0"
+              class="pi pi-eye-slash"></em>
+        </span>
         <span *ngIf="col.header == 'YTAction'">
           <p-button label="Good" styleClass="ui-button-success" (onClick)="approveChannel(rowData)"></p-button>
           <p-button label="Bad" styleClass="ui-button-warning" (onClick)="rejectChannel(rowData)"></p-button>
