@@ -30,7 +30,8 @@ export class PendingComponent implements OnInit {
   lookback = 2;
   loading = false;
   codes: object;
-
+  platforms = [];
+  selectedPlatform: any;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0) {
@@ -56,6 +57,14 @@ export class PendingComponent implements OnInit {
     this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
 
     this.codes = JSON.parse(this.phoneCodesService.getCodes())
+    this.platforms = [
+      {platform:"", name:"any platform"},
+      {platform:"ios", name:"ios"},
+      {platform:"android", name:"android"},
+      {platform:"linux", name:"linux"},
+      {platform:"windows", name:"windows"},
+    ]
+    this.selectedPlatform = this.platforms[0]
   }
 
   public loadPending() {
@@ -72,6 +81,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.showAutoApprovals) {
       params = params.set('auto_approved_only', String(this.showAutoApprovals));
+    }
+    if (this.selectedPlatform.platform) {
+      params = params.set('platform', this.selectedPlatform.platform);
     }
     if (this.showTriggeredOnly) {
       params = params.set('triggered_only', String(this.showTriggeredOnly));

@@ -48,6 +48,9 @@
     <span class="margin-15">
       <button pButton type="button" icon="pi pi-list" (click)="op.toggle($event)"></button>
     </span>
+    <span class="margin-15">
+    <p-dropdown [options]="platforms" [(ngModel)]="selectedPlatform" optionLabel="name"></p-dropdown>
+    </span>
     <button class="p-col-1 margin-15" pButton type="button" [disabled]="!verificationMethod" label="Apply Filter"
             (click)="loadPending()"></button>
   </div>
