@@ -69,7 +69,7 @@
               class="pi pi-user-minus"></em>
           <em *ngIf="rowData.IsIOSUser"
               class="pi pi-apple"></em>
-          <em *ngIf="rowData.FilesViewedCount==0"
+          <em *ngIf="!rowData.FilesViewedCount"
               class="pi pi-eye-slash"></em>
         </span>
         <span *ngIf="col.header == 'YTAction'">
