@@ -3,6 +3,7 @@ import {Phone} from '../phone/phone';
 import {YoutubeChannel} from '../youtube_channel/youtube-channel';
 import {CreditCard} from '../credit_card/credit-card';
 import {Access} from '../access/access';
+import {FileView} from '../file-view/file-view';
 import {DuplicateAccount} from '../duplicate_account/duplicate-account';
 import {RedeemedReward} from '../redeemed-reward/redeemed-reward';
 import {Install} from '../install/install';
@@ -32,6 +33,7 @@ export class User {
   Inviter: Inviter[] = [];
   OwnedChannels: OwnedChannel[] = [];
   InvitedUsers: InvitedUser[] = [];
+  FileViews: FileView[] = [];
   Tags: Tag[] = [];
   FollowedUsers: FollowedUser[] = [];
   PrimaryEmail: string;

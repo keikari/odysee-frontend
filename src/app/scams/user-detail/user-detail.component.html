@@ -55,7 +55,7 @@
               *ngIf="col.field === 'ChannelName'"
               href="https://youtube.com/channel/{{ rowData.ChannelID }}/videos"
               target="_blank"
-              >{{ rowData[col.field] }}</a
+            >{{ rowData[col.field] }}</a
             >
             <p-inputSwitch
               *ngIf="
@@ -74,7 +74,7 @@
                 col.field !== 'IsRedeemable' &&
                 col.field !== 'Reviewed'
               "
-              >{{ rowData[col.field] }}</span
+            >{{ rowData[col.field] }}</span
             >
           </td>
         </tr>
@@ -97,7 +97,7 @@
               *ngSwitchCase="
                 col.field === 'CreatedAt' || col.field === 'UpdatedAt'
               "
-              >{{ rowData[col.field] | date: "short" }}
+            >{{ rowData[col.field] | date: "short" }}
             </span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
@@ -118,7 +118,7 @@
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true">
             <span *ngSwitchCase="col.field === 'AccessTime'"
-              >{{ rowData[col.field] | date: "short" }}
+            >{{ rowData[col.field] | date: "short" }}
             </span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
@@ -142,14 +142,14 @@
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true">
             <span *ngSwitchCase="col.field === 'TransactionID'"
-              ><a
-                href="https://explorer.lbry.com/tx/{{ rowData[col.field] }}"
-                target="_blank"
-                >{{ rowData[col.field] }}</a
-              ></span
+            ><a
+              href="https://explorer.lbry.com/tx/{{ rowData[col.field] }}"
+              target="_blank"
+            >{{ rowData[col.field] }}</a
+            ></span
             >
             <span *ngSwitchCase="col.field === 'CreatedAt'"
-              >{{ rowData[col.field] | date: "short" }}
+            >{{ rowData[col.field] | date: "short" }}
             </span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
@@ -172,17 +172,17 @@
         <tr>
           <td>
             <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
-              ><i class="pi pi-info-circle"></i
+            ><i class="pi pi-info-circle"></i
             ></a>
           </td>
           <td *ngFor="let col of columns" [ngSwitch]="true">
             <span *ngSwitchCase="col.field === 'CreatedAt'"
-              >{{ rowData[col.field] | date: "short" }}
+            >{{ rowData[col.field] | date: "short" }}
             </span>
             <span *ngSwitchCase="col.field === 'UserID'"
-              >{{ rowData[col.field]
+            >{{ rowData[col.field]
               }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
-            ></span>
+              ></span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
           <td>
@@ -215,7 +215,7 @@
               *ngSwitchCase="
                 col.field === 'CreatedAt' || col.field === 'UpdatedAt'
               "
-              >{{ rowData[col.field] | date: "short" }}
+            >{{ rowData[col.field] | date: "short" }}
             </span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
@@ -243,9 +243,41 @@
               *ngSwitchCase="
                 col.field === 'CreatedAt' || col.field === 'UpdatedAt'
               "
-              >{{ rowData[col.field] | date: "short" }}
+            >{{ rowData[col.field] | date: "short" }}
             </span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Views" (click)="LoadUserData(DisplayedUser, 'views')">
+    <p-table [columns]="viewsColumns" [value]="DisplayedUser.FileViews">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td
+            *ngFor="let col of columns"
+            [ngSwitch]="true"
+          >
+            <span
+              *ngSwitchCase="
+                col.field === 'ViewedAt'
+              "
+            >{{ rowData[col.field] | date: "short" }}
+            </span>
+            <span *ngSwitchCase="col.field === 'URI'"
+            ><a
+              href="https://odysee.com/{{ rowData[col.field] }}"
+              target="_blank"
+            >{{ rowData[col.field] }}</a
+            ></span>
           </td>
         </tr>
       </ng-template>
@@ -265,14 +297,14 @@
         <tr>
           <td>
             <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
-              ><i class="pi pi-info-circle"></i
+            ><i class="pi pi-info-circle"></i
             ></a>
           </td>
           <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="getRewardColor(rowData)">
             <span *ngSwitchCase="col.field === 'UserID'"
-              >{{ rowData[col.field]
+            >{{ rowData[col.field]
               }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
-            ></span>
+              ></span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
         </tr>
@@ -297,14 +329,14 @@
         <tr *ngIf="rowData.PrimaryEmail !== ''">
           <td>
             <a target="_blank" [routerLink]="['/admin/audit', rowData.UserID]"
-              ><i class="pi pi-info-circle"></i
+            ><i class="pi pi-info-circle"></i
             ></a>
           </td>
           <td *ngFor="let col of columns" [ngSwitch]="true" [ngStyle]="getRewardColor(rowData)">
             <span *ngSwitchCase="col.field === 'UserID'"
-              >{{ rowData[col.field]
+            >{{ rowData[col.field]
               }}<em *ngIf="rowData.IsYouTuber" class="pi pi-video"></em
-            ></span>
+              ></span>
             <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
           </td>
           <td>
@@ -336,11 +368,11 @@
         <tr>
           <td *ngFor="let col of columns" [ngSwitch]="true">
             <span *ngSwitchCase="col.field === 'URI'"
-              ><a
-                href="https://lbry.tv/{{ rowData[col.field] }}"
-                target="_blank"
-                >{{ rowData[col.field] }}</a
-              ></span
+            ><a
+              href="https://lbry.tv/{{ rowData[col.field] }}"
+              target="_blank"
+            >{{ rowData[col.field] }}</a
+            ></span
             >
             <span *ngSwitchCase="col.field === 'ViewRateFactor'">
               <p-inputNumber
