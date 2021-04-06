@@ -12,7 +12,7 @@ import {Inviter} from '../inviter/inviter';
 import {OwnedChannel} from '../owned-channel/owned-channel';
 import {InvitedUser} from '../invited-user/invited-user';
 import {Tag} from '../tag/tag';
-import {FollowedUser} from '../followed_user/followed-user'
+import {FollowedUser} from '../followed_user/followed-user';
 
 
 export class User {
@@ -41,7 +41,7 @@ export class User {
   ReferredUsers: number;
   AcceptedInvites: number;
   RewardApproved: boolean;
-  FilesViewedCount: number;
+  FilesViewedCount: bigint;
   // Calculated Columns
   Duplicates: number;
   IsCountryMatch: boolean;
@@ -51,7 +51,7 @@ export class User {
   LastNote: string;
   Verification: string;
   IsInviterInDups: boolean;
-  IsIOSUser : boolean;
+  IsIOSUser: boolean;
   // For YT-verification
   YTChannelsAmount: number;
   YoutubeChannelID: string;
@@ -77,9 +77,7 @@ export class User {
     this.IsCountryMatch = true;
     this.IsIOSUser = false;
     this.IsInviterInDups = false;
-    if (u.files_viewed_count) {
-      this.FilesViewedCount=u.files_viewed_count;
-    }
+    this.FilesViewedCount = u.files_viewed_count;
     // Emails
     if (u.emails) {
       u.emails.forEach((e) => {
@@ -208,8 +206,8 @@ export class User {
       u.installs.forEach((i) => {
         const install = new Install();
         install.Platform = i.platform;
-        if (install.Platform=='ios') {
-          this.IsIOSUser=true;
+        if (install.Platform === 'ios') {
+          this.IsIOSUser = true;
         }
         install.DeviceType = i.type;
         install.CreatedAt = new Date(i.created_at);
@@ -245,10 +243,10 @@ export class User {
       inviter.IsYouTuber = u.inviter.is_youtuber;
       this.Inviter.push(inviter);
       this.DuplicateAccounts.forEach(user => {
-        if (this.Inviter[0].UserID==user.UserID) {
-          this.IsInviterInDups=true;
+        if (this.Inviter[0].UserID === user.UserID) {
+          this.IsInviterInDups = true;
         }
-      })
+      });
     }
     // OwnedChannels
     if (u.owned_channels) {
@@ -290,16 +288,18 @@ export class User {
     const defaultColor = {
       'background-color': '#FFFFFF'
     };
-    if(this.Inviter.length>0) {
-      if (fieldName === 'UserID'&&!this.Inviter[0].RewardEnabled) return {
-        'background-color': '#ffab99'
-      };
+    if (this.Inviter.length > 0) {
+      if (fieldName === 'UserID' && !this.Inviter[0].RewardEnabled) {
+        return {
+          'background-color': '#ffab99'
+        };
+      }
     }
     if (fieldName === 'Duplicates') {
-      let hasApprovedDups = false
+      let hasApprovedDups = false;
       this.DuplicateAccounts.forEach(element => {
         if (element.IsRewardsApproved) {
-          hasApprovedDups = true
+          hasApprovedDups = true;
         }
       });
       if (hasApprovedDups) {
@@ -319,18 +319,21 @@ export class User {
       };
     }
     if (fieldName === 'Status') {
-      if (this.Status == 'queued')
+      if (this.Status === 'queued') {
         return {
           'background-color': 'lightgoldenrodyellow'
         };
-      if (this.Status == 'abandoned')
+      }
+      if (this.Status === 'abandoned') {
         return {
           'background-color': 'lightcoral'
         };
-      if (this.Status == 'synced')
+      }
+      if (this.Status === 'synced') {
         return {
           'background-color': 'lightgreen'
         };
+      }
     }
     if (fieldName !== 'UserID') {
       return defaultColor;

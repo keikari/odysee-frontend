@@ -4,6 +4,7 @@ import {ApiService} from '../services/api.service';
 import {User} from './user-detail/model/user/user';
 import {InvitedByList} from './model/invited-by-list.model';
 import {PhoneCodesService} from '../services/phone-codes.service';
+
 @Component({
   selector: 'app-pending',
   templateUrl: './pending.component.html',
@@ -25,7 +26,7 @@ export class PendingComponent implements OnInit {
   invitedByFilter: number[] = [];
   invitedByLists: InvitedByList[] = [];
   selectedList: InvitedByList;
-  countryCode: string = "";
+  countryCode: string = '';
   newIDs: string;
   lookback = 2;
   loading = false;
@@ -56,15 +57,15 @@ export class PendingComponent implements OnInit {
     this.triggerFilter = localStorage.getItem('triggerFilter') ? localStorage.getItem('triggerFilter') : '';
     this.showVerified = localStorage.getItem('showVerified') ? localStorage.getItem('showVerified') === 'true' : false;
 
-    this.codes = JSON.parse(this.phoneCodesService.getCodes())
+    this.codes = JSON.parse(this.phoneCodesService.getCodes());
     this.platforms = [
-      {platform:"", name:"any platform"},
-      {platform:"ios", name:"ios"},
-      {platform:"android", name:"android"},
-      {platform:"linux", name:"linux"},
-      {platform:"windows", name:"windows"},
-    ]
-    this.selectedPlatform = this.platforms[0]
+      {platform: '', name: 'any platform'},
+      {platform: 'ios', name: 'ios'},
+      {platform: 'android', name: 'android'},
+      {platform: 'linux', name: 'linux'},
+      {platform: 'windows', name: 'windows'},
+    ];
+    this.selectedPlatform = this.platforms[0];
   }
 
   public loadPending() {
@@ -97,9 +98,9 @@ export class PendingComponent implements OnInit {
     if (this.verificationMethod.length > 0 && this.verificationMethod !== 'all') {
       params = params.set('verification_method', this.verificationMethod);
     }
-    if (this.countryCode.length > 0 && this.verificationMethod == 'phone' && this.codes[this.countryCode]) {
+    if (this.countryCode.length > 0 && this.verificationMethod === 'phone' && this.codes[this.countryCode]) {
       params = params.set('country_code', this.codes[this.countryCode]);
-      console.log( this.codes[this.countryCode]);
+      console.log(this.codes[this.countryCode]);
     }
     if (this.invitedByFilter.length > 0) {
       params = params.set('invited_by_filter', this.invitedByFilter.toString());
@@ -166,7 +167,7 @@ export class PendingComponent implements OnInit {
   }
 
   setUserColumns(method: string) {
-    if (method == 'youtube') {
+    if (method === 'youtube') {
       this.UserColumns = [
         {field: 'UserID', header: 'UserID', width: '30px'},
         {field: 'RewardApproved', header: 'Rewards', width: '15px'},
@@ -182,7 +183,7 @@ export class PendingComponent implements OnInit {
         {field: 'Views', header: 'Views', width: '10px'},
         {field: 'ISPs', header: 'ISPs', width: '10px'},
         {header: 'YTAction', width: '15px'}
-      ]
+      ];
     } else {
       this.UserColumns = [
         {field: 'UserID', header: 'UserID', width: '30px'},
@@ -193,7 +194,7 @@ export class PendingComponent implements OnInit {
         {field: 'IsCountryMatch', header: 'Country Match', width: '15px'},
         {field: 'Countries', header: 'Countries', width: '15px'},
         {field: 'ISPs', header: 'ISPs', width: '15px'},
-        {field: 'PrimaryEmail', header: 'Email', width: '15px'}]
+        {field: 'PrimaryEmail', header: 'Email', width: '15px'}];
     }
 
   }

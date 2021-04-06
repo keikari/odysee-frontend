@@ -5,7 +5,7 @@
   <p-splitButton icon="fa fa-check" appendTo="body" [model]="rejectItems"
                  (onClick)="updateSelectedUsersRewardsStatus(false)" label="Dismiss" styleClass="ui-button-warning"
                  [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
-  <p-splitButton icon="pi pi-sort" label="Sort" (onClick)="OrderByChannelsRatio()" [model]="sortItems"></p-splitButton>
+  <p-splitButton icon="pi pi-sort" label="Sort" [model]="sortItems"></p-splitButton>
   <p-button label="Hide YTs" styleClass="ui-button-warning" (onClick)="hideYouTubers()"></p-button>
   <p-button label="Approve sync" styleClass="ui-button-success" [disabled]="!selectedUsers || !selectedUsers.length"
             (onClick)="updateSelectedSync(true)"></p-button>
@@ -46,6 +46,12 @@
           pInputText type="text"
           (input)="dt.filter($event.target.value, col.field, 'contains')"
           placeholder="filter" class="p-column-filter p-inputtext-sm">
+      <span *ngIf="col.field=='UserID'">
+        <button (click)="inviterInDuplicatesFirst()"><em class="pi pi-user-minus"></em></button>
+        <button (click)="youtubersFirst()"><em class="pi pi-video"></em></button>
+        <button (click)="appleUsersFirst()"><em class="pi pi-apple"></em></button>
+        <button (click)="noViewsFirst()"><em class="pi pi-eye-slash"></em></button>
+      </span>
       <th></th>
     </tr>
   </ng-template>

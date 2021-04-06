@@ -72,6 +72,21 @@ export class UserReviewComponent implements OnInit {
           this.OrderByUserID();
         }
       },
+      {
+        label: 'Apple First', icon: 'pi pi-apple', command: () => {
+          this.appleUsersFirst();
+        }
+      },
+      {
+        label: 'InviterInDups First', icon: 'pi pi-user-minus', command: () => {
+          this.inviterInDuplicatesFirst();
+        }
+      },
+      {
+        label: 'No Views First', icon: 'pi pi-eye-slash', command: () => {
+          this.noViewsFirst();
+        }
+      },
     ];
   }
 
@@ -241,6 +256,23 @@ export class UserReviewComponent implements OnInit {
   hideYouTubers() {
     this.users = this.users.filter(user => user.YoutubeChannels.length === 0);
   }
+
+  appleUsersFirst() {
+    this.users = this.users.sort((a, b) => (a.IsIOSUser === b.IsIOSUser) ? 0 : a.IsIOSUser ? -1 : 1);
+  }
+
+  inviterInDuplicatesFirst() {
+    this.users = this.users.sort((a, b) => (a.IsInviterInDups === b.IsInviterInDups) ? 0 : a.IsInviterInDups ? -1 : 1);
+  }
+
+  noViewsFirst() {
+    this.users = this.users.sort((a, b) => a.FilesViewedCount <= b.FilesViewedCount ? -1 : 1);
+  }
+
+  youtubersFirst() {
+    this.users = this.users.sort((a, b) => a.YoutubeChannels.length >= b.YoutubeChannels.length ? -1 : 1);
+  }
+
 
   // param came from column.api_field
   changeFieldStatus(user: User, param: string, event) {

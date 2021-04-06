@@ -265,12 +265,11 @@ export class UserDetailComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
       } else if (response && response.data) {
         this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Tags loaded!'});
+        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Views loaded!'});
         response.data.forEach(view => this.DisplayedUser.FileViews.push({
           'URI': view.uri,
           'ViewedAt': view.last_time_viewed,
         }));
-        console.log(this.DisplayedUser.FileViews)
       }
     });
   }
