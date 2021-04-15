@@ -48,8 +48,8 @@
         ><i class="pi pi-info-circle"></i
         ></a>
         <a
-          *ngIf="col.field === 'URI'"
-          href="https://odysee.com/{{ rowData.URI }}"
+          *ngIf="col.field === 'ClaimID'"
+          href="https://odysee.com/$/search?q={{ rowData.ClaimID }}"
           target="_blank"
         >{{ rowData[col.field]}}</a>
         <p-triStateCheckbox *ngIf="col.field === 'IsActionTaken'"
@@ -72,7 +72,11 @@
 </p-table>
 
 <p-dialog [header]="'Report#'+review.ReportID" [(visible)]="isReviewing" modal="true" *ngIf="review">
+  <p-checkbox label="Custom tag?" [(ngModel)]="useCustomTag" binary="true" inputId="binary"></p-checkbox>
+  <p-dropdown *ngIf="useCustomTag"  class="p-col-7 p-justify-center" [style]="{'width':'300px'}" [options]="tagOptions"
+              [(ngModel)]="selectedTag" optionLabel="name" [showClear]="true" [filter]="true"></p-dropdown>
   <div>
+    <h3>ClaimID:</h3>
     <a
       href="https://odysee.com/$/search?q={{ review.ClaimID }}"
       target="_blank"

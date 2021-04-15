@@ -4,6 +4,8 @@ import {User} from "../scams/user-detail/model/user/user";
 import {ReportService} from "../services/report.service";
 import {HttpParams} from "@angular/common/http";
 import {MessageService} from "primeng";
+import {TagService} from "../services/tag.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-reports',
@@ -22,12 +24,40 @@ export class ReportsComponent implements OnInit {
   review: Report;
   Details: object;
   User: object;
+  customTag: string;
+  useCustomTag: boolean;
+  tagOptions: any[] = [];
+  selectedTag: any;
+  userID: string;
 
-  constructor(public rest: ReportService, private messageService: MessageService) {
+  constructor(public rest: ReportService, private messageService: MessageService, private tagService: TagService, public apiRest: ApiService) {
   }
 
   ngOnInit(): void {
     this.changeColumns(null)
+    this.tagService.getTags().subscribe(response => {
+      if (response !== undefined) {
+        response.data.forEach((tag) => {
+          const tagName = tag.display_name ? tag.display_name : tag.name;
+          this.tagOptions = this.tagOptions.concat({name: tagName, value: tag.name});
+        });
+        this.selectedTag = this.tagOptions[0];
+      }
+    });
+    this.apiRest.get('user', 'me', new HttpParams()).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.success) {
+          this.userID = response.data.id
+        } else {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'No Response Data?', detail: ''});
+        }
+      }
+    );
+
+
   }
 
   loadReports() {
@@ -83,9 +113,17 @@ export class ReportsComponent implements OnInit {
   }
 
   confirmReview(status) {
+    let begining = this.userID + " Report#" + this.review.ReportID
+    if (!this.review.ReviewerComment) {
+      this.review.ReviewerComment = ""
+    }
+    this.review.ReviewerComment = begining + " " + this.review.ReviewerComment
     let params = new HttpParams()
       .set('report_id', this.review.ReportID.toString())
-      .set('comment', this.review.ReviewerComment).set('status', status)
+      .set('comment', this.review.ReviewerComment).set('status', status);
+    if (this.useCustomTag && this.selectedTag.name) {
+      params = params.set('tag', this.selectedTag.name)
+    }
     this.rest.getAction('review', params).subscribe((response) => {
       if (response && response.error) {
         this.messageService.clear();
