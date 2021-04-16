@@ -28,6 +28,10 @@
       <p-checkbox class="p-col-3" label="Triggered Only" binary="true" [(ngModel)]="showTriggeredOnly"></p-checkbox>
       <p-checkbox class="p-col-4" label="Odysee User" binary="true" [(ngModel)]="showOdyseeUsers"></p-checkbox>
       <p-checkbox class="p-col-4" label="Odysee Only" binary="true" [(ngModel)]="showOdyseeOnly"></p-checkbox>
+      <div class="p-col-5">
+        <p-triStateCheckbox disabled="true" class="p-col-4" [(ngModel)]="haveViews"
+                            label="Have Views"></p-triStateCheckbox>
+      </div>
     </div>
     <span class="ui-float-label margin-15">
       <input id="float-input-lookback" [(ngModel)]="lookback" type="number" size="30" pInputText>

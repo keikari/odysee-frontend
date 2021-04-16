@@ -22,6 +22,7 @@ export class PendingComponent implements OnInit {
   showTriggeredOnly: boolean;
   showOdyseeUsers: boolean;
   showOdyseeOnly: boolean;
+  haveViews: any;
   verificationMethod: string;
   invitedByFilter: number[] = [];
   invitedByLists: InvitedByList[] = [];
@@ -74,6 +75,9 @@ export class PendingComponent implements OnInit {
     this.DisplayedUsers = [];
     let params = new HttpParams();
     this.loading = true;
+    if (this.haveViews != null) {
+      params = params.set('have_views', this.haveViews);
+    }
     if (this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
       localStorage.setItem('triggerFilter', this.triggerFilter);
