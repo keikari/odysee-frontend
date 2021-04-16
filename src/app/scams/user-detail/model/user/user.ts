@@ -41,7 +41,7 @@ export class User {
   ReferredUsers: number;
   AcceptedInvites: number;
   RewardApproved: boolean;
-  FilesViewedCount: bigint;
+  FilesViewedCount: number;
   // Calculated Columns
   Duplicates: number;
   IsCountryMatch: boolean;

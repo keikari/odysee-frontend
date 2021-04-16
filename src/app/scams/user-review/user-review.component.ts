@@ -257,6 +257,10 @@ export class UserReviewComponent implements OnInit {
     this.users = this.users.filter(user => user.YoutubeChannels.length === 0);
   }
 
+  hideZeroViews() {
+    this.users = this.users.filter(user => (user.FilesViewedCount !== 0));
+  }
+
   appleUsersFirst() {
     this.users = this.users.sort((a, b) => (a.IsIOSUser === b.IsIOSUser) ? 0 : a.IsIOSUser ? -1 : 1);
   }

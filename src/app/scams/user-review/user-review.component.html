@@ -7,6 +7,7 @@
                  [disabled]="!selectedUsers || !selectedUsers.length"></p-splitButton>
   <p-splitButton icon="pi pi-sort" label="Sort" [model]="sortItems"></p-splitButton>
   <p-button label="Hide YTs" styleClass="ui-button-warning" (onClick)="hideYouTubers()"></p-button>
+  <p-button label="Hide Zero Views" styleClass="ui-button-warning" (onClick)="hideZeroViews()"></p-button>
   <p-button label="Approve sync" styleClass="ui-button-success" [disabled]="!selectedUsers || !selectedUsers.length"
             (onClick)="updateSelectedSync(true)"></p-button>
   <p-button label="Reject sync" styleClass="ui-button-warning" [disabled]="!selectedUsers || !selectedUsers.length"
