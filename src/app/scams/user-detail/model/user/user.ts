@@ -178,29 +178,19 @@ export class User {
     if (u.duplicate_accounts) {
       this.Duplicates = u.duplicate_accounts.length;
       u.duplicate_accounts.forEach((d) => {
-        const duplicate = new DuplicateAccount();
-        duplicate.UserID = d.user_id;
-        duplicate.RewardStatusChangeTrigger = d.reward_status_change_trigger;
-        duplicate.IsRewardsApproved = d.reward_enabled;
-        duplicate.FirstIPMatch = d.first_ip_match;
-        duplicate.CreatedAt = new Date(d.created_at);
-        duplicate.PrimaryEmail = d.primary_email;
-        duplicate.IsYouTuber = d.is_youtuber;
+        const duplicate = new DuplicateAccount(
+          d.user_id,
+          d.primary_email,
+          d.reward_status_change_trigger,
+          d.reward_enabled,
+          d.is_youtuber,
+          d.first_ip_match,
+          d.created_at,
+        );
         this.DuplicateAccounts.push(duplicate);
       });
     }
-    // Redeemed Rewards
-    if (u.redeemed_rewards) {
-      u.redeemed_rewards.forEach((r) => {
-        const reward = new RedeemedReward();
-        reward.Type = r.type;
-        reward.Amount = r.amount;
-        reward.CreatedAt = r.created_at;
-        reward.Platform = r.platform;
-        reward.TransactionID = r.transaction_id;
-        this.RedeemedRewards.push(reward);
-      });
-    }
+
     // Installs
     if (u.installs) {
       u.installs.forEach((i) => {
@@ -231,16 +221,17 @@ export class User {
     }
     // Inviter
     if (u.inviter) {
-      const inviter = new Inviter();
-      inviter.InvitedUsers = u.inviter.invited_users;
-      inviter.InviteRewards = u.inviter.invite_rewards;
-      inviter.IsEmailVerified = u.inviter.is_email_verified;
-      inviter.PrimaryEmail = u.inviter.primary_email;
-      inviter.RewardEnabled = u.inviter.reward_enabled;
-      inviter.RewardStatusChangeTrigger = u.inviter.reward_status_change_trigger;
-      inviter.TotalRedeemedRewards = u.inviter.total_redeemed_rewards;
-      inviter.UserID = u.inviter.user_id;
-      inviter.IsYouTuber = u.inviter.is_youtuber;
+      const inviter = new Inviter(
+        u.inviter.user_id,
+        u.inviter.primary_email,
+        u.inviter.reward_status_change_trigger,
+        u.inviter.reward_enabled,
+        u.inviter.is_youtuber,
+        u.inviter.is_email_verified,
+        u.inviter.total_redeemed_rewards,
+        u.inviter.invited_users,
+        u.inviter.invite_rewards,
+      );
       this.Inviter.push(inviter);
       this.DuplicateAccounts.forEach(user => {
         if (this.Inviter[0].UserID === user.UserID) {
@@ -258,29 +249,6 @@ export class User {
         this.OwnedChannels.push(ownedChannel);
       });
     }
-    // InvitedUsers
-    if (u.invited_users) {
-      u.invited_users.forEach((i) => {
-        const invitedUser = new InvitedUser();
-        invitedUser.UserID = i.user_id;
-        invitedUser.IsEmailVerified = i.is_email_verified;
-        invitedUser.PrimaryEmail = i.primary_email;
-        invitedUser.RewardEnabled = i.reward_enabled;
-        invitedUser.RewardStatusChangeTrigger = i.reward_status_change_trigger;
-        invitedUser.TotalRedeemedRewards = i.total_redeemed_rewards;
-        invitedUser.IsYouTuber = i.is_youtuber;
-        this.InvitedUsers.push(invitedUser);
-      });
-    }
-    // UserTags
-    if (u.user_tags) {
-      u.user_tags.forEach((t) => {
-        const tag = new Tag();
-        tag.Id = t.tag_id;
-        tag.IsRemoved = t.is_removed;
-        this.Tags.push(tag);
-      });
-    }
     return this;
   }
 
@@ -289,7 +257,7 @@ export class User {
       'background-color': '#FFFFFF'
     };
     if (this.Inviter.length > 0) {
-      if (fieldName === 'UserID' && !this.Inviter[0].RewardEnabled) {
+      if (fieldName === 'UserID' && !this.Inviter[0].IsRewardsApproved) {
         return {
           'background-color': '#ffab99'
         };

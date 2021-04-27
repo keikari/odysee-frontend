@@ -3,9 +3,13 @@ import {User} from './model/user/user';
 import {HttpParams} from '@angular/common/http';
 import {ApiService} from '../../services/api.service';
 import {MessageService} from 'primeng/api';
-import {TagService} from '../../services/tag.service'
+import {TagService} from '../../services/tag.service';
 import {YoutubeChannel} from './model/youtube_channel/youtube-channel';
 import {Tag} from './model/tag/tag';
+import {RedeemedReward} from './model/redeemed-reward/redeemed-reward';
+import {InvitedUser} from './model/invited-user/invited-user';
+import {FollowedUser} from './model/followed_user/followed-user';
+import {FileView} from './model/file-view/file-view';
 
 @Component({
   selector: 'app-user-detail',
@@ -84,7 +88,7 @@ export class UserDetailComponent implements OnInit {
     {field: 'UserID', header: 'UserID'},
     {field: 'PrimaryEmail', header: 'Email'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
-    {field: 'RewardEnabled', header: 'Rewards Enabled'},
+    {field: 'IsRewardsApproved', header: 'Rewards Enabled'},
     {field: 'IsEmailVerified', header: 'Verified'},
     {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
     {field: 'InvitedUsers', header: 'Invited Users'},
@@ -99,17 +103,17 @@ export class UserDetailComponent implements OnInit {
     {field: 'UserID', header: 'UserID'},
     {field: 'PrimaryEmail', header: 'Email'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
-    {field: 'RewardEnabled', header: 'Rewards Enabled'},
+    {field: 'IsRewardsApproved', header: 'Rewards Enabled'},
     {field: 'IsEmailVerified', header: 'Verified'},
-    {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
+    {field: 'RedeemedRewards', header: 'Redeemed Rewards'},
   ];
   FollowersColumns = [
     {field: 'UserID', header: 'UserID'},
     {field: 'PrimaryEmail', header: 'Email'},
     {field: 'RewardStatusChangeTrigger', header: 'Trigger'},
-    {field: 'RewardEnabled', header: 'Rewards Enabled'},
+    {field: 'IsRewardsApproved', header: 'Rewards Enabled'},
     {field: 'IsEmailVerified', header: 'Verified'},
-    {field: 'TotalRedeemedRewards', header: 'Redeemed Rewards'},
+    {field: 'RedeemedRewards', header: 'Redeemed Rewards'},
     {field: 'SharedFollowers', header: 'Total Shared Followers'},
   ];
   selectedTag: any;
@@ -142,7 +146,7 @@ export class UserDetailComponent implements OnInit {
         break;
       case 'follow4_follow':
         if (this.DisplayedUser.FollowedUsers.length === 0) {
-          this.loadFollowXFollow(user)
+          this.loadFollowXFollow(user);
         }
         break;
       case 'views':
@@ -160,10 +164,10 @@ export class UserDetailComponent implements OnInit {
           response.data.forEach((tag) => {
             this.tagOptions = this.tagOptions.concat({name: tag.name, value: tag.name});
             this.DisplayedUser.Tags.forEach((userTag) => {
-              if (userTag.Id == tag.id) {
+              if (userTag.Id === tag.id) {
                 userTag.Name = tag.name;
               }
-            })
+            });
           });
           this.selectedTag = this.tagOptions[0];
         }
@@ -181,14 +185,15 @@ export class UserDetailComponent implements OnInit {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Rewards loaded!'});
         this.DisplayedUser.RedeemedRewards = [];
-        response.data.forEach(reward => {
-          this.DisplayedUser.RedeemedRewards.push({
-            'Type': reward.type,
-            'Amount': reward.amount,
-            'CreatedAt': reward.created_at,
-            'Platform': reward.platform,
-            'TransactionID': reward.transaction_id
-          });
+        response.data.forEach(r => {
+          const reward = new RedeemedReward(
+            r.type,
+            r.amount,
+            r.created_at,
+            r.platform,
+            r.transaction_id,
+          );
+          this.DisplayedUser.RedeemedRewards.push(reward);
         });
       }
     });
@@ -203,11 +208,14 @@ export class UserDetailComponent implements OnInit {
       } else if (response && response.data) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Tags loaded!'});
-        response.data.forEach(tag => this.DisplayedUser.Tags.push({
-          'Name': tag.name,
-          'Id': tag.id,
-          'IsRemoved': tag.is_removed,
-        }));
+        response.data.forEach(t => {
+          const tag = new Tag(
+            t.id,
+            t.is_removed,
+            t.name,
+          );
+          this.DisplayedUser.Tags.push(tag);
+        });
       }
     });
   }
@@ -221,15 +229,18 @@ export class UserDetailComponent implements OnInit {
       } else if (response && response.data) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Invited users Loaded!'});
-        response.data.forEach(user => this.DisplayedUser.InvitedUsers.push({
-          'UserID': user.user_id,
-          'IsEmailVerified': user.is_email_verified,
-          'PrimaryEmail': user.primary_email,
-          'RewardEnabled': user.reward_enabled,
-          'RewardStatusChangeTrigger': user.reward_status_change_trigger,
-          'TotalRedeemedRewards': user.total_redeemed_rewards,
-          'IsYouTuber': user.is_youtuber
-        }));
+        response.data.forEach(u => {
+          const invitedUser = new InvitedUser(
+            u.user_id,
+            u.primary_email,
+            u.reward_status_change_trigger,
+            u.reward_enabled,
+            u.is_youtuber,
+            u.is_email_verified,
+            u.total_redeemed_rewards,
+          );
+          this.DisplayedUser.InvitedUsers.push(invitedUser);
+        });
       }
     });
   }
@@ -243,16 +254,19 @@ export class UserDetailComponent implements OnInit {
       } else if (response && response.data) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Followers loaded!'});
-        response.data.forEach(user => this.DisplayedUser.FollowedUsers.push({
-          'UserID': user.user_id,
-          'IsEmailVerified': user.is_email_verified,
-          'PrimaryEmail': user.primary_email,
-          'RewardEnabled': user.reward_enabled,
-          'RewardStatusChangeTrigger': user.reward_status_change_trigger,
-          'TotalRedeemedRewards': user.total_redeemed_rewards,
-          'IsYouTuber': user.is_youtuber,
-          'SharedFollowers': user.shared_followers
-        }));
+        response.data.forEach(u => {
+          const fUser = new FollowedUser(
+            u.user_id,
+            u.primary_email,
+            u.reward_status_change_trigger,
+            u.reward_enabled,
+            u.is_youtuber,
+            u.is_email_verified,
+            u.total_redeemed_rewards,
+            u.shared_followers,
+          );
+          this.DisplayedUser.FollowedUsers.push(fUser);
+        });
       }
     });
   }
@@ -266,10 +280,7 @@ export class UserDetailComponent implements OnInit {
       } else if (response && response.data) {
         this.messageService.clear();
         this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Views loaded!'});
-        response.data.forEach(view => this.DisplayedUser.FileViews.push({
-          'URI': view.uri,
-          'ViewedAt': view.last_time_viewed,
-        }));
+        response.data.forEach(view => this.DisplayedUser.FileViews.push(new FileView(view.uri, view.last_time_viewed)));
       }
     });
   }
@@ -348,11 +359,15 @@ export class UserDetailComponent implements OnInit {
   }
 
   getRewardColor(user: any) {
-    if (user.RewardEnabled) return {
-      'background-color': '#8bff86'
-    };
-    if (!user.RewardEnabled) return {
-      'background-color': '#ffab99'
-    };
+    if (user.IsRewardsApproved) {
+      return {
+        'background-color': '#8bff86'
+      };
+    }
+    if (!user.IsRewardsApproved) {
+      return {
+        'background-color': '#ffab99'
+      };
+    }
   }
 }
