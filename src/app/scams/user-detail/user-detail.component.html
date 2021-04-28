@@ -126,7 +126,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Rewards" (click)="LoadUserData(DisplayedUser, 'rewards')">
+  <p-accordionTab header="Rewards" (click)="LoadUserRewards(DisplayedUser)">
     <p-table
       [columns]="redeemedRewardColumns"
       [value]="DisplayedUser.RedeemedRewards"
@@ -157,7 +157,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Duplicate Accounts">
+  <p-accordionTab header="Duplicate Accounts" (click)="LoadDuplicates(DisplayedUser)">
     <p-table [columns]="dupColumns" [value]="DisplayedUser.DuplicateAccounts">
       <ng-template pTemplate="header" let-columns>
         <tr>
@@ -251,7 +251,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Views" (click)="LoadUserData(DisplayedUser, 'views')">
+  <p-accordionTab header="Views" (click)="LoadFileViews(DisplayedUser)">
     <p-table [columns]="viewsColumns" [value]="DisplayedUser.FileViews">
       <ng-template pTemplate="header" let-columns>
         <tr>
@@ -311,7 +311,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Invited Users" (click)="LoadUserData(DisplayedUser, 'invited_users')">
+  <p-accordionTab header="Invited Users" (click)="LoadUsersInvited(DisplayedUser)">
     <p-table
       [columns]="invitedUsersColumns"
       [value]="DisplayedUser.InvitedUsers"
@@ -397,7 +397,7 @@
       </ng-template>
     </p-table>
   </p-accordionTab>
-  <p-accordionTab header="Tags" (click)="LoadUserData(DisplayedUser, 'tags')">
+  <p-accordionTab header="Tags" (click)="LoadUserTags(DisplayedUser)">
     <div class="tags-accordion">
       <div>
         <p-dropdown
@@ -430,7 +430,7 @@
       </ul>
     </div>
   </p-accordionTab>
-  <p-accordionTab header="Follow 4 Follow" (click)="LoadUserData(DisplayedUser, 'follow4_follow')">
+  <p-accordionTab header="Follow 4 Follow" (click)="LoadFollowXFollow(DisplayedUser)">
     <p-table
       [columns]="FollowersColumns"
       [value]="DisplayedUser.FollowedUsers"

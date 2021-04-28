@@ -64,9 +64,8 @@ export class User {
   ShouldSync: boolean;
   Redeemable: boolean;
   Reviewed: boolean;
-
   constructor(u: any) {
-    this.Duplicates = 0;
+    this.Duplicates = u.duplicates_count;
     this.UserID = u.user_id;
     this.GivenName = u.given_name;
     this.FamilyName = u.family_name;
@@ -78,6 +77,7 @@ export class User {
     this.IsIOSUser = false;
     this.IsInviterInDups = false;
     this.FilesViewedCount = u.files_viewed_count;
+    this.IsInviterInDups = u.is_inviter_in_duplicates;
     // Emails
     if (u.emails) {
       u.emails.forEach((e) => {
@@ -173,22 +173,6 @@ export class User {
         this.Phones.push(phone);
       });
       this.IsCountryMatch = countryMatch;
-    }
-    // Duplicate Accounts
-    if (u.duplicate_accounts) {
-      this.Duplicates = u.duplicate_accounts.length;
-      u.duplicate_accounts.forEach((d) => {
-        const duplicate = new DuplicateAccount(
-          d.user_id,
-          d.primary_email,
-          d.reward_status_change_trigger,
-          d.reward_enabled,
-          d.is_youtuber,
-          d.first_ip_match,
-          d.created_at,
-        );
-        this.DuplicateAccounts.push(duplicate);
-      });
     }
 
     // Installs

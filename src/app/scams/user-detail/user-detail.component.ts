@@ -10,6 +10,8 @@ import {RedeemedReward} from './model/redeemed-reward/redeemed-reward';
 import {InvitedUser} from './model/invited-user/invited-user';
 import {FollowedUser} from './model/followed_user/followed-user';
 import {FileView} from './model/file-view/file-view';
+import {LazyLoadService} from "../../services/lazy-load.service";
+import {DuplicateAccount} from "./model/duplicate_account/duplicate-account";
 
 @Component({
   selector: 'app-user-detail',
@@ -120,42 +122,12 @@ export class UserDetailComponent implements OnInit {
   tagOptions: any[] = [];
   comment = '';
 
-  constructor(public rest: ApiService, private messageService: MessageService, private tagService: TagService) {
+  constructor(public rest: ApiService, private messageService: MessageService, private tagService: TagService, private lazyService: LazyLoadService) {
   }
 
   ngOnInit() {
   }
 
-  LoadUserData(user: User, dataType: string) {
-    this.loadTagsDescription();
-    switch (dataType) {
-      case 'rewards':
-        if (this.DisplayedUser.RedeemedRewards.length === 0) {
-          this.loadUserRewards(user);
-        }
-        break;
-      case 'tags':
-        if (this.DisplayedUser.Tags.length === 0) {
-          this.loadUserTags(user);
-        }
-        break;
-      case 'invited_users':
-        if (this.DisplayedUser.InvitedUsers.length === 0) {
-          this.loadUsersInvited(user);
-        }
-        break;
-      case 'follow4_follow':
-        if (this.DisplayedUser.FollowedUsers.length === 0) {
-          this.loadFollowXFollow(user);
-        }
-        break;
-      case 'views':
-        if (this.DisplayedUser.FileViews.length === 0) {
-          this.loadFileViews(user);
-        }
-        break;
-    }
-  }
 
   loadTagsDescription() {
     if (this.tagOptions.length === 0) {
@@ -175,114 +147,146 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-  loadUserRewards(user: User) {
-    const params = new HttpParams().set('user_id', user.UserID.toString()).set('rewards', 'true');
-    this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
-      if (response && response.error) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
-      } else if (response && response.data) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Rewards loaded!'});
-        this.DisplayedUser.RedeemedRewards = [];
-        response.data.forEach(r => {
-          const reward = new RedeemedReward(
-            r.type,
-            r.amount,
-            r.created_at,
-            r.platform,
-            r.transaction_id,
-          );
-          this.DisplayedUser.RedeemedRewards.push(reward);
-        });
-      }
-    });
+  LoadUserRewards(user: User) {
+    if (this.DisplayedUser.RedeemedRewards.length === 0) {
+      this.lazyService.getRewards(user.UserID).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.data) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Rewards loaded!'});
+          this.DisplayedUser.RedeemedRewards = [];
+          response.data.forEach(r => {
+            const reward = new RedeemedReward(
+              r.type,
+              r.amount,
+              r.created_at,
+              r.platform,
+              r.transaction_id,
+            );
+            this.DisplayedUser.RedeemedRewards.push(reward);
+          });
+        }
+      });
+    }
   }
 
-  loadUserTags(user: User) {
-    const params = new HttpParams().set('user_id', user.UserID.toString()).set('tags', 'true');
-    this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
-      if (response && response.error) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
-      } else if (response && response.data) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Tags loaded!'});
-        response.data.forEach(t => {
-          const tag = new Tag(
-            t.id,
-            t.is_removed,
-            t.name,
-          );
-          this.DisplayedUser.Tags.push(tag);
-        });
-      }
-    });
+  LoadUserTags(user: User) {
+    if (this.DisplayedUser.Tags.length === 0) {
+      this.loadTagsDescription();
+      this.lazyService.getTags(user.UserID).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.data) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Tags loaded!'});
+          response.data.forEach(t => {
+            const tag = new Tag(
+              t.id,
+              t.is_removed,
+              t.name,
+            );
+            this.DisplayedUser.Tags.push(tag);
+          });
+        }
+      });
+    }
   }
 
-  loadUsersInvited(user: User) {
-    const params = new HttpParams().set('user_id', user.UserID.toString()).set('invited_users', 'true');
-    this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
-      if (response && response.error) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
-      } else if (response && response.data) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Invited users Loaded!'});
-        response.data.forEach(u => {
-          const invitedUser = new InvitedUser(
-            u.user_id,
-            u.primary_email,
-            u.reward_status_change_trigger,
-            u.reward_enabled,
-            u.is_youtuber,
-            u.is_email_verified,
-            u.total_redeemed_rewards,
-          );
-          this.DisplayedUser.InvitedUsers.push(invitedUser);
-        });
-      }
-    });
+  LoadUsersInvited(user: User) {
+    if (this.DisplayedUser.InvitedUsers.length === 0) {
+      this.lazyService.getInvitedUsers(user.UserID).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.data) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Invited users Loaded!'});
+          response.data.forEach(u => {
+            const invitedUser = new InvitedUser(
+              u.user_id,
+              u.primary_email,
+              u.reward_status_change_trigger,
+              u.reward_enabled,
+              u.is_youtuber,
+              u.is_email_verified,
+              u.total_redeemed_rewards,
+            );
+            this.DisplayedUser.InvitedUsers.push(invitedUser);
+          });
+        }
+      });
+    }
   }
 
-  loadFollowXFollow(user: User) {
-    const params = new HttpParams().set('user_id', user.UserID.toString()).set('follow4_follow', 'true');
-    this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
-      if (response && response.error) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
-      } else if (response && response.data) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Followers loaded!'});
-        response.data.forEach(u => {
-          const fUser = new FollowedUser(
-            u.user_id,
-            u.primary_email,
-            u.reward_status_change_trigger,
-            u.reward_enabled,
-            u.is_youtuber,
-            u.is_email_verified,
-            u.total_redeemed_rewards,
-            u.shared_followers,
-          );
-          this.DisplayedUser.FollowedUsers.push(fUser);
-        });
-      }
-    });
+
+  LoadFollowXFollow(user: User) {
+    if (this.DisplayedUser.FollowedUsers.length === 0) {
+      this.lazyService.getFollowxFollow(user.UserID).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.data) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Followers loaded!'});
+          response.data.forEach(u => {
+            const fUser = new FollowedUser(
+              u.user_id,
+              u.primary_email,
+              u.reward_status_change_trigger,
+              u.reward_enabled,
+              u.is_youtuber,
+              u.is_email_verified,
+              u.total_redeemed_rewards,
+              u.shared_followers,
+            );
+            this.DisplayedUser.FollowedUsers.push(fUser);
+          });
+        }
+      });
+    }
   }
 
-  loadFileViews(user: User) {
-    const params = new HttpParams().set('user_id', user.UserID.toString()).set('views', 'true');
-    this.rest.get('administrative', 'load_user_data', params).subscribe((response) => {
-      if (response && response.error) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
-      } else if (response && response.data) {
-        this.messageService.clear();
-        this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Views loaded!'});
-        response.data.forEach(view => this.DisplayedUser.FileViews.push(new FileView(view.uri, view.last_time_viewed)));
-      }
-    });
+  LoadDuplicates(user: User) {
+    if (this.DisplayedUser.DuplicateAccounts.length === 0) {
+      this.lazyService.getDuplicates(user.UserID).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.data) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Invited users Loaded!'});
+          response.data.forEach(d => {
+            const dUser = new DuplicateAccount(
+              d.user_id,
+              d.primary_email,
+              d.reward_status_change_trigger,
+              d.reward_enabled,
+              d.is_youtuber,
+              d.first_ip_match,
+              d.created_at,
+            );
+            this.DisplayedUser.DuplicateAccounts.push(dUser);
+          });
+        }
+      });
+    }
+  }
+  LoadFileViews(user: User) {
+    if (this.DisplayedUser.FileViews.length === 0) {
+      this.lazyService.getViews(user.UserID).subscribe((response) => {
+        if (response && response.error) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.error});
+        } else if (response && response.data) {
+          this.messageService.clear();
+          this.messageService.add({severity: 'success', summary: 'Loaded', detail: 'Views loaded!'});
+          response.data.forEach(view => this.DisplayedUser.FileViews.push(new FileView(view.uri, view.last_time_viewed)));
+        }
+      });
+    }
   }
 
   reject(user: User) {
