@@ -201,7 +201,7 @@ const appRoutes: Routes = [
     LighthouseService,
     ConfirmationService,
     [{provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true}],
-    [{provide: DEFAULT_TIMEOUT, useValue: 900000}],
+    [{provide: DEFAULT_TIMEOUT, useValue: 1500000}],
   ],
   bootstrap: [AppComponent]
 })
