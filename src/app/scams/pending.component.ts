@@ -23,6 +23,7 @@ export class PendingComponent implements OnInit {
   showOdyseeUsers: boolean;
   showOdyseeOnly: boolean;
   haveViews: boolean;
+  approved: boolean;
   fastSearch: boolean;
   verificationMethod: string;
   invitedByFilter: number[] = [];
@@ -78,6 +79,9 @@ export class PendingComponent implements OnInit {
     this.loading = true;
     if (this.haveViews) {
       params = params.set('have_views', this.haveViews.toString());
+    }
+    if (this.approved) {
+      params = params.set('is_approved_filter', this.approved.toString());
     }
     if (this.fastSearch) {
       params = params.set('order_by_update', this.fastSearch.toString());
