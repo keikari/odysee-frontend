@@ -36,6 +36,8 @@ export class PendingComponent implements OnInit {
   codes: object;
   platforms = [];
   selectedPlatform: any;
+  devices = [];
+  selectedDevice:any;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0) {
@@ -69,6 +71,13 @@ export class PendingComponent implements OnInit {
       {platform: 'windows', name: 'windows'},
     ];
     this.selectedPlatform = this.platforms[0];
+    this.devices = [
+      {device: '', name: 'any device'},
+      {device: 'desktop', name: 'desktop'},
+      {device: 'mobile', name: 'mobile'},
+      {device: 'web', name: 'web'},
+    ]
+    this.selectedDevice = this.devices[0];
   }
 
   public loadPending() {
@@ -94,6 +103,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.showAutoApprovals) {
       params = params.set('auto_approved_only', String(this.showAutoApprovals));
+    }
+    if (this.selectedDevice.device) {
+      params = params.set('device_type', this.selectedDevice.device);
     }
     if (this.selectedPlatform.platform) {
       params = params.set('platform', this.selectedPlatform.platform);
