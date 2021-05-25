@@ -13,7 +13,7 @@
       <p-radioButton label="Rejected" name="rejected" value="rejected" [(ngModel)]="status"></p-radioButton>
     </div>
     <input disabled placeholder="Find By Email" [(ngModel)]="reportedByFilter" size="30" pInputText>
-    <p-inputNumber [disabled]="true" [(ngModel)]="itemsToReturnFilter" placeholder="N items to return"></p-inputNumber>
+    <p-inputNumber [(ngModel)]="itemsToReturnFilter" placeholder="N items to return"></p-inputNumber>
     <button class="p-col-1 margin-15" pButton type="button" label="Apply Filter" (click)="loadReports()"></button>
   </div>
 </p-card>
