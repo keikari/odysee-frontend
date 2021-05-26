@@ -40,6 +40,7 @@ export class PendingComponent implements OnInit {
   selectedPlatform: any;
   devices = [];
   selectedDevice: any;
+  emailFilter: string;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0) {
@@ -99,6 +100,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.itemsToReturn) {
       params = params.set('items_to_return', this.itemsToReturn.toString());
+    }
+    if (this.emailFilter) {
+      params = params.set('email_domain_name', this.emailFilter);
     }
     if (this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);
