@@ -16,6 +16,7 @@ export class PendingComponent implements OnInit {
   pendingUsers: User[] = [];
   verifiedUsers: User[] = [];
   UserColumns = [];
+
   triggerFilter: string;
   showVerified: boolean;
   showAutoApprovals: boolean;
@@ -29,7 +30,8 @@ export class PendingComponent implements OnInit {
   invitedByFilter: number[] = [];
   invitedByLists: InvitedByList[] = [];
   selectedList: InvitedByList;
-  countryCode: string = '';
+  countryCode = '';
+  itemsToReturn: bigint;
   newIDs: string;
   lookback = 2;
   loading = false;
@@ -37,7 +39,7 @@ export class PendingComponent implements OnInit {
   platforms = [];
   selectedPlatform: any;
   devices = [];
-  selectedDevice:any;
+  selectedDevice: any;
 
   static getVerificationMethod(user: User): string {
     if (user.CreditCards.length > 0) {
@@ -76,7 +78,7 @@ export class PendingComponent implements OnInit {
       {device: 'desktop', name: 'desktop'},
       {device: 'mobile', name: 'mobile'},
       {device: 'web', name: 'web'},
-    ]
+    ];
     this.selectedDevice = this.devices[0];
   }
 
@@ -94,6 +96,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.fastSearch) {
       params = params.set('order_by_update', this.fastSearch.toString());
+    }
+    if (this.itemsToReturn) {
+      params = params.set('items_to_return', this.itemsToReturn.toString());
     }
     if (this.triggerFilter.length > 0) {
       params = params.set('trigger_filter', this.triggerFilter);

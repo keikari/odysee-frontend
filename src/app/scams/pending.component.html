@@ -57,6 +57,10 @@
     <span class="margin-15">
     <p-dropdown [options]="devices" [(ngModel)]="selectedDevice" optionLabel="name"></p-dropdown>
     </span>
+    <span class="ui-float-label margin-15">
+      <input id="float-input-items-to-return" [(ngModel)]="itemsToReturn" type="number" size="30" pInputText>
+      <label for="float-input-items-to-return">return n items</label>
+    </span>
     <button class="p-col-1 margin-15" pButton type="button" [disabled]="!verificationMethod" label="Apply Filter"
             (click)="loadPending()"></button>
   </div>
