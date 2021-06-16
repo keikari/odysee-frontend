@@ -1,19 +1,19 @@
-import {User} from './user'
+import {User} from './user';
 
 export class Report {
-  ReportID: number
-  Email: string
-  Type: string
-  Category: string
-  ClaimID: string
-  TXID: string
-  Vout: number
-  Status: string
-  ReviewerComment: string
-  Details: string
-  CreatedAt: string
-  UpdatedAt: string
-  User: User
+  ReportID: number;
+  Email: string;
+  Type: string;
+  Category: string;
+  ClaimID: string;
+  TXID: string;
+  Vout: number;
+  Status: string;
+  ReviewerComment: string;
+  Details: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+  User: User;
 
   constructor(r: any) {
     this.ReportID = r.id;
@@ -23,8 +23,9 @@ export class Report {
     this.TXID = r.tx_id;
     this.Vout = r.vout;
     this.Status = r.status;
-    if (r.reviewer_comment != null)
+    if (r.reviewer_comment != null) {
       this.ReviewerComment = r.reviewer_comment;
+    }
     this.Details = JSON.stringify(r.details);
     this.CreatedAt = r.created_at;
     this.UpdatedAt = r.updated_at;

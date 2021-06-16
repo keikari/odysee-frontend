@@ -24,7 +24,16 @@
   [value]="reports"
   [autoLayout]="true"
   [rowHover]="true"
+  [globalFilterFields]="['Email']">
 >
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex">
+			<span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span>
+    </div>
+  </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th [pSortableColumn]="col.field" *ngFor="let col of columns">
