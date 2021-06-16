@@ -11,7 +11,7 @@ import {TagService} from '../../services/tag.service'
 export class TagfileComponent implements OnInit {
   selectedTag: any;
   tagOptions: any[] = [];
-  outpoint = '';
+  outpoint = 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:0';
   claim_id = '';
   comment = '';
 
@@ -29,7 +29,7 @@ export class TagfileComponent implements OnInit {
       }
     });
   }
-  
+
   tagFile() {
     this.tagService.tagFile(this.comment, this.outpoint, this.selectedTag.name, this.claim_id).subscribe((response: any) => {
       if (response !== undefined) {
