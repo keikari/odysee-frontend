@@ -5,6 +5,9 @@ import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {environment} from '../environments/environment';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
+import {HttpParams} from '@angular/common/http';
+import {VerifyService} from './services/verify.service';
+import {ReportService} from './services/report.service';
 
 
 @Component({
@@ -16,7 +19,11 @@ import {Message} from '@angular/compiler/src/i18n/i18n_ast';
 
 export class AppComponent implements OnInit {
 
-  constructor(public rest: ApiService, private messageService: MessageService, private router: Router) {
+  constructor(public rest: ApiService,
+              private messageService: MessageService,
+              private verifyService: VerifyService,
+              private reportService: ReportService,
+              private router: Router) {
   }
 
   title = 'app';
@@ -106,6 +113,36 @@ export class AppComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'User is not in authorized group to access commander',
+          detail: response.error});
+      }else{
+        this.authVerify();
+        this.authReports();
+      }
+    });
+  }
+
+  authVerify() {
+    this.rest.get('auth', 'verify', new HttpParams()).subscribe((response: any) => {
+
+      if( response && response.success && response.data){
+        this.verifyService.setToken(response.data)
+      }else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'User is not in authorized group to access verify service',
+          detail: response.error});
+      }
+    });
+  }
+
+  authReports() {
+    this.rest.get('auth', 'rick', new HttpParams()).subscribe((response: any) => {
+      if( response && response.success && response.data){
+        this.reportService.setToken(response.data)
+      }else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'User is not in authorized group to access verify service',
           detail: response.error});
       }
     });

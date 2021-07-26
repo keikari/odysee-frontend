@@ -12,7 +12,10 @@ export class ReportService extends RestService {
     super(http, messageService);
     this.endpoint = environment.reportsurl;
     this.tokenParamName = 'key';
-    this.token = '6juILzkpe8uj9PdsAnLa6PgSflH3DmXXSVQ3kJlA';
+  }
+
+  setToken(token: string): void{
+    this.token = token;
   }
 }
 

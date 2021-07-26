@@ -14,6 +14,9 @@ export class VerifyService extends RestService {
     super(http, messageService);
     this.endpoint = environment.verifyurl;
     this.tokenParamName = 'auth';
-    this.token = 'wM6Z3ySnO3ajhD-EeI0oAldDHcvm1w16';
+  }
+
+  setToken(token: string): void{
+    this.token = token;
   }
 }
