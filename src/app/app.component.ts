@@ -105,28 +105,30 @@ export class AppComponent implements OnInit {
 
   authenticate(token: string) {
     this.token = token;
+    this.rest.setToken(token);
+    this.authVerify();
+    this.authReports();
     this.rest.authenticate(this.token).subscribe((response: any) => {
-      this.isAuthenticated = response && response.data && response.data.groups &&
-          response.data.groups.length > 0 &&
-          ( response.data.groups.includes('admin') || response.data.groups.includes('mod') );
-      if ( !this.isAuthenticated ) {
+      const authenticated = response && response.data && response.data.groups &&
+        response.data.groups.length > 0 &&
+        (response.data.groups.includes('admin') || response.data.groups.includes('mod'));
+      if (!authenticated) {
         this.messageService.add({
           severity: 'error',
           summary: 'User is not in authorized group to access commander',
-          detail: response.error});
-      }else{
-        this.authVerify();
-        this.authReports();
+          detail: response.error
+        });
+      } else {
+        this.isAuthenticated = authenticated;
       }
     });
   }
 
   authVerify() {
     this.rest.get('auth', 'verify', new HttpParams()).subscribe((response: any) => {
-
-      if( response && response.success && response.data){
-        this.verifyService.setToken(response.data)
-      }else {
+      if ( response && response.success && response.data) {
+        this.verifyService.setToken(response.data);
+      } else {
         this.messageService.add({
           severity: 'error',
           summary: 'User is not in authorized group to access verify service',
@@ -137,9 +139,9 @@ export class AppComponent implements OnInit {
 
   authReports() {
     this.rest.get('auth', 'rick', new HttpParams()).subscribe((response: any) => {
-      if( response && response.success && response.data){
-        this.reportService.setToken(response.data)
-      }else {
+      if ( response && response.success && response.data) {
+        this.reportService.setToken(response.data);
+      } else {
         this.messageService.add({
           severity: 'error',
           summary: 'User is not in authorized group to access verify service',

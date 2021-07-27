@@ -67,7 +67,7 @@ export class PendingUser {
       d.created_at = new Date(u.discord.created_at);
       d.updated_at = new Date(u.discord.updated_at);
       this.discord = d;
-      if (d.email!=u.user.email) this.is_good_email=false
+      if (d.email !== u.user.email) { this.is_good_email = false; }
     }
     if (u.github) {
       const gh = new Github();
@@ -84,11 +84,11 @@ export class PendingUser {
       gh.updated_at = new Date(u.github.updated_at);
       gh.emails = u.github.emails.join(' ');
       this.github = gh;
-      let is_match=false;
+      let is_match = false;
       u.github.emails.forEach(email => {
-        if (email==u.user.email) is_match=is_match||true
+        if (email === u.user.email) { is_match = is_match || true; }
       });
-      if (!is_match) this.is_good_email = false
+      if (!is_match) { this.is_good_email = false; }
     }
 
     if (u.twitter) {
@@ -107,11 +107,11 @@ export class PendingUser {
       twitter.created_at = u.twitter.created_at;
       twitter.updated_at = u.twitter.updated_at;
       this.twitter = twitter;
-      if (twitter.email!=u.user.email) this.is_good_email=false
+      if (twitter.email !== u.user.email) { this.is_good_email = false; }
     }
 
     if (u.facebook) {
-      const fb = new Facebook()
+      const fb = new Facebook();
       fb.user_id = u.facebook.user_id;
       fb.name = u.facebook.name;
       fb.last_name = u.facebook.last_name;
@@ -119,7 +119,7 @@ export class PendingUser {
       fb.created_at = u.facebook.created_at;
       fb.updated_at = u.facebook.updated_at;
       this.facebook = fb;
-      if (fb.email!=u.user.email) this.is_good_email=false
+      if (fb.email !== u.user.email) { this.is_good_email = false; }
     }
 
     if (u.linkedin) {
@@ -131,7 +131,7 @@ export class PendingUser {
       lin.created_at = u.linkedin.created_at;
       lin.updated_at = u.linkedin.updated_at;
       this.linkedin = lin;
-      if (lin.email!=u.user.email) this.is_good_email=false
+      if (lin.email !== u.user.email) { this.is_good_email = false; }
     }
 
 
@@ -139,7 +139,6 @@ export class PendingUser {
       this.duplicates = u.duplicates.map((p) => new PendingUser(p) );
     }
     if (u.lbry_inc_data) {
-      console.log(u.lbry_inc_data)
       this.lbryInc.user_id = u.lbry_inc_data.user_id;
       this.lbryInc.manually_blocked = u.lbry_inc_data.manually_blocked;
       this.lbryInc.rewards_enabled = u.lbry_inc_data.rewards_enabled;

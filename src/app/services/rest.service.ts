@@ -100,6 +100,10 @@ export class RestService {
     this.endpoint = endpoint;
   }
 
+  public setToken(token: string): void {
+    this.token = token;
+  }
+
   private setEncoder(params: HttpParams): HttpParams {
     let p = new HttpParams({ encoder: new JSHttpParamEncoder() });
     params.keys().forEach((key) => {
