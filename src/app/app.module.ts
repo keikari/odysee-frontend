@@ -82,30 +82,32 @@ import {YtQueueComponent} from './yt-queue/yt-queue.component';
 import {ReportsComponent} from './reports/reports.component';
 import { SearchComponent } from './search/search.component';
 import {LighthouseService} from './services/lighthouse.service';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import {AuthGuard} from './shared/auth.guard';
 
 const appRoutes: Routes = [
-  {path: 'templates/send', component: TemplateComponent},
-  {path: 'templates/sql', component: SqlTemplatesComponent},
-  {path: 'user/approve', component: ApproveComponent},
-  {path: 'user/merge', component: MergeComponent},
-  {path: 'user/invite', component: InviteComponent},
-  {path: 'tag/user', component: TaguserComponent},
-  {path: 'tag/file', component: TagfileComponent},
-  {path: 'reward-code', component: RewardCodeComponent},
-  {path: 'homepage', component: HomepageComponent},
-  {path: 'status', component: StatusComponent},
-  {path: 'tag/channel', component: TagchannelComponent},
-  {path: 'admin/pending', component: PendingComponent},
-  {path: 'admin/audit', component: AuditUserComponent},
-  {path: 'admin/audit/:id', component: AuditUserComponent},
-  {path: 'admin/country-codes', component: CountryCodesComponent},
-  {path: 'notifications', component: DeviceNotificationComponent},
-  {path: 'admin/verification', component: PendingVerificationComponent},
-  {path: 'retention', component: RetentionComponent},
-  {path: 'channel-factor', component: ChannelFactorComponent},
-  {path: 'admin/yt-queue', component: YtQueueComponent},
-  {path: 'reports', component: ReportsComponent},
-  {path: 'search', component: SearchComponent},
+  {path: 'templates/send', component: TemplateComponent, canActivate: [AuthGuard]},
+  {path: 'templates/sql', component: SqlTemplatesComponent, canActivate: [AuthGuard]},
+  {path: 'user/approve', component: ApproveComponent, canActivate: [AuthGuard]},
+  {path: 'user/merge', component: MergeComponent, canActivate: [AuthGuard]},
+  {path: 'user/invite', component: InviteComponent, canActivate: [AuthGuard]},
+  {path: 'tag/user', component: TaguserComponent, canActivate: [AuthGuard]},
+  {path: 'tag/file', component: TagfileComponent, canActivate: [AuthGuard]},
+  {path: 'reward-code', component: RewardCodeComponent, canActivate: [AuthGuard]},
+  {path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard]},
+  {path: 'status', component: StatusComponent, canActivate: [AuthGuard]},
+  {path: 'tag/channel', component: TagchannelComponent, canActivate: [AuthGuard]},
+  {path: 'admin/pending', component: PendingComponent, canActivate: [AuthGuard]},
+  {path: 'admin/audit', component: AuditUserComponent, canActivate: [AuthGuard]},
+  {path: 'admin/audit/:id', component: AuditUserComponent, canActivate: [AuthGuard]},
+  {path: 'admin/country-codes', component: CountryCodesComponent, canActivate: [AuthGuard]},
+  {path: 'notifications', component: DeviceNotificationComponent, canActivate: [AuthGuard]},
+  {path: 'admin/verification', component: PendingVerificationComponent, canActivate: [AuthGuard]},
+  {path: 'retention', component: RetentionComponent, canActivate: [AuthGuard]},
+  {path: 'channel-factor', component: ChannelFactorComponent, canActivate: [AuthGuard]},
+  {path: 'admin/yt-queue', component: YtQueueComponent, canActivate: [AuthGuard]},
+  {path: 'reports', component: ReportsComponent, canActivate: [AuthGuard]},
+  {path: 'search', component: SearchComponent, canActivate: [AuthGuard]},
   {path: '', component: StatusComponent}];
 
 @NgModule({
@@ -194,12 +196,19 @@ const appRoutes: Routes = [
     OverlayPanelModule,
     TriStateCheckboxModule,
     ChartModule,
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['http://localhost:4200', 'https://api.odysee.com', 'https://commander.lbry.com'],
+        sendAccessToken: true
+      }
+    }),
   ],
   providers: [
     ApiService,
     MessageService,
     LighthouseService,
     ConfirmationService,
+    AuthGuard,
     [{provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true}],
     [{provide: DEFAULT_TIMEOUT, useValue: 1500000}],
   ],

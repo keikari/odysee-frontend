@@ -15,7 +15,7 @@ export class ApiService extends RestService {
   constructor(http: HttpClient, messageService: MessageService) {
     super(http, messageService);
     this.endpoint = environment.apiurl;
-    this.tokenParamName = 'auth_token';
+    this.tokenParamName = ''; // 'auth_token';
   }
 }
 

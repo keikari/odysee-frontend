@@ -31,7 +31,9 @@ export class RestService {
   }
 
   patch(resource: string, action: string, params: HttpParams): Observable<any> {
-    params = params.set(this.tokenParamName, this.token);
+    if (this.tokenParamName !== '') {
+      params = params.set(this.tokenParamName, this.token);
+    }
     params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.patch(url, null, {headers: null, params: params}).pipe(
@@ -40,7 +42,9 @@ export class RestService {
   }
 
   put(resource: string, action: string, params: HttpParams): Observable<any> {
-    params = params.set(this.tokenParamName, this.token);
+    if (this.tokenParamName !== '') {
+      params = params.set(this.tokenParamName, this.token);
+    }
     params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.put(url, null, {headers: null, params: params}).pipe(
@@ -49,7 +53,9 @@ export class RestService {
   }
 
   post(resource: string, action: string, params: HttpParams): Observable<any> {
-    params = params.set(this.tokenParamName, this.token);
+    if (this.tokenParamName !== '') {
+      params = params.set(this.tokenParamName, this.token);
+    }
     params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.post(url, null, {headers: null, params: params}).pipe(
@@ -58,7 +64,9 @@ export class RestService {
   }
 
   delete(resource: string, action: string, params: HttpParams): Observable<any> {
-    params = params.set(this.tokenParamName, this.token);
+    if (this.tokenParamName !== '') {
+      params = params.set(this.tokenParamName, this.token);
+    }
     params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
     return this.http.delete(url, {headers: null, params: params}).pipe(
@@ -67,10 +75,12 @@ export class RestService {
   }
 
   get(resource: string, action: string, params: HttpParams): Observable<any> {
-    params = params.set(this.tokenParamName, this.token);
+    if (this.tokenParamName !== '') {
+      params = params.set(this.tokenParamName, this.token);
+    }
     params = this.setEncoder(params);
     const url = this.endpoint + '/' + resource + '/' + action;
-    return this.http.get(url, {headers: null, params: params}).pipe(
+    return this.http.get(url, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*'}, params: params}).pipe(
       map(this.extractData), catchError(this.handleError<any>(resource + '/' + action))
     );
   }
@@ -83,7 +93,9 @@ export class RestService {
   }
 
   getAction(action: string, params: HttpParams): Observable<any> {
-    params = params.set(this.tokenParamName, this.token);
+    if (this.tokenParamName !== '') {
+      params = params.set(this.tokenParamName, this.token);
+    }
     params = this.setEncoder(params);
     const url = this.endpoint + '/' + action;
     return this.http.get(url, {headers: null, params: params}).pipe(

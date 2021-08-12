@@ -2,12 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {ApiService} from './services/api.service';
 import {MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../environments/environment';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
 import {HttpParams} from '@angular/common/http';
 import {VerifyService} from './services/verify.service';
 import {ReportService} from './services/report.service';
+import {OAuthService} from 'angular-oauth2-oidc';
+import {authCodeFlowConfig} from './auth.config';
+import {filter} from 'rxjs/operators';
 
 
 @Component({
@@ -20,14 +23,25 @@ import {ReportService} from './services/report.service';
 export class AppComponent implements OnInit {
 
   constructor(public rest: ApiService,
+              private oauthService: OAuthService,
               private messageService: MessageService,
               private verifyService: VerifyService,
               private reportService: ReportService,
-              private router: Router) {
+              private router: Router,
+              private activatedroute: ActivatedRoute) {
+    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.loadDiscoveryDocumentAndLogin();
+    this.oauthService.setupAutomaticSilentRefresh();
+
+    // Automatically load user profile
+    this.oauthService.events
+      .pipe(filter((e) => e.type === 'token_received'))
+      .subscribe((_) => { this.hasToken = true; this.oauthService.loadUserProfile()});
   }
 
   title = 'app';
   isAuthenticated = false;
+  hasToken = false;
   items: MenuItem[];
   token: string;
   settingsVisible: boolean;
@@ -36,15 +50,18 @@ export class AppComponent implements OnInit {
   customAPIEnabled = false;
 
   ngOnInit() {
-    this.token = localStorage.getItem('token');
+    this.activatedroute.paramMap.subscribe(params => {
+      if (params.has('code') && !this.hasToken) {
+        console.log('Has param CODE');
+        this.oauthService.loadDiscoveryDocumentAndLogin();
+      }
+    });
     this.customAPI = localStorage.getItem('api_url');
     this.customAPIEnabled = localStorage.getItem('api_enabled') === 'true';
     if (this.customAPIEnabled) {
       this.rest.setEndpoint(this.customAPI);
     }
-    if (this.token) {
-      this.authenticate(this.token);
-    }
+    // this.authenticate();
     this.items = [
       {
         label: 'User',
@@ -103,12 +120,10 @@ export class AppComponent implements OnInit {
     ];
   }
 
-  authenticate(token: string) {
-    this.token = token;
-    this.rest.setToken(token);
+  authenticate() {
     this.authVerify();
     this.authReports();
-    this.rest.authenticate(this.token).subscribe((response: any) => {
+    this.rest.authenticate(null).subscribe((response: any) => {
       const authenticated = response && response.data && response.data.groups &&
         response.data.groups.length > 0 &&
         (response.data.groups.includes('admin') || response.data.groups.includes('mod'));
@@ -150,14 +165,24 @@ export class AppComponent implements OnInit {
     });
   }
 
-  login() {
-    localStorage.setItem('token', this.token);
-    this.setCustomAPIHost();
-    this.authenticate(this.token);
+  isSignedIn(): boolean {
+    return this.oauthService.hasValidAccessToken();
   }
 
-  logout() {
-    localStorage.setItem('token', undefined);
+  async signin() {
+    await this.oauthService.loadDiscoveryDocumentAndLogin();
+    this.hasToken = this.oauthService.hasValidAccessToken();
+  }
+
+  login() {
+    this.setCustomAPIHost();
+    this.authenticate();
+  }
+
+  async logout() {
+    if (this.oauthService.hasValidAccessToken()) {
+      await this.oauthService.revokeTokenAndLogout();
+    }
     this.isAuthenticated = false;
   }
 
