@@ -6,7 +6,7 @@ export const authCodeFlowConfig: AuthConfig = {
   logoutUrl: window.location.origin,
   clientId: 'commander',
   responseType: 'code',
-  scope: 'openid profile email',
+  scope: 'openid profile email internal-apis',
   showDebugInformation: true,
   timeoutFactor: 0.01,
 };
