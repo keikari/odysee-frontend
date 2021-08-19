@@ -82,7 +82,7 @@ import {YtQueueComponent} from './yt-queue/yt-queue.component';
 import {ReportsComponent} from './reports/reports.component';
 import { SearchComponent } from './search/search.component';
 import {LighthouseService} from './services/lighthouse.service';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {AuthGuard} from './shared/auth.guard';
 
 const appRoutes: Routes = [
@@ -211,6 +211,7 @@ const appRoutes: Routes = [
     AuthGuard,
     [{provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true}],
     [{provide: DEFAULT_TIMEOUT, useValue: 1500000}],
+    [{ provide: OAuthStorage, useValue: localStorage }],
   ],
   bootstrap: [AppComponent]
 })
