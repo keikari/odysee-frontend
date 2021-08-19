@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     // Automatically load user profile
     this.oauthService.events
       .pipe(filter((e) => e.type === 'token_received'))
-      .subscribe((_) => { this.hasToken = true; this.oauthService.loadUserProfile()});
+      .subscribe((_) => { this.hasToken = true; this.oauthService.loadUserProfile(); });
   }
 
   title = 'app';
@@ -61,7 +61,6 @@ export class AppComponent implements OnInit {
     if (this.customAPIEnabled) {
       this.rest.setEndpoint(this.customAPI);
     }
-    // this.authenticate();
     this.items = [
       {
         label: 'User',
@@ -118,6 +117,9 @@ export class AppComponent implements OnInit {
         label: 'Search', routerLink: ['/search']
       },
     ];
+    if (this.oauthService.hasValidAccessToken()) {
+      this.authenticate();
+    }
   }
 
   authenticate() {
