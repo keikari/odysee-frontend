@@ -31,7 +31,8 @@ export class AppComponent implements OnInit {
               private activatedroute: ActivatedRoute) {
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocumentAndLogin();
-    this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh(); // this should refresh aith token automaticaly ?
+    this.oauthService.timeoutFactor = 0.9;
 
     // Automatically load user profile
     this.oauthService.events
