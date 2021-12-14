@@ -198,7 +198,7 @@ const appRoutes: Routes = [
     ChartModule,
     OAuthModule.forRoot({
       resourceServer: {
-        allowedUrls: ['http://localhost:4200', 'http://localhost:8080', 'https://api.odysee.com', 'https://commander.lbry.com'],
+        allowedUrls: ['http://localhost:4200', 'http://localhost:8080', 'https://api.odysee.com', 'https://commander.lbry.com', 'https://api.lbry.com/'],
         sendAccessToken: true
       }
     }),
