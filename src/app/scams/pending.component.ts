@@ -18,6 +18,7 @@ export class PendingComponent implements OnInit {
   UserColumns = [];
 
   triggerFilter: string;
+  watchedClaimID: string;
   showVerified: boolean;
   showAutoApprovals: boolean;
   showTriggeredOnly: boolean;
@@ -100,6 +101,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.itemsToReturn) {
       params = params.set('items_to_return', this.itemsToReturn.toString());
+    }
+    if (this.watchedClaimID) {
+      params = params.set('watched_claim_id', this.watchedClaimID)
     }
     if (this.emailFilter) {
       params = params.set('email_domain_name', this.emailFilter);
