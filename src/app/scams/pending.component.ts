@@ -27,6 +27,7 @@ export class PendingComponent implements OnInit {
   haveViews: boolean;
   approved: boolean;
   fastSearch: boolean;
+  disableIndex: boolean;
   verificationMethod: string;
   invitedByFilter: number[] = [];
   invitedByLists: InvitedByList[] = [];
@@ -101,6 +102,9 @@ export class PendingComponent implements OnInit {
     }
     if (this.itemsToReturn) {
       params = params.set('items_to_return', this.itemsToReturn.toString());
+    }
+    if (this.disableIndex) {
+      params = params.set('disable_index', this.disableIndex.toString());
     }
     if (this.watchedClaimID) {
       params = params.set('watched_claim_id', this.watchedClaimID)
