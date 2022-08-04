@@ -314,6 +314,7 @@ function ClaimListDiscover(props: Props) {
     has_no_source?: boolean,
     limit_claims_per_channel?: number,
     remove_duplicates?: boolean,
+    valid_channel_signature?: boolean,
   } = {
     page_size: dynamicPageSize,
     page,
@@ -348,6 +349,7 @@ function ClaimListDiscover(props: Props) {
 
   if (channelIdsParam) {
     options.channel_ids = channelIdsParam;
+    options.valid_channel_signature = true;
   }
 
   if (excludedIdsParam) {
