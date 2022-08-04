@@ -56,12 +56,13 @@ class UriIndicator extends React.PureComponent<Props> {
       };
     } else if (claim) {
       const signingChannel = claim.signing_channel && claim.signing_channel.amount;
+      const isChannelSignatureValid = claim.is_channel_signature_valid;
       const isChannelClaim = claim.value_type === 'channel';
       const channelClaim = isChannelClaim ? claim : claim.signing_channel;
 
       return {
         hasChannelData: Boolean(channelClaim),
-        isAnonymous: !signingChannel && !isChannelClaim,
+        isAnonymous: !isChannelSignatureValid && !isChannelClaim,
         channelName: channelClaim?.name,
         channelLink: isLinkType ? channelClaim?.canonical_url || channelClaim?.permanent_url : false,
         channelTitle:
