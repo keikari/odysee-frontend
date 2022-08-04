@@ -80,6 +80,7 @@ type SearchOptions = {
   stream_types?: Array<string>,
   has_source?: boolean,
   has_no_source?: boolean,
+  valid_channel_signatures?: boolean,
 };
 
 function resolveSearchOptions(props) {
@@ -137,6 +138,10 @@ function resolveSearchOptions(props) {
     options.has_no_source = true;
   } else if (hasSource || (!ENABLE_NO_SOURCE_CLAIMS && (!claimType || claimType === 'stream'))) {
     options.has_source = true;
+  }
+
+  if (channelIds) {
+    options.valid_channel_signatures = true;
   }
 
   if (releaseTime) {
