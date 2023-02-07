@@ -122,8 +122,12 @@ export default function ClaimList(props: Props) {
     doDisablePlayerDrag,
     restoreScrollPos,
     setHasActive,
+    test_claims,
   } = props;
+  //console.log(test_claims);
 
+  const renderCount = React.useRef(0);
+  //console.log(++renderCount.current);
   const isMobile = useIsMobile();
 
   const [currentSort, setCurrentSort] = usePersistedState(persistedStorageKey, SORT_NEW);
@@ -153,6 +157,7 @@ export default function ClaimList(props: Props) {
   const sortedUris = (urisLength > 0 && (currentSort === SORT_NEW ? tileUris : tileUris.slice().reverse())) || [];
 
   React.useEffect(() => {
+    //console.log(`useEffect 3: ${++renderCount.current}`);
     if (typeof loadedCallback === 'function') loadedCallback(totalLength);
   }, [totalLength]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -181,6 +186,7 @@ export default function ClaimList(props: Props) {
   }, []);
 
   useEffect(() => {
+    //console.log(`useEffect 2: ${++renderCount.current}`);
     const handleScroll = debounce((e) => {
       if (page && pageSize && onScrollBottom) {
         const mainEl = document.querySelector(`.${MAIN_CLASS}`);
@@ -251,6 +257,7 @@ export default function ClaimList(props: Props) {
   };
 
   React.useEffect(() => {
+    //console.log(`useEffect 1: ${++renderCount.current}`);
     if (setHasActive) {
       // used in case the active item is deleted
       setHasActive(sortedUris.some((uri) => activeUri && uri === activeUri));
@@ -288,6 +295,7 @@ export default function ClaimList(props: Props) {
     [setActiveListItemRef]
   );
 
+  const banState = {};
   return tileLayout && !header ? (
     <>
       <section ref={listRef} className={classnames('claim-grid', { 'swipe-list': swipeLayout })}>
@@ -301,12 +309,19 @@ export default function ClaimList(props: Props) {
                 }
               }
               return (
-                <React.Fragment key={uri}>
-                  {inj && inj}
-                  {(index < tileUris.length - uriBuffer.current.length ||
-                    (pageSize && index < pageSize - uriBuffer.current.length) ||
-                    (pageSize && tileUris.length % pageSize !== 0)) && (
                     <ClaimPreviewTile
+                      claim={test_claims[uri]}
+                      title={test_claims[uri]?.value.title}
+                      date={null}
+                      isResolvingUri={false}
+                      claimIsMine={false}
+                      banState={null}
+                      streamingUrl={null}
+                      showMature={false}
+                      isMature={false}
+                      isLivestream={false}
+                      isLivestreamActive={false}
+                      viewCount={5}
                       uri={uri}
                       showHiddenByUser={showHiddenByUser}
                       showUnresolvedClaims={showUnresolvedClaims}
@@ -316,8 +331,6 @@ export default function ClaimList(props: Props) {
                       showNoSourceClaims={showNoSourceClaims}
                       swipeLayout={swipeLayout}
                     />
-                  )}
-                </React.Fragment>
               );
             }
           })}

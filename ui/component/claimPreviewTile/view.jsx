@@ -85,11 +85,17 @@ function ClaimPreviewTile(props: Props) {
     fypId,
     mediaDuration,
     viewCount,
-    swipeLayout = false,
+    swipeLayout,
     pulse,
     firstCollectionItemUrl,
     onlyThumb,
   } = props;
+  
+  const renderCount = React.useRef(0);
+  React.useEffect(() => {
+    console.log(`rendered: ${++renderCount.current}`);
+  }, [
+  ]);
 
   const isEmbed = React.useContext(EmbedContext);
 
@@ -107,7 +113,7 @@ function ClaimPreviewTile(props: Props) {
     // $FlowFixMe
     (claim.value.stream_type === 'audio' || claim.value.stream_type === 'video');
   const collectionClaimId = isCollection && claim && claim.claim_id;
-  const thumbnailUrl = useGetThumbnail(uri, claim, streamingUrl, getFile, placeholder);
+  const thumbnailUrl = claim?.value.thumbnail?.url;
   const canonicalUrl = claim && claim.canonical_url;
   const repostedContentUri = claim && (claim.reposted_claim ? claim.reposted_claim.permanent_url : claim.permanent_url);
   const listId = collectionId || collectionClaimId;
@@ -144,9 +150,9 @@ function ClaimPreviewTile(props: Props) {
 
   if (!shouldHide && !placeholder) {
     shouldHide =
-      banState.blacklisted ||
-      banState.filtered ||
-      (!showHiddenByUser && (banState.muted || banState.blocked)) ||
+      banState?.blacklisted ||
+      banState?.filtered ||
+      (!showHiddenByUser && (banState?.muted || banState?.blocked)) ||
       (isAbandoned && !showUnresolvedClaims);
   }
 
@@ -297,4 +303,4 @@ function ClaimPreviewTile(props: Props) {
   );
 }
 
-export default withRouter(ClaimPreviewTile);
+export default React.memo(ClaimPreviewTile);
