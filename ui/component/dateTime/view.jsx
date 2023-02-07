@@ -65,11 +65,11 @@ class DateTime extends React.Component<Props, State> {
 
     const clockFormat = clock24h ? 'HH:mm' : 'hh:mm A';
     return (
-      <span className="date_time" title={timeAgo && moment(date).locale(appLanguage).format(`LL ${clockFormat}`)}>
+      <span className="date_time" title={timeAgo && moment(date).locale('').format(`LL ${clockFormat}`)}>
         {date
           ? timeAgo
             ? getTimeAgoStr(date, showFutureDate, genericSeconds)
-            : moment(date).locale(appLanguage).format(type === 'date' ? 'LL' : clockFormat)
+            : moment(date).locale('').format(type === 'date' ? 'LL' : clockFormat)
           : '...'}
       </span>
     );

@@ -274,6 +274,7 @@ function ClaimPreviewTile(props: Props) {
                     <UriIndicator uri={uri} link external={isEmbed} claim={claim} />
                     <div className="claim-tile__about--counts">
                       {isLivestream && <LivestreamDateTime uri={uri} />}
+                      {!isLivestream && <DateTime timeAgo uri={uri} date={new Date(claim?.value?.release_time * 1000)} />}
                     </div>
                   </div>
                 </React.Fragment>
