@@ -309,6 +309,11 @@ export default function ClaimList(props: Props) {
                 }
               }
               return (
+                <React.Fragment key={uri}>
+                  {inj && inj}
+                  {(index < tileUris.length - uriBuffer.current.length ||
+                    (pageSize && index < pageSize - uriBuffer.current.length) ||
+                    (pageSize && tileUris.length % pageSize !== 0)) && (
                     <ClaimPreviewTile
                       claim={test_claims[uri]}
                       title={test_claims[uri]?.value.title}
@@ -331,6 +336,8 @@ export default function ClaimList(props: Props) {
                       showNoSourceClaims={showNoSourceClaims}
                       swipeLayout={swipeLayout}
                     />
+                      )}
+                </React.Fragment>
               );
             }
           })}
