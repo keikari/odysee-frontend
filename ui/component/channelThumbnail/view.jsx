@@ -86,11 +86,6 @@ function ChannelThumbnail(props: Props) {
     colorClassName = `channel-thumbnail__default--4`;
   }
 
-  React.useEffect(() => {
-    if (shouldResolve && uri) {
-      doResolveUri(uri);
-    }
-  }, [doResolveUri, shouldResolve, uri]);
 
   if (isAnimated && !allowGifs) {
     const url = getImageProxyUrl(channelThumbnail);

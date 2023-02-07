@@ -267,7 +267,7 @@ function ClaimPreviewTile(props: Props) {
               ) : (
                 <React.Fragment>
                   <UriIndicator focusable={false} uri={uri} link hideAnonymous external={isEmbed} claim={claim}>
-                    <ChannelThumbnail uri={channelUri} xsmall checkMembership={false} />
+                    <ChannelThumbnail uri={channelUri} thumbnail={claim?.value?.thumbnail?.url} claim={claim?.sigining_channel} xsmall checkMembership={false} />
                   </UriIndicator>
 
                   <div className="claim-tile__about">
