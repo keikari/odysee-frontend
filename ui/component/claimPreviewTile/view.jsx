@@ -216,7 +216,8 @@ function ClaimPreviewTile(props: Props) {
       })}
     >
       <NavLink {...navLinkProps} role="none" tabIndex={-1} aria-hidden target={isEmbed && '_blank'}>
-        <FileThumbnail thumbnail={thumbnailUrl} allowGifs tileLayout uri={uri} secondaryUri={firstCollectionItemUrl}>
+        <FileThumbnail thumbnail={thumbnailUrl} allowGifs tileLayout uri={uri} secondaryUri={firstCollectionItemUrl}
+        >
           {!isChannel && (
             <React.Fragment>
               {((fypId && isStream) || isPlayable) && (
@@ -227,22 +228,12 @@ function ClaimPreviewTile(props: Props) {
                     </div>
                   )}
 
-                  {isPlayable && (
-                    <>
-                      <FileWatchLaterLink focusable={false} uri={repostedContentUri} />
-                      <ButtonAddToQueue focusable={false} uri={repostedContentUri} />
-                    </>
-                  )}
                 </div>
               )}
 
-              <div className="claim-preview__file-property-overlay">
-                <PreviewOverlayProperties uri={uri} properties={properties} />
-              </div>
               <ClaimPreviewProgress uri={uri} />
             </React.Fragment>
           )}
-          {isCollection && <CollectionPreviewOverlay collectionId={listId} />}
         </FileThumbnail>
       </NavLink>
 
@@ -256,12 +247,11 @@ function ClaimPreviewTile(props: Props) {
                 <TruncatedText text={title || (claim && claim.name)} lines={isChannel ? 1 : 2} />
                 {isChannel && (
                   <div className="claim-tile__about">
-                    <UriIndicator uri={uri} external={isEmbed} />
+                    <UriIndicator uri={uri} external={isEmbed} claim={claim}/>
                   </div>
                 )}
               </h2>
             </NavLink>
-            <ClaimMenuList uri={uri} collectionId={listId} fypId={fypId} channelUri={channelUri} />
           </div>
           <div>
             <div
@@ -276,16 +266,14 @@ function ClaimPreviewTile(props: Props) {
                 <></>
               ) : (
                 <React.Fragment>
-                  <UriIndicator focusable={false} uri={uri} link hideAnonymous external={isEmbed}>
+                  <UriIndicator focusable={false} uri={uri} link hideAnonymous external={isEmbed} claim={claim}>
                     <ChannelThumbnail uri={channelUri} xsmall checkMembership={false} />
                   </UriIndicator>
 
                   <div className="claim-tile__about">
-                    <UriIndicator uri={uri} link external={isEmbed} />
+                    <UriIndicator uri={uri} link external={isEmbed} claim={claim} />
                     <div className="claim-tile__about--counts">
-                      <FileViewCountInline uri={uri} />
                       {isLivestream && <LivestreamDateTime uri={uri} />}
-                      {!isLivestream && <DateTime timeAgo uri={uri} />}
                     </div>
                   </div>
                 </React.Fragment>

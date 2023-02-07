@@ -69,7 +69,7 @@ class UriIndicator extends React.PureComponent<Props> {
       uri,
       channelInfo,
       link,
-      isResolvingUri,
+      isResolvingUri = false,
       claim,
       children,
       inline,
