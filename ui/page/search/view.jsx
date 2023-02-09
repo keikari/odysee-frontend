@@ -28,6 +28,11 @@ export default function SearchPage(props: Props) {
   const { push } = useHistory();
   const [from, setFrom] = React.useState(0);
 
+  const searchTerm = React.useRef(urlQuery);
+  if (urlQuery !== searchTerm.current) {
+    resetPage();
+    searchTerm.current = urlQuery;
+  }
   const modifiedUrlQuery = urlQuery && urlQuery.trim().replace(/\s+/g, '').replace(/:/g, '#');
   const uriFromQuery = `lbry://${modifiedUrlQuery}`;
 
