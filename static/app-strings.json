@@ -1655,7 +1655,7 @@
   "Enter a name or %domain% URL": "Enter a name or %domain% URL",
   "Winning amount: %amount%": "Winning amount: %amount%",
   "Download or get the app": "Download or get the app",
-  "This content can be downloaded from odysee.com, but not displayed. It will display in LBRY Desktop, an app for desktop computers.": "This content can be downloaded from odysee.com, but not displayed. It will display in LBRY Desktop, an app for desktop computers.",
+  "This content can be downloaded from Odysee, but not displayed due to unsupported file type.": "This content can be downloaded from Odysee, but not displayed due to unsupported file type.",
   "Repost Here": "Repost Here",
   "Publish Here": "Publish Here",
   "Close sidebar - hide channels you are following.": "Close sidebar - hide channels you are following.",
