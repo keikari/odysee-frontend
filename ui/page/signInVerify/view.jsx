@@ -10,6 +10,7 @@ import Card from 'component/common/card';
 
 type Props = {
   history: { push: (string) => void, location: { search: string } },
+  doUserCheckEmailVerified: () => void,
   doToast: ({}) => void,
 };
 
@@ -19,6 +20,7 @@ let verificationApiHistory = { called: false, successful: false };
 function SignInVerifyPage(props: Props) {
   const {
     history: { push, location },
+    doUserCheckEmailVerified,
     doToast,
   } = props;
 
@@ -52,6 +54,16 @@ function SignInVerifyPage(props: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- On mount only
   }, []);
+
+  React.useEffect(() => {
+    const emailVerifyCheckInterval = setInterval(() => {
+      doUserCheckEmailVerified();
+    }, 2000);
+
+    return () => {
+      clearInterval(emailVerifyCheckInterval);
+    }
+  });
 
   React.useEffect(() => {
     let captchaTimeout;
