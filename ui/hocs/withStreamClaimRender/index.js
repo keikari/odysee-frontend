@@ -13,6 +13,7 @@ import {
   selectPendingFiatPaymentForUri,
   selectSdkFeePendingForUri,
   selectScheduledStateForUri,
+  makeSelectTagInClaimOrChannelForUri,
   // selectClaimWasPurchasedForUri,
   // selectIsFiatPaidForUri,
 } from 'redux/selectors/claims';
@@ -32,6 +33,8 @@ import { doStartFloatingPlayingUri, doClearPlayingUri } from 'redux/actions/cont
 import { doFileGetForUri } from 'redux/actions/file';
 import { doCheckIfPurchasedClaimId } from 'redux/actions/stripe';
 import { doMembershipMine, doMembershipList } from 'redux/actions/memberships';
+
+import { NSFW_CONTENT_TAG } from 'constants/tags';
 
 import withStreamClaimRender from './view';
 
@@ -66,6 +69,7 @@ const select = (state, props) => {
     sdkFeePending: selectSdkFeePendingForUri(state, uri),
     pendingUnlockedRestrictions: selectPendingUnlockedRestrictionsForUri(state, uri),
     canViewFile: selectCanViewFileForUri(state, uri),
+    isNsfw: makeSelectTagInClaimOrChannelForUri(props.uri, NSFW_CONTENT_TAG)(state),
     channelLiveFetched: selectChannelIsLiveFetchedForUri(state, uri),
     sourceLoaded: selectVideoSourceLoadedForUri(state, uri),
   };
