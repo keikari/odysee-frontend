@@ -14,6 +14,7 @@ import {
   selectSdkFeePendingForUri,
   selectScheduledStateForUri,
   makeSelectTagInClaimOrChannelForUri,
+  selectClaimIsMine,
   // selectClaimWasPurchasedForUri,
   // selectIsFiatPaidForUri,
 } from 'redux/selectors/claims';
@@ -72,6 +73,7 @@ const select = (state, props) => {
     isNsfw: makeSelectTagInClaimOrChannelForUri(props.uri, NSFW_CONTENT_TAG)(state),
     channelLiveFetched: selectChannelIsLiveFetchedForUri(state, uri),
     sourceLoaded: selectVideoSourceLoadedForUri(state, uri),
+    claimIsMine: Boolean(selectClaimIsMine(state, claim)),
   };
 };
 

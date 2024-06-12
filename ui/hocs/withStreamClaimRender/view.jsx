@@ -53,6 +53,7 @@ type Props = {
   isNsfw: ?boolean,
   channelLiveFetched: boolean,
   sourceLoaded: boolean,
+  claimIsMine: boolean,
   doCheckIfPurchasedClaimId: (claimId: string) => void,
   doFileGetForUri: (uri: string, opt?: ?FileGetOptions) => void,
   doMembershipMine: () => void,
@@ -102,6 +103,7 @@ const withStreamClaimRender = (StreamClaimComponent: FunctionalComponentParam) =
       isNsfw,
       channelLiveFetched,
       sourceLoaded,
+      claimIsMine,
       doCheckIfPurchasedClaimId,
       doFileGetForUri,
       doMembershipMine,
@@ -118,8 +120,9 @@ const withStreamClaimRender = (StreamClaimComponent: FunctionalComponentParam) =
     const [currentStreamingUri, setCurrentStreamingUri] = React.useState();
     const [clickProps, setClickProps] = React.useState();
 
-    const [isNsfwAknowledged, setIsNsfwAknowledged] = usePersistedState(`nsfw-aknowledged-${claimId}`, false);
+    const [isNsfwAknowledged, setIsNsfwAknowledged] = usePersistedState(`nsfw-aknowledged-${claimId}`, claimIsMine);
 
+    console.log(isNsfw, isNsfwAknowledged);
     const { search, href, state: locationState, pathname } = location;
     const { forceDisableAutoplay } = locationState || {};
     const currentUriPlaying = playingUri.uri === uri && claimLinkId === playingUri.sourceId;
