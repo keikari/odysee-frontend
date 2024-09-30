@@ -48,6 +48,7 @@ type Props = {
   limitShow?: number,
   user: User,
   disableControlTags?: boolean,
+  disabledControlTags?: Array<string>,
   help?: string,
 };
 
@@ -82,6 +83,7 @@ export default function TagsSearch(props: Props) {
     limitSelect = TAG_FOLLOW_MAX,
     limitShow = 5,
     disableControlTags,
+    disabledControlTags,
     help,
   } = props;
   const [newTag, setNewTag] = useState('');
@@ -304,17 +306,21 @@ export default function TagsSearch(props: Props) {
           onSelect && ( // onSelect ensures this does not appear on TagFollow
             <fieldset-section>
               <label>{__('Control Tags')}</label>
-              {CONTROL_TAGS.map((t) => (
-                <FormField
-                  key={t}
-                  name={t}
-                  type="checkbox"
-                  blockWrap={false}
-                  label={controlTagLabels[t]}
-                  checked={tagsPassedIn.some((te) => te.name === t)}
-                  onChange={() => handleUtilityTagCheckbox(t)}
-                />
-              ))}
+              {CONTROL_TAGS.map(
+                (t) =>
+                  // $FlowIgnore
+                  !disabledControlTags?.includes(t) && (
+                    <FormField
+                      key={t}
+                      name={t}
+                      type="checkbox"
+                      blockWrap={false}
+                      label={controlTagLabels[t]}
+                      checked={tagsPassedIn.some((te) => te.name === t)}
+                      onChange={() => handleUtilityTagCheckbox(t)}
+                    />
+                  )
+              )}
             </fieldset-section>
           )}
       </Form>
