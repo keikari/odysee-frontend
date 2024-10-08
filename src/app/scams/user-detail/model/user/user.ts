@@ -62,6 +62,7 @@ export class User {
   Videos: number;
   Views: number;
   ShouldSync: boolean;
+  Vip: boolean;
   Redeemable: boolean;
   Reviewed: boolean;
   constructor(u: any) {
@@ -107,6 +108,7 @@ export class User {
         ytChannel.IsRedeemable = y.redeemable;
         ytChannel.Reviewed = y.reviewed;
         ytChannel.ShouldSync = y.should_sync;
+        ytChannel.Vip = y.vip;
         ytChannel.Ratio = ytChannel.Views / ytChannel.Videos;
         ytChannel.Suggestion = (ytChannel.Ratio > 1000) ? 'likely good' : 'likely bad';
         this.YoutubeChannels.push(ytChannel);
@@ -122,6 +124,7 @@ export class User {
       this.Videos = this.YoutubeChannels[0].Videos;
       this.Views = this.YoutubeChannels[0].Views;
       this.ShouldSync = this.YoutubeChannels[0].ShouldSync;
+      this.Vip = this.YoutubeChannels[0].Vip;
       this.Redeemable = this.YoutubeChannels[0].IsRedeemable;
       this.Reviewed = this.YoutubeChannels[0].Reviewed;
     }

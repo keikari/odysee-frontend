@@ -61,7 +61,8 @@
               *ngIf="
                 col.field === 'ShouldSync' ||
                 col.field === 'IsRedeemable' ||
-                col.field === 'Reviewed'
+                col.field === 'Reviewed' ||
+                col.field === 'Vip'
               "
               (onChange)="changeFieldStatus(rowData, col.api_field, $event)"
               [(ngModel)]="rowData[col.field]"
@@ -72,7 +73,8 @@
                 col.field !== 'ChannelName' &&
                 col.field !== 'ShouldSync' &&
                 col.field !== 'IsRedeemable' &&
-                col.field !== 'Reviewed'
+                col.field !== 'Reviewed' &&
+                col.field !== 'Vip'
               "
             >{{ rowData[col.field] }}</span
             >

@@ -11,6 +11,7 @@ export class YoutubeChannel {
   IsRedeemable: boolean;
   Reviewed: boolean;
   ShouldSync: boolean;
+  Vip: boolean;
   Status: string;
   ShouldEmail: boolean;
   ApplyDisabled: boolean;

@@ -48,6 +48,7 @@ export class UserDetailComponent implements OnInit {
     {field: 'RewardAmount', header: 'Reward Amount'},
     {field: 'IsRedeemed', header: 'Redeemed'},
     {field: 'IsRedeemable', header: 'Redeemable', api_field: 'redeemable'},
+    {field: 'Vip', header: 'Vip', api_field: 'vip'},
     {field: 'ShouldSync', header: 'ShouldSync', api_field: 'should_sync'},
     {field: 'Reviewed', header: 'Reviewed', api_field: 'reviewed'}];
   creditColumns = [
